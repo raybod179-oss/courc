@@ -1,0 +1,949 @@
+/* ============================================================
+   استایل مشترک مرجع آموزشی HTML-CSS (نسخه ی حرفه‌ای و تمیز)
+   فایل مشترک برای همه بخش‌های دوره
+   ============================================================ */
+
+:root {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+
+  --text: #1f2937;
+  --heading: #0f172a;
+  --muted: #64748b;
+
+  --border: #e5e7eb;
+  --border-soft: #eef0f4;
+
+  --accent: #4f46e5;
+  --accent-strong: #4338ca;
+  --accent-soft: #eef2ff;
+
+  --dark: #0f172a;
+  --dark-soft: #1e293b;
+
+  --radius: 18px;
+  --radius-sm: 12px;
+
+  --shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 10px 24px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 4px 12px rgba(15, 23, 42, 0.08), 0 24px 48px rgba(15, 23, 42, 0.1);
+
+  --code-bg: #111827;
+  --code-label: #1f2937;
+  --code-border: #1e293b;
+  --code-text: #e2e8f0;
+
+  /* سازگاری با استایل‌های inline قدیمی */
+  --pink: #94a3b8;
+  --purple: #818cf8;
+  --teal: #94a3b8;
+  --blue: #94a3b8;
+  --yellow: #cbd5e1;
+  --orange: #94a3b8;
+}
+
+/* ---------- فونت لوکال وزیرمتن ---------- */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-Thin.woff2") format("woff2");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-ExtraLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-ExtraBold.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-FD-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Vazirmatn", "Tahoma", sans-serif;
+  background: linear-gradient(180deg, #f6f7fb 0%, #fbfcfe 55%, #f6f7fb 100%);
+  color: var(--text);
+  line-height: 1.9;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---------- قاب اصلی ---------- */
+.course-page {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 32px 24px 90px;
+}
+
+/* ---------- سربرگ ---------- */
+.course-header {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f5fb 100%);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: 22px;
+  padding: 46px 40px 42px;
+  margin-bottom: 30px;
+  box-shadow: var(--shadow-lg);
+}
+
+.course-header::before {
+  content: "";
+  position: absolute;
+  top: -90px;
+  left: -70px;
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.course-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.course-header .badge {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  border: 1px solid #dbe3ff;
+  padding: 4px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  margin-bottom: 18px;
+}
+
+.course-header h1 {
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 800;
+  color: var(--heading);
+  margin-bottom: 10px;
+  line-height: 1.45;
+}
+
+.course-header p {
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 640px;
+}
+
+/* ---------- فهرست مطالب ---------- */
+.toc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+
+.toc h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: var(--heading);
+  font-weight: 700;
+}
+
+.toc h2::before {
+  content: "📚";
+  font-size: 16px;
+}
+
+.toc ol {
+  padding-right: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 24px;
+}
+
+.toc li {
+  counter-increment: toc;
+}
+
+.toc li::before {
+  content: counter(toc);
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 10px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+
+.toc a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.toc a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---------- کارت درس ---------- */
+.lesson {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 30px;
+  margin-bottom: 26px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.lesson:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+.lesson-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.lesson-num {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  color: var(--accent-strong);
+  font-weight: 800;
+  font-size: 18px;
+  background: var(--accent-soft);
+  border: 1px solid #dfe5ff;
+}
+
+.lesson-head h2 {
+  font-size: 21px;
+  color: var(--heading);
+  font-weight: 800;
+}
+
+.lesson p {
+  margin-bottom: 13px;
+}
+
+.lesson ul,
+.lesson ol {
+  margin: 0 0 15px 0;
+  padding-right: 24px;
+}
+
+.lesson li {
+  margin-bottom: 7px;
+  padding-right: 4px;
+}
+
+.lesson li::marker {
+  color: var(--accent);
+}
+
+.lesson h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--heading);
+  margin: 24px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed var(--border);
+}
+
+.lesson code {
+  font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.92em;
+  background: #eef1f6;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  padding: 2px 7px;
+  color: #334155;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* ---------- جفت «کد + خروجی» کنار هم ---------- */
+.demo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 16px;
+  margin: 18px 0;
+  align-items: stretch;
+}
+
+.demo-code {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 14px;
+  overflow: hidden;
+  direction: ltr;
+  text-align: left;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.28);
+}
+
+.demo-code .demo-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--code-label);
+  padding: 8px 16px;
+  font-size: 12px;
+  color: #94a3b8;
+  direction: rtl;
+  font-family: "Vazirmatn", sans-serif;
+  border-bottom: 1px solid var(--code-border);
+}
+
+.demo-code .demo-label span:first-child {
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.demo-code .demo-tag {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  direction: ltr;
+}
+
+.demo-code pre {
+  padding: 18px 20px;
+  overflow-x: auto;
+}
+
+.demo-code code {
+  font-family: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace !important;
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: var(--code-text);
+  background: transparent;
+  border: none;
+  padding: 0;
+  direction: ltr;
+}
+
+/* بلوک‌های چندگانه داخل پنل کد (روش جدید: HTML و CSS کنار هم) */
+.demo-block + .demo-block {
+  border-top: 1px dashed var(--code-border);
+}
+
+.demo-lang {
+  font-family: "Vazirmatn", sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #64748b;
+  padding: 12px 20px 0;
+  direction: ltr;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+
+.demo-block pre {
+  padding: 6px 20px 16px;
+}
+
+/* بدنه‌ی خروجی (زنده) */
+.demo-body {
+  padding: 18px 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.demo-out {
+  background: #fbfcfe;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-out .demo-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f1f3f8;
+  border-bottom: 1px solid var(--border-soft);
+  padding: 8px 16px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.demo-out .demo-tag {
+  background: #e5eaf3;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 2px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  direction: rtl;
+}
+
+.demo-out > :last-child {
+  padding: 18px 20px;
+  flex: 1;
+}
+
+.demo-out h1, .demo-out h2, .demo-out h3,
+.demo-out h4, .demo-out h5, .demo-out h6 {
+  margin: 5px 0;
+}
+
+.demo-out p {
+  margin: 6px 0;
+}
+
+.demo-out ul,
+.demo-out ol {
+  padding-right: 26px;
+  margin: 6px 0;
+}
+
+.demo-out ul ul,
+.demo-out ol ol {
+  margin: 2px 0;
+}
+
+.demo-out dl {
+  margin: 6px 0;
+}
+
+.demo-out img {
+  max-width: 100%;
+  height: auto;
+}
+
+.demo-out a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.demo-out input[type="text"],
+.demo-out input[type="password"],
+.demo-out input[type="email"],
+.demo-out input[type="number"],
+.demo-out input[type="date"],
+.demo-out input[type="time"],
+.demo-out input[type="search"],
+.demo-out input[type="tel"],
+.demo-out input[type="url"],
+.demo-out textarea,
+.demo-out select {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 13px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text);
+  margin: 4px 0 4px 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.demo-out textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.demo-out input:focus,
+.demo-out textarea:focus,
+.demo-out select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.demo-out button,
+.demo-out input[type="submit"],
+.demo-out input[type="reset"] {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 9px 22px;
+  border: none;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  margin: 4px 0;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.demo-out button:hover,
+.demo-out input[type="submit"]:hover {
+  background: var(--accent-strong);
+}
+
+.demo-out input[type="reset"] {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.demo-out input[type="reset"]:hover {
+  background: #d1d5db;
+}
+
+.demo-out label {
+  font-size: 14px;
+}
+
+.demo-out form {
+  margin: 4px 0;
+}
+
+.demo-out dt {
+  font-weight: 700;
+}
+
+.demo-out dd {
+  margin: 0 22px 8px 0;
+}
+
+.demo-out hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+.demo-out blockquote {
+  border-right: 4px solid var(--border-strong, #cbd5e1);
+  margin: 8px 0;
+  padding: 6px 14px;
+  background: #f8fafc;
+  border-radius: 8px;
+  color: var(--muted);
+}
+
+/* ---------- کادرهای نکته ---------- */
+.note {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 20px;
+  margin: 18px 0;
+  font-size: 15px;
+}
+
+.note .note-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+
+.note p {
+  margin: 0;
+}
+
+.note ul {
+  margin: 4px 0 0 0;
+  padding-right: 20px;
+}
+
+.note li {
+  margin-bottom: 4px;
+}
+
+.note.tip {
+  background: #f3fbf7;
+  border-color: #c6ece0;
+  border-right: 4px solid #10b981;
+}
+
+.note.tip .note-title { color: #047857; }
+
+.note.warn {
+  background: #fffaf0;
+  border-color: #f5e3be;
+  border-right: 4px solid #f59e0b;
+}
+
+.note.warn .note-title { color: #b45309; }
+
+.note.info {
+  background: #eff6ff;
+  border-color: #c9dcf8;
+  border-right: 4px solid #3b82f6;
+}
+
+.note.info .note-title { color: #1d4ed8; }
+
+/* ---------- کادر تمرین ---------- */
+.exercise {
+  background: #fafafd;
+  border: 1px solid var(--border);
+  border-right: 4px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 18px 22px;
+  margin: 18px 0;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.exercise:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-1px);
+}
+
+.exercise .ex-title {
+  font-weight: 700;
+  color: var(--accent-strong);
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.exercise ol {
+  margin-right: 20px;
+  padding-right: 2px;
+}
+
+.exercise li {
+  margin-bottom: 6px;
+}
+
+/* ---------- خلاصه طلایی ---------- */
+.golden {
+  background: linear-gradient(135deg, var(--dark) 0%, var(--dark-soft) 100%);
+  border: 1px solid #334155;
+  border-radius: var(--radius);
+  padding: 26px 30px;
+  margin: 30px 0;
+  color: #cbd5e1;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.golden::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.golden h3 {
+  color: #fbbf24;
+  font-size: 17px;
+  margin-bottom: 14px;
+  font-weight: 800;
+}
+
+.golden > * {
+  position: relative;
+  z-index: 1;
+}
+
+.golden ol {
+  margin-right: 20px;
+}
+
+.golden li {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.golden li::marker {
+  color: #fbbf24;
+}
+
+/* ---------- جدول ---------- */
+.lesson table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.lesson table th,
+.lesson table td {
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  text-align: right;
+}
+
+.lesson table th {
+  background: #f4f5fa;
+  color: var(--heading);
+  font-weight: 700;
+}
+
+.lesson table tr:nth-child(even) td {
+  background: #fafbfd;
+}
+
+.lesson table caption {
+  caption-side: top;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--heading);
+  text-align: right;
+}
+
+/* ---------- ناوبری ---------- */
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.lesson-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.lesson-nav a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.lesson-nav a:last-child {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.lesson-nav a:last-child:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #fff;
+}
+
+/* ---------- صفحه فهرست دوره (00) ---------- */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.hub-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+a.hub-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.hub-card .hub-num {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  border: 1px solid #dfe5ff;
+  color: var(--accent-strong);
+  font-weight: 800;
+  font-size: 15px;
+}
+
+.hub-card .hub-title {
+  font-weight: 700;
+  color: var(--heading);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.hub-card .hub-desc {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 3px;
+  line-height: 1.7;
+}
+
+.hub-card.hub-soon {
+  opacity: 0.55;
+}
+
+@media (max-width: 760px) {
+  .hub-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- فوکوس قابل دسترس ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid rgba(79, 70, 229, 0.45);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---------- موبایل ---------- */
+@media (max-width: 760px) {
+  .demo {
+    grid-template-columns: 1fr;
+  }
+
+  .toc ol {
+    grid-template-columns: 1fr;
+  }
+
+  .course-page {
+    padding: 16px 14px 70px;
+  }
+
+  .course-header {
+    padding: 32px 24px;
+  }
+
+  .course-header h1 {
+    font-size: 25px;
+  }
+
+  .lesson {
+    padding: 20px;
+  }
+
+  .lesson-nav {
+    flex-direction: column;
+  }
+}
+
+/* ---------- پنلِ کدِ تمام‌عرض (وقتی فقط کد داریم و خروجی نداریم) ---------- */
+.demo-full {
+  display: block;
+}
+
+.demo-full .demo-code {
+  max-width: 100%;
+}
+
+/* ---------- گام پروژه (پروژه‌محوری دوره) ---------- */
+.proj-step {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-right: 4px solid var(--accent);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin: 20px 0;
+  box-shadow: var(--shadow);
+}
+
+.proj-step .proj-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  color: var(--accent-strong);
+  margin-bottom: 8px;
+}
+
+.proj-step p {
+  margin: 6px 0;
+}
+
+.proj-step ol {
+  margin: 8px 0 0;
+  padding-right: 22px;
+}
+
+.proj-step ol li {
+  margin: 4px 0;
+}

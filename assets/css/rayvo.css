@@ -1,0 +1,251 @@
+/* ============================================================
+   Rayvo Theme — هویت بصری اختصاصی دوره‌ی Laravel
+   روی style.css لود می‌شود و ظاهر را بازتعریف می‌کند.
+   رنگ برند فقط در همین متغیرها عوض می‌شود.
+   ============================================================ */
+:root{
+  --rv-cyan:#22d3ee; --rv-blue:#3b82f6; --rv-violet:#8b5cf6;
+  --rv-grad:linear-gradient(135deg,#22d3ee 0%,#3b82f6 55%,#8b5cf6 100%);
+  --rv-ink:#0b1220; --rv-ink-2:#111a2e; --rv-ink-3:#18233d;
+
+  --bg:#f4f7fb; --surface:#fff; --text:#1e293b; --heading:#0b1220; --muted:#64748b;
+  --border:#e2e8f0; --border-soft:#edf2f7;
+  --accent:#2563eb; --accent-strong:#1d4ed8; --accent-soft:#e8f0ff;
+  --radius:16px; --radius-sm:11px;
+  --shadow:0 1px 2px rgba(11,18,32,.05),0 10px 28px rgba(11,18,32,.07);
+  --shadow-lg:0 6px 16px rgba(11,18,32,.1),0 28px 56px rgba(11,18,32,.14);
+  --code-bg:#0b1220; --code-label:#111a2e; --code-border:#1b2742; --code-text:#e6edf7;
+  --side-w:310px; --top-h:58px;
+}
+html[data-theme="dark"]{
+  --bg:#0a0f1c; --surface:#101828; --text:#cbd5e1; --heading:#f1f5f9; --muted:#8b9bb4;
+  --border:#1d2a44; --border-soft:#16213a;
+  --accent:#38bdf8; --accent-strong:#7dd3fc; --accent-soft:rgba(56,189,248,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--top-h) + 18px)}
+body{background:var(--bg);color:var(--text);font-size:16px;line-height:2;padding-top:var(--top-h);
+  background-image:radial-gradient(900px 420px at 85% -80px,rgba(34,211,238,.10),transparent 70%),radial-gradient(700px 380px at 5% 0,rgba(139,92,246,.08),transparent 70%);
+  background-repeat:no-repeat}
+html[data-theme="dark"] body{background-image:radial-gradient(900px 420px at 85% -80px,rgba(34,211,238,.10),transparent 70%),radial-gradient(700px 380px at 5% 0,rgba(139,92,246,.12),transparent 70%)}
+::selection{background:#22d3ee55}
+a{color:var(--accent)}
+
+/* ---------- نوار بالا ---------- */
+.rv-top{position:fixed;inset:0 0 auto 0;height:var(--top-h);z-index:60;display:flex;align-items:center;gap:12px;padding:0 18px;
+  background:rgba(11,18,32,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07);color:#e2e8f0}
+.rv-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.3px}
+.rv-logo:hover{text-decoration:none}
+.rv-mark{width:34px;height:34px;border-radius:10px;background:var(--rv-grad);display:grid;place-items:center;color:#06101f;font-weight:900;font-size:19px;font-family:Inter,Segoe UI,Arial,sans-serif;box-shadow:0 0 18px rgba(34,211,238,.45)}
+.rv-logo small{font-weight:500;color:#94a3b8;font-size:12.5px;display:block;line-height:1.2;margin-top:2px}
+.rv-logo b{display:block;line-height:1.1}
+.rv-spacer{flex:1}
+.rv-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#e2e8f0;border-radius:10px;height:36px;min-width:36px;padding:0 12px;font:inherit;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.rv-btn:hover{background:rgba(255,255,255,.14);text-decoration:none;color:#fff}
+.rv-menu{display:none}
+.rv-bar{position:absolute;inset:auto 0 -1px 0;height:3px;background:transparent}
+.rv-bar i{display:block;height:100%;width:0;background:var(--rv-grad);box-shadow:0 0 10px rgba(34,211,238,.7);transition:width .12s}
+
+/* ---------- سایدبار ---------- */
+.rv-side{position:fixed;top:var(--top-h);bottom:0;inset-inline-start:0;width:var(--side-w);overflow-y:auto;z-index:50;
+  background:var(--rv-ink);color:#cbd5e1;padding:18px 14px 28px;border-inline-end:1px solid rgba(255,255,255,.06);scrollbar-width:thin;scrollbar-color:#24334f transparent}
+.rv-prog{background:var(--rv-ink-2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:14px;margin-bottom:16px}
+.rv-prog .t{display:flex;justify-content:space-between;font-size:13px;color:#cbd5e1}
+.rv-prog .t b{color:#fff}
+.rv-prog .track{height:8px;border-radius:99px;background:#1b2742;margin-top:10px;overflow:hidden}
+.rv-prog .track i{display:block;height:100%;width:0;border-radius:99px;background:var(--rv-grad);transition:width .4s}
+.rv-level{margin:18px 4px 6px;font-size:12px;letter-spacing:.4px;color:#64748b;font-weight:700;display:flex;align-items:center;gap:8px}
+.rv-level::after{content:"";flex:1;height:1px;background:rgba(255,255,255,.07)}
+.rv-lvl-tag{font-size:10.5px;padding:1px 8px;border-radius:99px;background:rgba(34,211,238,.12);color:#67e8f9}
+.rv-lvl-tag.soon{background:rgba(148,163,184,.12);color:#94a3b8}
+.rv-list{list-style:none;margin:0;padding:0}
+.rv-list a,.rv-list span.soon{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:10px;color:#cbd5e1;text-decoration:none;font-size:13.5px;line-height:1.7}
+.rv-list a:hover{background:var(--rv-ink-3);color:#fff;text-decoration:none}
+.rv-list a.on{background:linear-gradient(90deg,rgba(34,211,238,.16),rgba(59,130,246,.10));color:#fff;box-shadow:inset -3px 0 0 #22d3ee}
+.rv-list .n{flex:none;width:24px;height:24px;border-radius:8px;background:#18233d;display:grid;place-items:center;font-size:11.5px;color:#94a3b8;font-weight:700}
+.rv-list a.done .n{background:#06b6d4;color:#04121c}
+.rv-list span.soon{color:#64748b;cursor:default}
+.rv-list span.soon .n{background:#101a2e;color:#475569}
+.rv-side-foot{margin:22px 4px 0;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);font-size:12.5px;color:#7a8aa5}
+.rv-side-foot a{color:#67e8f9}
+@media(min-width:1100px){
+  body.rv-has-side{padding-inline-start:var(--side-w)}
+}
+@media(max-width:1099px){
+  .rv-menu{display:inline-flex}
+  .rv-side{transform:translateX(105%);transition:transform .25s;box-shadow:var(--shadow-lg);width:min(330px,86vw)}
+  html[dir="ltr"] .rv-side{transform:translateX(-105%)}
+  body.rv-open .rv-side{transform:none}
+  body.rv-open::after{content:"";position:fixed;inset:var(--top-h) 0 0 0;background:rgba(2,6,15,.55);z-index:40}
+}
+@media(max-width:560px){.rv-logo small{display:none}.rv-hide-sm{display:none}}
+
+/* ---------- هدر صفحه (هیرو) ---------- */
+.course-page{max-width:900px}
+.course-header{background:linear-gradient(160deg,#0b1220 0%,#0e1a33 60%,#10223f 100%) !important;color:#fff;border:1px solid rgba(34,211,238,.18);border-radius:22px !important;
+  box-shadow:var(--shadow-lg) !important;position:relative;overflow:hidden;padding:44px 38px !important}
+.course-header::before{content:"" !important;position:absolute !important;inset:0 !important;top:0 !important;right:0 !important;bottom:0 !important;left:0 !important;width:100% !important;height:100% !important;border-radius:0 !important;transform:none !important;filter:none !important;opacity:.55 !important;pointer-events:none;
+  background:radial-gradient(520px 260px at 90% 0,rgba(34,211,238,.28),transparent 70%),radial-gradient(420px 240px at 0 100%,rgba(139,92,246,.28),transparent 70%),
+  linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px) 0 0/34px 34px,linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px) 0 0/34px 34px !important}
+.course-header h1{color:#fff !important;font-size:clamp(1.7rem,3.4vw,2.35rem) !important;line-height:1.4;font-weight:800}
+.course-header p{color:#b6c4dc !important;max-width:640px}
+.course-header .badge{background:rgba(34,211,238,.14) !important;color:#67e8f9 !important;border:1px solid rgba(34,211,238,.35) !important;border-radius:99px !important;padding:3px 14px !important;font-weight:700}
+.rv-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;position:relative}
+.rv-chip{font-size:12.5px;padding:3px 12px;border-radius:99px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:#cfe3f7}
+
+/* ---------- فهرست مطالب و کارت‌ها ---------- */
+.toc,.lesson,.exercise,.note,.hub-card,.proj-step{border-radius:var(--radius) !important}
+.toc{background:var(--surface) !important;border:1px solid var(--border) !important;box-shadow:var(--shadow) !important}
+.toc a{color:var(--text) !important}
+.toc a:hover{color:var(--accent) !important}
+.lesson{background:var(--surface) !important;border:1px solid var(--border) !important;box-shadow:var(--shadow) !important}
+.lesson:hover{border-color:rgba(34,211,238,.45) !important}
+.lesson-head h2,.lesson h3,.toc h2,.exercise .ex-title{color:var(--heading) !important}
+.lesson-num{background:var(--rv-grad) !important;color:#06101f !important;font-weight:800 !important;box-shadow:0 6px 16px rgba(59,130,246,.35) !important;border-radius:12px !important}
+.lesson p,.lesson li{color:var(--text)}
+.lesson code{background:var(--accent-soft) !important;color:var(--accent-strong) !important;border:1px solid rgba(37,99,235,.18) !important;border-radius:7px !important}
+html[data-theme="dark"] .lesson code{border-color:rgba(56,189,248,.25) !important}
+.demo-code code,.demo-block code,pre code{background:transparent !important;border:0 !important;color:inherit !important}
+
+/* ---------- کد ---------- */
+.demo-code{position:relative;background:var(--code-bg) !important;border:1px solid var(--code-border) !important;border-radius:14px !important;box-shadow:0 10px 30px rgba(2,6,15,.25)}
+.demo-code .demo-label{background:var(--code-label) !important;border-bottom:1px solid var(--code-border) !important}
+.demo-code .demo-label span:first-child{color:#cfe3f7 !important}
+.demo-code .demo-tag{background:rgba(34,211,238,.14) !important;color:#67e8f9 !important;border-radius:99px !important}
+.demo-code pre{font-family:'JetBrains Mono','Fira Code',Consolas,monospace !important;font-size:13.5px !important;line-height:1.85 !important;color:var(--code-text) !important}
+.demo-code::before{content:"";position:absolute;top:0;inset-inline:0;height:2px;background:var(--rv-grad);opacity:.8;border-radius:14px 14px 0 0;z-index:1}
+.rv-copy{position:absolute;top:44px;inset-inline-end:10px;z-index:2;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#cfe3f7;border-radius:8px;font:inherit;font-size:12px;padding:3px 10px;cursor:pointer;opacity:.0;transition:.15s}
+.demo-code:hover .rv-copy,.rv-copy:focus{opacity:1}
+.rv-copy:hover{background:rgba(34,211,238,.25);color:#fff}
+.rv-copy.ok{opacity:1;background:#06b6d4;color:#04121c;border-color:#06b6d4}
+@media(hover:none){.rv-copy{opacity:1}}
+
+/* ---------- نکته‌ها / تمرین / جمع‌بندی ---------- */
+.note{background:var(--surface) !important;border-color:var(--border) !important}
+.note.info{background:rgba(59,130,246,.08) !important;border-color:rgba(59,130,246,.3) !important}
+.note.tip{background:rgba(16,185,129,.08) !important;border-color:rgba(16,185,129,.3) !important}
+.note.warn{background:rgba(245,158,11,.09) !important;border-color:rgba(245,158,11,.35) !important}
+html[data-theme="dark"] .note .note-title{filter:brightness(1.25)}
+.exercise{background:linear-gradient(135deg,rgba(34,211,238,.10),rgba(139,92,246,.10)) !important;border:1px solid rgba(59,130,246,.3) !important}
+.golden{background:linear-gradient(150deg,#0b1220,#122344) !important;border:1px solid rgba(34,211,238,.25) !important;border-radius:20px !important;color:#e2e8f0}
+.golden h3,.golden li{color:#e2e8f0 !important}
+.proj-step{background:var(--surface) !important;border:1px dashed rgba(59,130,246,.45) !important}
+.proj-step .proj-title{color:var(--accent) !important}
+.lesson table{border-radius:12px;overflow:hidden}
+html[data-theme="dark"] .lesson table td,html[data-theme="dark"] .lesson table th{background:transparent !important;color:var(--text) !important;border-color:var(--border) !important}
+
+/* ---------- ناوبری بین درس‌ها ---------- */
+.lesson-nav a{background:var(--surface) !important;border:1px solid var(--border) !important;color:var(--text) !important;border-radius:12px !important}
+.lesson-nav a:hover{border-color:#22d3ee !important;color:var(--accent) !important}
+.lesson-nav a:last-child{background:var(--rv-grad) !important;color:#06101f !important;border:0 !important;font-weight:700}
+.lesson-nav a:last-child:hover{color:#06101f !important;filter:brightness(1.07)}
+
+/* ---------- فهرست اصلی ---------- */
+.hub-card{background:var(--surface) !important;border:1px solid var(--border) !important;box-shadow:var(--shadow) !important}
+a.hub-card:hover{border-color:#22d3ee !important;transform:translateY(-3px)}
+.hub-card .hub-num{background:var(--rv-grad) !important;color:#06101f !important;font-weight:800}
+.hub-card .hub-title{color:var(--heading) !important}
+
+/* ---------- دکمه‌ی تکمیل درس ---------- */
+.rv-done{display:flex;justify-content:center;margin:28px 0 8px}
+.rv-done button{font:inherit;font-weight:700;cursor:pointer;border-radius:14px;padding:13px 28px;border:1px solid var(--border);background:var(--surface);color:var(--text);box-shadow:var(--shadow);transition:.15s}
+.rv-done button:hover{border-color:#22d3ee}
+.rv-done button.is-done{background:var(--rv-grad);color:#06101f;border:0;box-shadow:0 10px 26px rgba(34,211,238,.35)}
+
+/* ---------- فوتر برند ---------- */
+.rv-footer{max-width:900px;margin:42px auto 30px;padding:26px 24px;border-radius:20px;background:linear-gradient(150deg,#0b1220,#10223f);border:1px solid rgba(34,211,238,.2);color:#cbd5e1;text-align:center;box-shadow:var(--shadow-lg)}
+.rv-footer .by{font-size:15px;color:#e2e8f0}
+.rv-footer .by b{background:var(--rv-grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.rv-footer .sub{font-size:13px;color:#8fa3c4;margin-top:4px}
+.rv-links{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.rv-links a{color:#cfe3f7;text-decoration:none;font-size:13px;padding:5px 14px;border-radius:99px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05)}
+.rv-links a:hover{border-color:#22d3ee;color:#fff;text-decoration:none;background:rgba(34,211,238,.12)}
+.rv-copy-right{font-size:12px;color:#6b7e9d;margin-top:14px}
+
+.rv-top-btn{position:fixed;inset-block-end:20px;inset-inline-end:20px;z-index:45;width:44px;height:44px;border-radius:14px;border:0;background:var(--rv-grad);color:#06101f;font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 10px 24px rgba(34,211,238,.35);opacity:0;pointer-events:none;transition:.2s}
+.rv-top-btn.show{opacity:1;pointer-events:auto}
+
+@media print{.rv-top,.rv-side,.rv-top-btn,.rv-done,.rv-copy{display:none !important}body{padding:0 !important}}
+@media(max-width:640px){.course-header{padding:30px 22px !important}}
+
+
+/* ===================== نسخه‌ی ۲: لوگو، منوی آکاردئونی، فهرست ساده ===================== */
+.rv-mark{width:38px;height:38px;border-radius:11px;object-fit:cover;background:#0b0c0e;box-shadow:0 0 16px rgba(34,211,238,.4);display:block;font-size:0}
+.rv-logo{gap:11px}
+.rv-menu span{display:inline}
+
+/* منوی کناری — آکاردئونی و کم‌شلوغ */
+.rv-prog .t.sm{margin-top:8px;font-size:12px;color:#7a8aa5}
+details.rv-lvl{margin:6px 0;border-radius:12px}
+details.rv-lvl>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:9px 12px;border-radius:12px;color:#e2e8f0;font-weight:700;font-size:13.5px;background:rgba(255,255,255,.03)}
+details.rv-lvl>summary::-webkit-details-marker{display:none}
+details.rv-lvl>summary::before{content:"▸";color:#22d3ee;font-size:12px;margin-inline-end:6px;transition:transform .15s}
+details.rv-lvl[open]>summary::before{transform:rotate(90deg)}
+html[dir="rtl"] details.rv-lvl>summary::before{content:"◂"}
+html[dir="rtl"] details.rv-lvl[open]>summary::before{transform:rotate(-90deg)}
+details.rv-lvl>summary span{flex:1}
+details.rv-lvl>summary small{color:#7a8aa5;font-weight:500;font-size:11.5px}
+details.rv-lvl .rv-list{margin:4px 0 8px}
+.rv-proj{display:flex;align-items:center;gap:8px;margin:8px 0;padding:10px 12px;border-radius:12px;color:#fff;font-weight:700;font-size:13.5px;text-decoration:none;background:linear-gradient(90deg,rgba(34,211,238,.14),rgba(139,92,246,.14));border:1px solid rgba(34,211,238,.25)}
+.rv-proj:hover{text-decoration:none;color:#fff;filter:brightness(1.15)}
+.rv-proj.on{box-shadow:inset -3px 0 0 #22d3ee}
+.rv-proj.soon{opacity:.6;cursor:default;filter:grayscale(.4)}
+.rv-proj span{flex:1}
+.rv-proj em{font-style:normal;font-size:11px;font-weight:500;color:#94a3b8}
+
+/* ---------- صفحه‌ی فهرست ---------- */
+.ix{max-width:860px}
+.ix-hero{position:relative;overflow:hidden;text-align:center;padding:40px 24px 28px;border-radius:26px;color:#e8f0fb;
+  background:radial-gradient(520px 260px at 50% -40px,rgba(34,211,238,.28),transparent 70%),radial-gradient(420px 240px at 100% 100%,rgba(139,92,246,.25),transparent 70%),linear-gradient(165deg,#0a0f1c,#0e1a33 70%,#10223f);
+  border:1px solid rgba(34,211,238,.2);box-shadow:var(--shadow-lg)}
+.ix-logo{display:block;width:96px;height:96px;margin:0 auto 14px;border-radius:24px;box-shadow:0 0 36px rgba(34,211,238,.45)}
+.ix-badge{display:inline-block;font-size:12.5px;padding:3px 14px;border-radius:99px;border:1px solid rgba(34,211,238,.35);background:rgba(34,211,238,.1);color:#67e8f9;font-weight:700}
+.ix-hero h1{color:#fff;font-size:clamp(1.9rem,6vw,2.7rem);margin:14px 0 8px;line-height:1.35;font-weight:800;direction:rtl}
+.ix-hero p{color:#b6c4dc;max-width:620px;margin:0 auto;font-size:15.5px;line-height:2}
+.ix-cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.ix-btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 26px;border-radius:14px;font-weight:800;text-decoration:none;color:#06101f;background:var(--rv-grad);box-shadow:0 10px 28px rgba(34,211,238,.35);font-size:15px}
+.ix-btn:hover{text-decoration:none;filter:brightness(1.07);color:#06101f}
+.ix-btn.ghost{background:rgba(255,255,255,.08);color:#e2e8f0;border:1px solid rgba(255,255,255,.18);box-shadow:none}
+.ix-btn.ghost:hover{color:#fff;background:rgba(255,255,255,.14)}
+.ix-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:26px}
+.ix-stats div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:10px 6px}
+.ix-stats b{display:block;font-size:1.35rem;color:#fff;line-height:1.5}
+.ix-stats span{font-size:11.5px;color:#9fb2cf;line-height:1.5;display:block}
+.ix-how{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 6px}
+.ix-how div{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:14px 16px}
+.ix-how b{display:block;color:var(--heading);margin-bottom:2px}
+.ix-how span{font-size:13.5px;color:var(--muted);line-height:1.9;display:block}
+.ix-h{margin:30px 4px 12px;font-size:1.3rem;color:var(--heading)}
+.ix-level{background:var(--surface);border:1px solid var(--border);border-radius:18px;margin:10px 0;box-shadow:var(--shadow);overflow:hidden}
+.ix-level>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px}
+.ix-level>summary::-webkit-details-marker{display:none}
+.ix-num{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--rv-grad);color:#06101f;font-weight:800}
+.ix-body{flex:1;min-width:0}
+.ix-body b{display:block;color:var(--heading);line-height:1.6}
+.ix-body small{display:block;color:var(--muted);font-size:12.5px;line-height:1.7}
+.ix-tag{flex:none;font-size:12px;color:var(--accent);background:var(--accent-soft);padding:2px 12px;border-radius:99px;white-space:nowrap}
+.ix-level ul{list-style:none;margin:0;padding:0 8px 10px}
+.ix-level li a,.ix-level li.soon{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;color:var(--text);text-decoration:none}
+.ix-level li a:hover{background:var(--accent-soft);text-decoration:none}
+.ix-level li .n{flex:none;width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);font-size:12.5px;font-weight:700}
+.ix-level li .tt{flex:1;line-height:1.7}
+.ix-level li .mn{font-size:12px;color:var(--muted);white-space:nowrap}
+.ix-level li.soon{opacity:.55}
+.ix-level li.soon .n{background:transparent;border:1px dashed var(--border);color:var(--muted)}
+.ix-proj{display:flex;align-items:center;gap:12px;margin:10px 0;padding:14px 16px;border-radius:18px;text-decoration:none;color:#e2e8f0;
+  background:linear-gradient(135deg,#0b1220,#122344);border:1px solid rgba(34,211,238,.3);box-shadow:var(--shadow)}
+.ix-proj:hover{text-decoration:none;transform:translateY(-2px);color:#fff}
+.ix-proj .ix-star{font-size:1.6rem}
+.ix-proj .ix-body b{color:#fff}.ix-proj .ix-body small{color:#9fb2cf}
+.ix-proj .ix-tag{background:rgba(34,211,238,.14);color:#67e8f9}
+.ix-proj.soon{opacity:.7}
+@media(max-width:640px){
+  .ix-stats{grid-template-columns:repeat(2,1fr)}
+  .ix-how{grid-template-columns:1fr}
+  .ix-hero{padding:30px 16px 22px;border-radius:22px}
+  .ix-level li .mn{display:none}
+  .ix-tag{font-size:11px;padding:2px 9px}
+  .rv-menu span{display:none}
+}

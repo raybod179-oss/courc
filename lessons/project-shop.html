@@ -1,0 +1,3449 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پروژه‌ی اول | فروشگاه لاراول</title>
+    <meta name="description" content="پروژه‌ی پایانی دوره لاراول: ساختن فروشگاه کوچک قدم‌به‌قدم — Auth، CRUD محصول، دسته‌بندی، آپلود تصویر، سبد خرید و سفارش">
+
+    <link rel="icon" href="../assets/img/favicon.png">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/rayvo.css">
+    <script>try{document.documentElement.setAttribute("data-theme",localStorage.getItem("rayvo:theme")||"light")}catch(e){}</script>
+
+    <style>
+        .tk99-term { background:#0f172a; color:#e2e8f0; direction:ltr; text-align:left; font-family:'JetBrains Mono','Fira Code',Consolas,monospace; font-size:12.5px; line-height:1.9; padding:14px 16px; border-radius:10px; overflow-x:auto; white-space:pre; }
+        .tk99-term .p { color:#38bdf8; }
+        .tk99-term .c { color:#94a3b8; }
+        .tk99-term .o { color:#4ade80; }
+        .tk99-term .x { color:#f87171; }
+        .tk99-more { margin-top:14px; font-size:12.5px; color:#64748b; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; padding:8px 12px; }
+        .tk99-more a { color:#4f46e5; text-decoration:none; font-weight:600; }
+        .tk99-more a:hover { text-decoration:underline; }
+        .tk99-file { display:inline-block; background:#eef2ff; color:#4338ca; font-family:'JetBrains Mono','Fira Code',Consolas,monospace; font-size:12.5px; direction:ltr; padding:2px 9px; border-radius:6px; border:1px solid #c7d2fe; }
+        .tk99-check { margin-top:14px; background:#f0fdf4; border:1px solid #bbf7d0; border-right:4px solid #10b981; border-radius:10px; padding:12px 16px; font-size:13.5px; }
+        .tk99-check .lbl { color:#15803d; font-weight:700; margin-bottom:4px; }
+        .tk99-check code { background:#ecfdf5; border-color:#bbf7d0; }
+        .tk99-map { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+        .tk99-card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:16px 18px; }
+        .tk99-card h4 { margin:0 0 8px; color:#4338ca; font-size:14px; }
+        .tk99-card p { margin:0; color:#475569; font-size:13px; line-height:1.9; }
+        .tk99-done { list-style:none; padding-right:0; }
+        .tk99-done li { position:relative; padding-right:26px; margin-bottom:8px; }
+        .tk99-done li::before { content:"✓"; position:absolute; right:0; top:0; color:#10b981; font-weight:800; }
+    
+        .dl-hero{background:linear-gradient(135deg,#0891b2,#2563eb 60%,#6d28d9);color:#fff;border-radius:18px;padding:28px 26px;margin:18px 0;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+        .dl-hero h2{color:#fff;margin:0 0 6px;font-size:1.25rem}
+        .dl-hero p{margin:0;opacity:.92;font-size:14px}
+        .dl-btn{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#0b1220;font-weight:800;padding:14px 26px;border-radius:12px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.18);white-space:nowrap}
+        .dl-btn:hover{transform:translateY(-1px);text-decoration:none}
+        .dl-meta{font-size:12.5px;opacity:.9;margin-top:6px}
+        .src-dir{margin:22px 0 8px;font-size:14px;color:#4338ca}
+        .ltr-inline{direction:ltr;unicode-bidi:embed;font-family:Consolas,monospace}
+        details.src{background:#fff;border:1px solid var(--border);border-radius:10px;margin:6px 0;overflow:hidden}
+        details.src summary{cursor:pointer;padding:9px 14px;display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:13px}
+        details.src summary:hover{background:#f8fafc}
+        details.src summary code{direction:ltr;unicode-bidi:embed}
+        details.src summary small{color:#64748b}
+        details.src .demo{margin:0}
+        details.src pre{max-height:520px;overflow:auto;direction:ltr;text-align:left}
+        .demo-code pre{direction:ltr;text-align:left}
+        .tbl{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff}
+        .tbl th,.tbl td{border:1px solid var(--border);padding:8px 12px;text-align:right;vertical-align:top}
+        .tbl th{background:#f8fafc}
+        .tbl code{direction:ltr;unicode-bidi:embed}
+        .tree{background:#0b1220;color:#e2e8f0;direction:ltr;text-align:left;font-family:'JetBrains Mono','Fira Code',Consolas,monospace;font-size:13px;line-height:1.8;padding:16px 18px;border-radius:10px;white-space:pre;overflow-x:auto}
+        .os-tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+    
+        .part-title{margin:44px 0 10px;padding:18px 22px;border-radius:18px;background:linear-gradient(135deg,rgba(34,211,238,.12),rgba(139,92,246,.12));border:1px solid rgba(59,130,246,.28)}
+        .part-title b{display:block;font-size:1.15rem;color:var(--heading)}
+        .part-title span{color:var(--muted);font-size:14px}
+    </style>
+</head>
+<body>
+<div class="course-page">
+
+    <header class="course-header">
+        <span class="badge">پروژه‌ی اول</span>
+        <h1>پروژه‌ی اول: فروشگاه لاراول</h1>
+        <p>اولین سایت واقعی دوره. اول قدم‌به‌قدم می‌سازیمش، بعد نسخه‌ی کامل و آماده‌اش را دانلود می‌کنی و با کار خودت مقایسه می‌کنی. این فروشگاه در سطح پیشرفته به یک مارکت‌پلیس چندفروشنده ارتقا پیدا می‌کند.</p>
+    </header>
+
+    <nav class="toc" aria-label="فهرست مطالب">
+        <h2>در این پروژه</h2>
+        <ol>
+            <li><a href="#blueprint">نقشه‌ی پروژه</a></li>
+            <li><a href="#step1">گام‌های ۱ تا ۱۰ (ساخت)</a></li>
+            <li><a href="#summary">خلاصه و تمرین</a></li>
+            <li><a href="#download">دانلود سورس کامل</a></li>
+            <li><a href="#install">نصب و اجرا</a></li>
+            <li><a href="#accounts">حساب‌های آزمایشی</a></li>
+            <li><a href="#structure">ساختار پروژه</a></li>
+            <li><a href="#core">قطعه‌های کلیدی</a></li>
+            <li><a href="#tests">تست‌ها</a></li>
+            <li><a href="#trouble">عیب‌یابی</a></li>
+            <li><a href="#browser">مرورگر سورس</a></li>
+        </ol>
+    </nav>
+
+
+    <div class="part-title" id="part1"><b>بخش اول: ساخت قدم‌به‌قدم</b><span>پروژه را خودت از صفر بساز؛ هر گام یک «تست گام» دارد.</span></div>
+
+    <!-- ================= نقشه ================= -->
+    <section class="lesson" id="blueprint">
+        <div class="lesson-head">
+            <span class="lesson-num">۱</span>
+            <h2>نقشه‌ی کلی پروژه (قبل از شروع)</h2>
+        </div>
+
+        <p>قبل از اولین گام، کلِ محصولِ نهایی را ببین تا حینِ ساختن مسیرت را گم نکنی. فروشگاهِ ما از این‌جاها تشکیل شده است:</p>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">نقشه‌ی روت‌ها</span></div>
+                <pre><code>روتِ عمومی (مهمان هم می‌بیند)          پنلِ مدیریت (فقط admin)
+------------------------------          ------------------------------
+GET  /                       → خانه    GET    /admin               → داشبورد
+GET  /products               → فهرست   GET    /admin/products       → فهرست
+GET  /products/{product}     → نمایش   GET    /admin/products/create → ساخت
+GET  /cart                   → سبد     POST   /admin/products        → ذخیره
+POST /cart/{product}         → افزودن  PUT    /admin/products/{product} → بروزرسانی
+POST /checkout               → سفارش   DELETE /admin/products/{product} → حذف
+POST /login, /register      → ورود
+POST /logout                → خروج
+        </code></pre>
+            </div>
+        </div>
+
+        <div class="tk99-map">
+            <div class="tk99-card">
+                <h4>جدول‌ها</h4>
+                <p><code>users</code> (با role) — <code>categories</code> — <code>products</code> (با image و category_id) — <code>orders</code> — <code>order_product</code> (pivot با quantity).</p>
+            </div>
+            <div class="tk99-card">
+                <h4>مدل‌ها و روابط</h4>
+                <p>Category ← hasMany → Product ← belongsTo به هم؛ Order belongsTo User و belongsToMany Product (pivot).</p>
+            </div>
+            <div class="tk99-card">
+                <h4>میان‌افزار و گیت</h4>
+                <p><code>auth</code> برای سبد/سفارش، <code>check-role:admin</code> برای پنل، و Gate برای مدیریتِ محصول.</p>
+            </div>
+        </div>
+
+        <div class="note tip">
+            <div class="note-title">💡 از کجا شروع کنم؟</div>
+            <p>اگر پروژه‌ای که از بخش ۲ تا ۱۵ ساختی سر جای‌اش است، همان را ادامه بده — این ۱۰ گام دقیقاً رویِ همان پیاده می‌شود. اگر پروژه‌ات را گم کرده‌ای، با <span class="tk99-file">composer create-project laravel/laravel shop</span> دوباره بساز و از گام ۱ شروع کن.</p>
+        </div>
+    </section>
+
+    <!-- ================= گام ۱ ================= -->
+    <section class="lesson" id="step1">
+        <div class="lesson-head">
+            <span class="lesson-num">۲</span>
+            <h2>گام ۱: اسکلت و قالب x-layout</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: تمامِ صفحات یک قالبِ مشترک داشته باشند</div>
+            <p>در درسِ ۶ قالب را با <code>layouts/app.blade.php</code> و <code>@extends</code> ساختیم. اینجا همان قالب را به شکلِ
+                یک <strong>کامپوننتِ Blade</strong> می‌نویسیم تا همه‌ی صفحه‌ها کوتاه‌تر شوند:</p>
+        </div>
+
+        <ul class="tk99-done">
+            <li>کامپوننتِ <span class="tk99-file">resources/views/components/layout.blade.php</span> را بساز با <code>@props(['title' =&gt; ...])</code>.</li>
+            <li>داخلش: head با سبکِ سراسری، header با ناوبری، <code>{{ $slot }}</code>، footer.</li>
+            <li>فایلِ سبکِ <span class="tk99-file">assets/css/style.css</span> را (از دوره) درِ head متصل کن.</li>
+            <li>ناوبریِ header شامل: خانه، محصولات، سبد خرید و (ورود/ثبت‌نام یا نامِ کاربر + خروج).</li>
+        </ul>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">استفاده درِ هر بلیدِ صفحات</span></div>
+                <pre><code>&lt;x-layout title="فروشگاه کوچک"&gt;
+    &lt;h1&gt;به فروشگاه خوش آمدی&lt;/h1&gt;
+    &lt;p&gt;... محتوای هر صفحه ...&lt;/p&gt;
+&lt;/x-layout&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            صفحه‌ی <code>/</code> و <code>/products</code> را باز کن: هر دو با همین قالبِ یکسان لود شوند و ناوبریِ بالای صفحه درِ هر دو دیده شود.
+        </div>
+    </section>
+
+    <!-- ================= گام ۲ ================= -->
+    <section class="lesson" id="step2">
+        <div class="lesson-head">
+            <span class="lesson-num">۳</span>
+            <h2>گام ۲: Auth و نقش admin</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: ثبت‌نام/ورود/خروج + یک کاربرِ مدیر</div>
+            <p>جمعِ درس‌های ۱۰ و ۱۲: فرمِ ثبت‌نام، ورود با <code>Auth::attempt</code> و خروجِ چندمرحله‌ای.</p>
+        </div>
+
+        <ul class="tk99-done">
+            <li>ستونِ <code>role</code> (پیش‌فرضِ <code>customer</code>) با migration به جدولِ users اضافه کن.</li>
+            <li>کنترلرها را بساز: <code>php artisan make:controller AuthController</code> و
+                <code>php artisan make:controller DashboardController</code>.</li>
+            <li>در <code>AuthController</code>: <code>createRegister()</code>/<code>store()</code> (با <code>Hash::make</code>)،
+                <code>createLogin()</code>/<code>store()</code> برای ورود، و <code>logout()</code>.
+                بعدِ ورود موفق: <code>session()-&gt;regenerate()</code> + <code>redirect()-&gt;intended()</code>.</li>
+            <li>خروج: <code>Auth::logout()</code> + <code>invalidate()</code> + <code>regenerateToken()</code>.</li>
+            <li>روت‌های پنل را از همین الان با <code>middleware(['auth','check-role:admin'])</code> بساز (میان‌افزارِ نقش از درسِ ۱۱).</li>
+            <li>یک کاربرِ admin بساز (از گام ۴ دائمی می‌شود).</li>
+        </ul>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">routes/web.php</span></div>
+                <pre><code>Route::middleware(['auth', 'check-role:admin'])-&gt;prefix('admin')
+    -&gt;group(function () {
+        Route::get('/', [DashboardController::class, 'index'])-&gt;name('admin.dashboard');
+        // روت‌های مدیریتِ محصولات درِ گام ۵
+    });</code></pre>
+            </div>
+        </div>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            بدونِ ورود برو <code>/admin</code> → باید به صفحه‌ی ورود ریدایرکت شوی. با ادمین وارد شو → به داشبورد برسی. (ترتیبِ میان‌افزارها مهم است: اول <code>auth</code>، بعد <code>check-role</code>.)
+        </div>
+    </section>
+
+    <!-- ================= گام ۳ ================= -->
+    <section class="lesson" id="step3">
+        <div class="lesson-head">
+            <span class="lesson-num">۴</span>
+            <h2>گام ۳: جداول و مدل‌ها</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: خوابِ دیتابیسیِ فروشگاه</div>
+            <p>جمعِ درس‌های ۷، ۸ و ۹: migration و مدل + روابط.</p>
+        </div>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">خلاصه‌ی جداول</span></div>
+                <pre><code>categories: id | name | timestamps
+
+products:   id | category_id (FK) | name | description | price | image? | timestamps
+
+orders:     id | user_id (FK) | total | timestamps
+
+order_product: order_id | product_id | quantity        // pivot</code></pre>
+            </div>
+        </div>
+
+        <ul class="tk99-done">
+
+            <li>مدل‌ها: <code>Category</code> (hasMany products)، <code>Product</code> (belongsTo category، belongsToMany orders با <code>-&gt;withPivot('quantity')</code>)، <code>Order</code> (belongsTo user، belongsToMany products)، <code>User</code> (hasMany orders).</li>
+            <li>روی <code>Product</code> با <code>#[Fillable('name', 'description', 'price', 'category_id', 'image')]</code> فیلدهای مجاز را مشخص کن.</li>
+            <li><code>php artisan migrate</code> را اجرا کن.</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            درِ Tinker: <code>$c = Category::create(['name' =&gt; 'کتاب']);</code> و <code>$c-&gt;products()-&gt;create([...])</code> — رابطه‌ی hasMany باید کار کند.
+        </div>
+    </section>
+
+    <!-- ================= گام ۴ ================= -->
+    <section class="lesson" id="step4">
+        <div class="lesson-head">
+            <span class="lesson-num">۵</span>
+            <h2>گام ۴: Seed داده‌ی اولیه</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: یک فرمان = فروشگاهِ پر</div>
+            <p>جمعِ درسِ ۱۳: seeder برای دسته‌ها، factory برای محصولات، و ادمینِ همیشگی.</p>
+        </div>
+
+        <ul class="tk99-done">
+            <li><code>CategorySeeder</code>: کتاب، نوشت‌افزار، گجت (داده‌ی کنترل‌شده).</li>
+            <li><code>ProductFactory</code>: نام/توضیح/قیمت با <code>fake()</code> و <code>category_id =&gt; Category::factory()</code>.</li>
+            <li><code>DatabaseSeeder</code>: ترتیبِ <code>$this-&gt;call([CategorySeeder::class, ProductSeeder::class])</code> + کاربرِ <code>admin@shop.test</code> با role admin.</li>
+            <li>اجرا: <code>php artisan migrate:fresh --seed</code>.</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            <code>php artisan tinker</code> → <code>Product::count()</code> باید ۴۰ و <code>User::where('role','admin')-&gt;count()</code> باید ۱ باشد.
+        </div>
+    </section>
+
+    <!-- ================= گام ۵ ================= -->
+    <section class="lesson" id="step5">
+        <div class="lesson-head">
+            <span class="lesson-num">۶</span>
+            <h2>گام ۵: CRUD محصول در پنل</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: مدیر بتواند محصول بسازد، ویرایش کند و حذف کند</div>
+            <p>جمعِ درس‌های ۸ و ۱۲ با مسیرِ <code>/admin/products</code> و محافظتِ کامل.</p>
+        </div>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">routes — داخلِ گروهِ admin</span></div>
+<pre><code>// بدونِ -&gt;names() این نام‌ها با روت‌هایِ عمومیِ مرحله‌ی ۷ قفل می‌شوند؛ پس حتماً بده:
+Route::resource('products', Admin\ProductController::class)
+    -&gt;except(['show'])     // نمایشِ عمومی جدا درِ سایت است
+    -&gt;names('admin.products');</code></pre>
+            </div>
+        </div>
+
+        <ul class="tk99-done">
+            <li><code>index</code>: جدولِ محصولات (تصویر، نام، دسته، قیمت) + دکمه‌ی ساخت/ویرایش/حذف.</li>
+            <li><code>create/store</code>: فرم با validation؛ فیلدِ category از dropdown دسته‌ها.</li>
+            <li><code>edit/update</code>: ویرایشِ همان فرم؛ عکسِ فعلی را نشان بده.</li>
+            <li><code>destroy</code>: حذفِ ردیف + حذفِ فایل (گامِ بعد).</li>
+            <li>پیام‌هایِ فلش موفقیت با <code>redirect()-&gt;with('success', ...)</code> و نمایش درِ بلید.</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            از پنل یک محصول جدید بساز، ویرایش‌اش کن و بعد حذف‌اش کن — هر بار پیامِ فلشِ درست را درِ صفحه ببین.
+        </div>
+    </section>
+
+    <!-- ================= گام ۶ ================= -->
+    <section class="lesson" id="step6">
+        <div class="lesson-head">
+            <span class="lesson-num">۷</span>
+            <h2>گام ۶: آپلود تصویر</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: هر محصول یک عکسِ واقعی داشته باشد</div>
+            <p>جمعِ درسِ ۱۴: دیسکِ public، <code>store()</code>، نمایش با <code>asset()</code> و حذف با <code>Storage::disk('public')-&gt;delete()</code>.</p>
+        </div>
+
+        <ul class="tk99-done">
+            <li><code>php artisan storage:link</code> را اجرا کن (بدونِ آن، عکس‌ها ۴۰۴ می‌خورند).</li>
+            <li>فرم‌های create/edit را با <code>&lt;input type="file" name="image"&gt;</code> و <code>enctype="multipart/form-data"</code> تکمیل کن.</li>
+            <li>درِ <code>store()</code>: <code>$path = $request-&gt;file('image')-&gt;store('images', 'public')</code> و همان <code>$path</code> را درِ دیتابیس ذخیره کن.</li>
+            <li>درِ <code>update</code>: اگر <code>hasFile('image')</code>، عکسِ قبلی را با <code>Storage::disk('public')-&gt;delete($product-&gt;image)</code> پاک کن و مسیرِ جدید را بنویس.</li>
+            <li>درِ <code>destroy</code>: قبل از حذفِ ردیف، فایل را هم پاک کن.</li>
+            <li>نمایش درِ صفحاتِ عمومی: <code>&lt;img src="{{ asset('storage/' . $product-&gt;image) }}"&gt;</code>، و اگر null بود، placeholder.</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            یک فایلِ jpg آپلود کن → درِ صفحه‌ی عمومیِ محصول باید دیده شود. محصول را حذف کن → هم ردیفِ دیتابیس و هم فایلِ واقعی باید بروند.
+        </div>
+    </section>
+
+    <!-- ================= گام ۷ ================= -->
+    <section class="lesson" id="step7">
+        <div class="lesson-head">
+            <span class="lesson-num">۸</span>
+            <h2>گام ۷: فهرست عمومی + جستجو + صفحه‌بندی</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: مشتری درِ فروشگاه بچرخد و پیداش کند</div>
+            <p>جمعِ درسِ ۱۳: <code>paginate()</code>، <code>links()</code> و جست‌وجوی ساده با متدِ <code>when()</code> روی کوئری.</p>
+        </div>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">ProductController@index</span></div>
+                <pre><code>public function index(Request $request): View
+{
+    $products = Product::query()
+        -&gt;with('category')
+        -&gt;when($request-&gt;search, fn ($q, $s) =&gt;
+            $q-&gt;where('name', 'like', "%{$s}%"))
+        -&gt;paginate(12)
+        -&gt;withQueryString();
+
+    return view('products.index', compact('products'));
+}</code></pre>
+            </div>
+        </div>
+
+        <ul class="tk99-done">
+            <li>روتِ عمومیِ <code>/products</code> را با <code>only(['index','show'])</code> بساز (سطحِ حمله کوچک — درسِ ۱۵).</li>
+            <li>کارتِ محصول: تصویر، نام، دسته، قیمت با <code>number_format($product-&gt;price)</code>.</li>
+            <li>فرمِ جستجوی <code>GET /products?search=...</code> و حفظِ پارامتر درِ لینک‌هایِ صفحات.</li>
+            <li>زیرِ فهرست: <code>{{ $products-&gt;links() }}</code> + کادرِ «نمایش ۱ تا ۱۲ از ۴۰».</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+                داده‌ی اولیه با seed و factory ساخته شده، پس هر بار که پروژه را از نو می‌سازی، همان محصول‌ها با همان قیمت‌ها سرِ جایشان هستند. این تنها راهِ درستِ داشتنِ یک محیطِ قابلِ اعتماد است.
+        </div>
+    </section>
+
+    <!-- ================= گام ۸ ================= -->
+    <section class="lesson" id="step8">
+        <div class="lesson-head">
+            <span class="lesson-num">۹</span>
+            <h2>گام ۸: سبد خرید و سفارش</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: مشتری چند محصول جمع کند و سفارش ثبت شود</div>
+            <p>جمعِ درسِ ۴: سبدِ ساده با Session و ثبتِ سفارشِ بدونِ پرداختِ واقعی. ساخت کنترلر: <code>php artisan make:controller CartController</code>.</p>
+        </div>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">app/Http/Controllers/CartController.php</span></div>
+                <pre><code>// افزودن به سبد — ذخیره: product_id =&gt; quantity
+$cart = session()-&gt;get('cart', []);
+$cart[$product-&gt;id] = ($cart[$product-&gt;id] ?? 0) + 1;
+session()-&gt;put('cart', $cart);
+
+// ثبتِ سفارش (فقط لاگین‌کرده)
+$order = Order::create(['user_id' =&gt; auth()-&gt;id(), 'total' =&gt; $total]);
+foreach ($cart as $pid =&gt; $qty) {
+    $order-&gt;products()-&gt;attach($pid, ['quantity' =&gt; $qty]);
+}
+session()-&gt;forget('cart');</code></pre>
+            </div>
+        </div>
+
+        <ul class="tk99-done">
+            <li>روت‌هایِ سبد: <code>GET /cart</code>، <code>POST /cart/{product}</code>، <code>DELETE /cart/{product}</code>.</li>
+            <li>صفحه‌ی سبد: لیستِ اقلام با قیمتِ واحد، تعداد و جمعِ کل (از داده‌ی واقعیِ دیتابیس، نه کوکی).</li>
+            <li>روتِ <code>POST /checkout</code> با middlewareِ <code>auth</code>؛ اگر مهمان بود → login.</li>
+            <li>جمعِ کل را حساب کن، <code>Order</code> بساز و با pivot quantity به محصولات متصل کن.</li>
+            <li>بعدِ سفارش: سبدِ session خالی شود + پیامِ فلشِ موفقیت.</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            به‌عنوانِ مشتری لاگین شو، ۳ محصول اضافه کن، سفارش بده → درِ جدولِ <code>orders</code> ردیف + درِ pivot سه ردیف با quantity درست ثبت شود و سبد خالی شود.
+        </div>
+    </section>
+
+    <!-- ================= گام ۹ ================= -->
+    <section class="lesson" id="step9">
+        <div class="lesson-head">
+            <span class="lesson-num">۱۰</span>
+            <h2>گام ۹: Validation کامل</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: هیچ ورودیِ ناخوانده‌ای پذیرفته نشود</div>
+            <p>جمعِ درسِ ۱۰: همه‌ی فرم‌ها با validation، <code>validated()</code>، <code>@error</code> و <code>old()</code>.</p>
+        </div>
+
+        <div class="demo demo-full">
+            <div class="demo-code">
+                <div class="demo-label"><span>کد</span><span class="demo-tag">قواعدِ پیشنهادی</span></div>
+                <pre><code>$validated = $request-&gt;validate([
+    'name'        =&gt; ['required', 'string', 'max:255'],
+    'description' =&gt; ['nullable', 'string'],
+    'price'       =&gt; ['required', 'integer', 'min:0', 'max:999999999'],
+    'category_id' =&gt; ['required', 'exists:categories,id'],
+    'image'       =&gt; ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
+]);
+
+// ثبت‌نام:
+'email'    =&gt; ['required', 'email', 'unique:users,email'],
+'password' =&gt; ['required', 'string', 'min:8', 'confirmed'],</code></pre>
+            </div>
+        </div>
+
+        <ul class="tk99-done">
+            <li>هر فرم = validation + <code>$request-&gt;validated()</code> (هرگز <code>$request-&gt;all()</code> مستقیم به <code>create</code>).</li>
+            <li>برایِ هر فیلد، <code>@error('name')</code> + <code>old('name')</code> درِ فرم‌هایِ POST.</li>
+            <li>درِ فرمِ ویرایش، <code>unique</code> را با <code>ignore($product-&gt;id)</code> تنظیم کن.</li>
+            <li>Mass assignment را با <code>$fillable</code> بسته نگه دار (درسِ ۱۵).</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ گام</div>
+            با پسوردِ ۴ حرفی ثبت‌نام کن → خطا با پیامِ فارسیِ خوش‌خوان نشان داده شود و مقدارِ قبلیِ فیلدها با <code>old()</code> حفظ شود. با یک فایلِ exe فرمِ محصول → خطایِ mimes بگیری.
+        </div>
+    </section>
+
+    <!-- ================= گام ۱۰ ================= -->
+    <section class="lesson" id="step10">
+        <div class="lesson-head">
+            <span class="lesson-num">۱۱</span>
+            <h2>گام ۱۰: تستِ نهایی و امنیت</h2>
+        </div>
+
+        <div class="proj-step">
+            <div class="proj-title">هدف: کلِ جریانِ یک خریدِ واقعی بدونِ خلل</div>
+            <p>جمعِ درسِ ۱۵ + دو سناریویِ کامل از اول تا آخر.</p>
+        </div>
+
+        <div class="tk99-map">
+            <div class="tk99-card">
+                <h4>سناریوی مشتری</h4>
+                <p>ثبت‌نام → جستجو → افزودن به سبد → سفارش → دیدنِ پیامِ موفقیت.</p>
+            </div>
+            <div class="tk99-card">
+                <h4>سناریوی مدیر</h4>
+                <p>لاگین → ساختِ محصول با عکس → ویرایش → نمایشِ عکس درِ صفحه‌ی عمومیِ سایت.</p>
+            </div>
+        </div>
+
+        <ul class="tk99-done">
+            <li><code>@csrf</code> درِ همه‌ی فرم‌هایِ POST/PUT/DELETE؛ <code>@method('DELETE')</code> درِ فرمِ حذف.</li>
+            <li>اکسکیپ: درِ همه‌ی بلیدها <code>{{ }}</code>؛ هیچ <code>{!! !!}</code>ای رویِ داده‌ی کاربر نباشد.</li>
+            <li>rate limit: <code>throttle:login</code> رویِ <code>POST /login</code> (۵ درِ دقیقه).</li>
+            <li>محیطِ تولید: <code>APP_ENV=production</code> + <code>APP_DEBUG=false</code> درِ .envِ سرور.</li>
+            <li>public فقط <code>only(['index','show'])</code>؛ پنل با <code>auth</code> + <code>check-role:admin</code>.</li>
+        </ul>
+
+        <div class="tk99-check">
+            <div class="lbl">تستِ نهایی</div>
+            هر دو سناریو را از اول تا آخر (بدونِ استفاده از Tinker و بدونِ دست‌کاریِ مستقیمِ دیتابیس) اجرا کن — همه‌چیز باید واقعیِ واقعی کار کند. 🎉
+        </div>
+    </section>
+
+    <!-- ================= خلاصه ================= -->
+    <section class="lesson" id="summary">
+        <div class="lesson-head">
+            <span class="lesson-num">۱۲</span>
+            <h2>خلاصه‌ی پروژه</h2>
+        </div>
+
+        <table>
+            <caption>آنچه با این فروشگاه ساخته‌ای</caption>
+            <thead>
+                <tr><th>قابلیت</th><th>از کدام درس‌ها</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>قالبِ مشترک با x-layout و slot</td><td>۶</td></tr>
+                <tr><td>ثبت‌نام، ورود، خروج و نقش admin</td><td>۱۰، ۱۱، ۱۲</td></tr>
+                <tr><td>جداول، مدل‌ها و روابط</td><td>۷، ۸، ۹</td></tr>
+                <tr><td>داده‌ی آزمایشی با Seeder و Factory</td><td>۱۳</td></tr>
+                <tr><td>CRUD محصول با مسیرِ resource و Gate</td><td>۸، ۱۲</td></tr>
+                <tr><td>آپلود و حذفِ تصویر درِ storage</td><td>۱۴</td></tr>
+                <tr><td>فهرست با جستجو و صفحه‌بندی</td><td>۱۳</td></tr>
+                <tr><td>سبد خرید با Session و سفارش</td><td>۴، ۹</td></tr>
+                <tr><td>Validation و امنیتِ پایه</td><td>۱۰، ۱۵</td></tr>
+            </tbody>
+        </table>
+
+        <div class="exercise">
+            <div class="ex-title">🏆 چالش‌هایِ پس از پروژه</div>
+            <ol>
+                <li>یک فیلدِ «تخفیف» به محصول اضافه کن و قیمتِ نهایی را حساب کن.</li>
+                <li>فیلترِ قیمت درِ فهرست (بالای X تومان / زیر Y تومان) اضافه کن.</li>
+                <li>صفحه‌ی «سفارش‌هایِ من» برایِ هر مشتری (hasMany orders).</li>
+            </ol>
+        </div>
+
+        <div class="note tip">
+            <div class="note-title">💡 و حالا؟</div>
+            <p>مباحثِ بعدی (تست‌نویسی، API و Sanctum، صف‌ها، رویدادها) در سطح «متوسط» دوره آموزش داده می‌شوند و دو پروژه‌ی دیگر (سایت خبری و سیستم رزرو وقت) هم همان‌جا ساخته می‌شود. با همین فروشگاه، حالا پایه‌ی رفتن به آن‌ها را داری.</p>
+        </div>
+    </section>
+
+    <div class="part-title" id="part2"><b>بخش دوم: سورس کامل و آماده</b><span>اگر گام‌ها را خودت ساختی، با این نسخه مقایسه کن؛ اگر عجله داری، مستقیم دانلودش کن و اجرا کن.</span></div>
+
+<!-- ================= دانلود ================= -->
+    <section class="lesson" id="download">
+        <div class="lesson-head"><span class="lesson-num">۱۳</span><h2>دانلود با یک کلیک</h2></div>
+
+        <div class="dl-hero">
+            <div class="grow" style="flex:1;min-width:240px">
+                <h2>🛍️ فروشگاه لاراول — سورس کامل</h2>
+                <p>مدل‌ها، مایگریشن‌ها، کنترلرها، ویوها، پنل مدیریت، داده‌ی آزمایشی و تست‌ها؛ همه در یک فایل zip.</p>
+                <div class="dl-meta">67 فایل سورس · حدود 2,601 خط · حجم زیپ ≈ 204 کیلوبایت · سازگار با Laravel 12 و 13</div>
+            </div>
+            <a class="dl-btn" href="../downloads/laravel-shop-source.zip" download>⬇️ دانلود laravel-shop-source.zip</a>
+        </div>
+
+        <div class="note info">
+            <div class="note-title">📦 این zip چیست؟</div>
+            <ul>
+                <li>یک «لایه‌ی روی لاراول» است، نه یک پروژه‌ی کامل با <code>vendor</code>. پوشه‌ی <code>vendor</code> را خودِ Composer نصب می‌کند؛ پس حجم کم می‌ماند.</li>
+                <li>فایل‌ها طوری چیده شده‌اند که وقتی داخل پروژه‌ی تازه استخراج شوند، هرکدام دقیقاً سرِ جای خودشان بنشینند.</li>
+                <li>برای دیدنِ کد بدون دانلود، به <a href="#browser">مرورگر سورس</a> پایین همین صفحه برو.</li>
+            </ul>
+        </div>
+
+        <div class="note warn">
+            <div class="note-title">⚠️ چهار فایل بازنویسی می‌شوند</div>
+            <p>روی پروژه‌ی تازه این چهار فایل جایگزین می‌شوند: <code>routes/web.php</code>، <code>app/Models/User.php</code>، <code>app/Providers/AppServiceProvider.php</code> و <code>database/seeders/DatabaseSeeder.php</code>. اگر روی پروژه‌ی خودت (و نه پروژه‌ی تازه) استخراج می‌کنی، اول از آن‌ها نسخه‌ی پشتیبان بگیر.</p>
+        </div>
+    </section>
+
+    <!-- ================= نصب ================= -->
+    <section class="lesson" id="install">
+        <div class="lesson-head"><span class="lesson-num">۱۴</span><h2>نصب و اجرا (گام‌به‌گام)</h2></div>
+
+        <div class="note info">
+            <div class="note-title">🎯 پیش‌نیازها</div>
+            <ul>
+                <li><strong>PHP 8.3+</strong> با افزونه‌های <code>pdo_sqlite</code>، <code>mbstring</code>، <code>openssl</code>، <code>fileinfo</code>، <code>tokenizer</code> و <code>xml</code> (در نصب‌های معمولیِ PHP آماده‌اند).</li>
+                <li><strong>Composer 2</strong>.</li>
+                <li>نیازی به Node/npm نیست؛ استایل فروشگاه یک فایل CSS ساده است.</li>
+                <li>دیتابیس پیش‌فرض <strong>SQLite</strong> است و چیزی برای راه‌اندازی ندارد.</li>
+            </ul>
+        </div>
+
+        <div class="proj-step"><div class="proj-title">گام ۱ — ساخت پروژه‌ی تازه‌ی لاراول</div>
+            <p>همان کاری که در درس ۱ کردی؛ فقط اسمش را <code>laravel-shop</code> می‌گذاریم:</p>
+            <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">ترمینال</span></div><pre><code>composer create-project laravel/laravel laravel-shop
+cd laravel-shop</code></pre></div></div>
+        </div>
+
+        <div class="proj-step"><div class="proj-title">گام ۲ — دانلود و استخراج روی پروژه</div>
+            <p>فایل zip را از <a href="#download">بخش ۱</a> دانلود کن (معمولاً به پوشه‌ی Downloads می‌رود)، بعد <strong>یکی</strong> از این روش‌ها را بزن. همیشه باید داخل پوشه‌ی <code>laravel-shop</code> باشی:</p>
+            <div class="os-tabs">
+                <div>
+                    <strong>🪟 ویندوز (PowerShell)</strong>
+                    <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">PowerShell</span></div><pre><code>tar -xf "$env:USERPROFILE\Downloads\laravel-shop-source.zip" -C .</code></pre></div></div>
+                </div>
+                <div>
+                    <strong>🍎🐧 مک / لینوکس</strong>
+                    <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">Terminal</span></div><pre><code>unzip -o ~/Downloads/laravel-shop-source.zip -d .</code></pre></div></div>
+                </div>
+            </div>
+            <p class="muted small">روش دستی: zip را باز کن، همه‌ی پوشه‌ها را انتخاب و داخل پوشه‌ی <code>laravel-shop</code> بکش، و در پرسشِ «فایل‌های هم‌نام» گزینه‌ی <em>Replace / جایگزین</em> را بزن.</p>
+        </div>
+
+        <div class="proj-step"><div class="proj-title">گام ۳ — ساخت جدول‌ها و داده‌ی آزمایشی</div>
+            <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">ترمینال</span></div><pre><code>php artisan migrate --seed</code></pre></div></div>
+            <p>اگر پرسید «فایل دیتابیس SQLite ساخته شود؟» جواب <code>yes</code> است. این فرمان ۵ جدول فروشگاه را می‌سازد، ۲ حساب، ۵ دسته‌بندی، ۲۵ محصول و ۴ سفارش نمونه وارد می‌کند.</p>
+        </div>
+
+        <div class="proj-step"><div class="proj-title">گام ۴ — لینکِ تصویرها</div>
+            <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">ترمینال</span></div><pre><code>php artisan storage:link</code></pre></div></div>
+            <p>بدون این فرمان، تصویرهایی که از پنل آپلود می‌کنی ۴۰۴ می‌دهند (درس ۱۴).</p>
+        </div>
+
+        <div class="proj-step"><div class="proj-title">گام ۵ — اجرا</div>
+            <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">ترمینال</span></div><pre><code>php artisan serve</code></pre></div></div>
+            <p>آدرس <code>http://127.0.0.1:8000</code> را در مرورگر باز کن. 🎉</p>
+        </div>
+
+        <div class="note tip">
+            <div class="note-title">💡 خلاصه‌ی همه‌ی فرمان‌ها (کپی‌کردنی)</div>
+            <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">ترمینال</span></div><pre><code>composer create-project laravel/laravel laravel-shop
+cd laravel-shop
+unzip -o ~/Downloads/laravel-shop-source.zip -d .   # ویندوز: tar -xf ... -C .
+php artisan migrate --seed
+php artisan storage:link
+php artisan serve</code></pre></div></div>
+        </div>
+
+        <div class="note info">
+            <div class="note-title">🐬 می‌خواهی با MySQL (مثلاً XAMPP) کار کنی؟</div>
+            <p>یک دیتابیس خالی بساز و در <code>.env</code> این مقدارها را بگذار، سپس <code>php artisan migrate:fresh --seed</code> را بزن:</p>
+            <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">.env</span></div><pre><code>DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_shop
+DB_USERNAME=root
+DB_PASSWORD=</code></pre></div></div>
+        </div>
+    </section>
+
+    <!-- ================= حساب‌ها ================= -->
+    <section class="lesson" id="accounts">
+        <div class="lesson-head"><span class="lesson-num">۱۵</span><h2>حساب‌های آزمایشی و آدرس‌ها</h2></div>
+        <table class="tbl">
+            <thead><tr><th>نقش</th><th>ایمیل</th><th>گذرواژه</th><th>جاهای قابل‌دسترسی</th></tr></thead>
+            <tbody>
+                <tr><td>مدیر</td><td><code>admin@shop.test</code></td><td><code>password</code></td><td>همه‌چیز + <code>/admin</code></td></tr>
+                <tr><td>مشتری</td><td><code>customer@shop.test</code></td><td><code>password</code></td><td>خرید، سفارش‌های من (پنل مدیریت: ۴۰۳)</td></tr>
+            </tbody>
+        </table>
+        <table class="tbl" style="margin-top:14px">
+            <thead><tr><th>آدرس</th><th>چیست؟</th></tr></thead>
+            <tbody>
+                <tr><td><code>/</code></td><td>خانه: دسته‌ها و تازه‌ترین محصولات</td></tr>
+                <tr><td><code>/products</code></td><td>فهرست با جستجو، فیلتر دسته، مرتب‌سازی و صفحه‌بندی</td></tr>
+                <tr><td><code>/cart</code> و <code>/checkout</code></td><td>سبد خرید و ثبت سفارش (پرداخت نیاز به ورود دارد)</td></tr>
+                <tr><td><code>/orders</code></td><td>سفارش‌های مشتری</td></tr>
+                <tr><td><code>/admin</code></td><td>داشبورد، محصولات، دسته‌بندی‌ها، سفارش‌ها (فقط admin)</td></tr>
+            </tbody>
+        </table>
+        <div class="note warn"><div class="note-title">🔐 قبل از انتشار روی اینترنت</div><p>گذرواژه‌ی دو حساب آزمایشی را عوض کن یا آن‌ها را حذف کن؛ <code>APP_DEBUG=false</code> بگذار و <code>APP_ENV=production</code>.</p></div>
+    </section>
+
+    <!-- ================= ساختار ================= -->
+    <section class="lesson" id="structure">
+        <div class="lesson-head"><span class="lesson-num">۱۶</span><h2>ساختار پروژه</h2></div>
+        <div class="tree">laravel-shop/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/ (Dashboard, Category, Product, Order)
+│   │   │   ├── AuthController.php   CartController.php   CheckoutController.php
+│   │   │   └── HomeController.php   OrderController.php  ProductController.php
+│   │   ├── Middleware/CheckRole.php
+│   │   └── Requests/ (CheckoutRequest + Admin/ProductRequest, CategoryRequest)
+│   ├── Models/ (User, Category, Product, Order)
+│   ├── Policies/OrderPolicy.php
+│   ├── Providers/AppServiceProvider.php
+│   └── Services/Cart.php
+├── config/shop.php
+├── database/
+│   ├── migrations/ (role، categories، products، orders، order_product)
+│   ├── factories/ (Category, Product)
+│   └── seeders/ (Database, Category, Product, Order)
+├── lang/fa/validation.php
+├── public/ (css/shop.css + fonts/Vazirmatn)
+├── resources/views/ (components, auth, products, cart, checkout, orders, admin)
+├── routes/web.php
+├── tests/Feature/ShopTest.php
+└── SHOP-README.md</div>
+    </section>
+
+    <!-- ================= نقشه ================= -->
+    <section class="lesson" id="map">
+        <div class="lesson-head"><span class="lesson-num">۱۷</span><h2>هر درس کجای پروژه است؟</h2></div>
+        <p>این جدول پلِ میان درس‌ها و کد است. هر وقت چیزی در سورس برایت ناآشنا بود، درسِ مربوط را دوباره بخوان.</p>
+        <table class="tbl">
+            <thead><tr><th>درس</th><th>در پروژه</th></tr></thead>
+            <tbody>
+                <tr><td><a href="02-روتینگ.html">۲ روتینگ</a></td><td><code>routes/web.php</code> — گروه‌ها، نام‌گذاری، resource</td></tr>
+                <tr><td><a href="03-کنترلرها.html">۳ کنترلرها</a></td><td><code>app/Http/Controllers/*</code> — کنترلرهای عمومی و <code>Admin/</code></td></tr>
+                <tr><td><a href="04-درخواست-پاسخ-فلش.html">۴ درخواست، پاسخ، فلش</a></td><td><code>redirect()->with()</code> و <code>components/flash.blade.php</code>، سبد در Session</td></tr>
+                <tr><td><a href="05-Blade-پایه.html">۵ Blade پایه</a></td><td><code>@foreach</code>، <code>@forelse</code>، <code>@class</code>، <code>@selected</code> در همه‌ی ویوها</td></tr>
+                <tr><td><a href="06-Blade-چیدمان-و-کامپوننت.html">۶ چیدمان و کامپوننت</a></td><td><code>x-layout</code>، <code>x-admin-layout</code>، <code>x-product-card</code>، <code>x-field</code></td></tr>
+                <tr><td><a href="07-Migration.html">۷ Migration</a></td><td><code>database/migrations/*</code> — کلید خارجی و ایندکس</td></tr>
+                <tr><td><a href="08-Eloquent-CRUD.html">۸ Eloquent CRUD</a></td><td><code>app/Models/*</code> و CRUD در <code>Admin/ProductController</code></td></tr>
+                <tr><td><a href="09-Eloquent-روابط.html">۹ روابط</a></td><td><code>hasMany</code>، <code>belongsTo</code>، <code>belongsToMany</code> با pivot (<code>quantity</code>، <code>price</code>)</td></tr>
+                <tr><td><a href="10-فرم-ها-Validation.html">۱۰ فرم‌ها و Validation</a></td><td><code>app/Http/Requests/*</code> و <code>x-field</code> با <code>@error</code>/<code>old()</code></td></tr>
+                <tr><td><a href="11-Middleware.html">۱۱ Middleware</a></td><td><code>app/Http/Middleware/CheckRole.php</code></td></tr>
+                <tr><td><a href="12-Auth.html">۱۲ Auth</a></td><td><code>AuthController</code> و <code>OrderPolicy</code> با Gate</td></tr>
+                <tr><td><a href="13-Seeder-Factory-Pagination.html">۱۳ Seeder، Factory، Pagination</a></td><td><code>database/seeders</code>، <code>factories</code>، <code>vendor/pagination/shop.blade.php</code></td></tr>
+                <tr><td><a href="14-Storage-و-آپلود.html">۱۴ Storage و آپلود</a></td><td>آپلود/حذف تصویر در <code>Admin/ProductController</code></td></tr>
+                <tr><td><a href="15-امنیت.html">۱۵ امنیت</a></td><td><code>throttle</code>، <code>session()->regenerate()</code>، <code>$fillable</code> بدون role، تراکنش، Policy</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ================= قلب ================= -->
+    <section class="lesson" id="core">
+        <div class="lesson-head"><span class="lesson-num">۱۸</span><h2>قلب پروژه: ۵ قطعه‌ی کلیدی</h2></div>
+        <p>کلِ پروژه را یک‌جا نخوان؛ اول این پنج قطعه را بفهم. بقیه تکرار همین الگوهاست.</p>
+
+        <h3>۱) میان‌افزار نقش — «در پنل مدیریت قفل است»</h3>
+        <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>app/Http/Middleware/CheckRole.php</span><span class="demo-tag">PHP</span></div><pre><code>&lt;?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * استفاده در روت:  CheckRole::class.':admin'
+ * نکته: این میان‌افزار باید «بعد از» auth بیاید، چون به کاربر لاگین‌کرده نیاز دارد.
+ */
+class CheckRole
+{
+    public function handle(Request $request, Closure $next, string $role): Response
+    {
+        $user = $request-&gt;user();
+
+        abort_unless($user &amp;&amp; $user-&gt;role === $role, 403, 'دسترسی به این بخش برای شما مجاز نیست.');
+
+        return $next($request);
+    }
+}</code></pre></div></div>
+        <p>در روت‌ها به‌صورت <code>CheckRole::class.':admin'</code> می‌آید. چون با نام کلاس صدا زده می‌شود، لازم نیست در <code>bootstrap/app.php</code> alias ثبت کنی. <strong>ترتیب مهم است:</strong> اول <code>auth</code> (تا کاربر لاگین باشد) و بعد <code>CheckRole</code>:</p>
+        <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>routes/web.php</span><span class="demo-tag">PHP</span></div><pre><code>/* ... */
+Route::middleware(['auth', CheckRole::class.':admin'])
+    -&gt;prefix('admin')
+    -&gt;name('admin.')
+    -&gt;group(function () {
+        Route::get('/', [Admin\DashboardController::class, 'index'])-&gt;name('dashboard');
+
+        Route::resource('categories', Admin\CategoryController::class)-&gt;except('show');
+        Route::resource('products', Admin\ProductController::class)-&gt;except('show');
+
+        Route::get('/orders', [Admin\OrderController::class, 'index'])-&gt;name('orders.index');
+        Route::get('/orders/{order}', [Admin\OrderController::class, 'show'])-&gt;name('orders.show');
+        Route::patch('/orders/{order}', [Admin\OrderController::class, 'update'])-&gt;name('orders.update');
+    });</code></pre></div></div>
+
+        <h3>۲) سبد خرید — فقط «شناسه و تعداد» در Session</h3>
+        <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>app/Services/Cart.php (متد add)</span><span class="demo-tag">PHP</span></div><pre><code>public function add(Product $product, int $quantity = 1): void
+{
+    $raw = $this-&gt;raw();
+    $raw[$product-&gt;id] = ($raw[$product-&gt;id] ?? 0) + $quantity;
+    $raw[$product-&gt;id] = min($raw[$product-&gt;id], $product-&gt;stock, (int) config('shop.max_quantity'));
+    $this-&gt;save($raw);
+}</code></pre></div></div>
+        <p>قیمت داخل سشن ذخیره نمی‌شود. هر بار که سبد نمایش داده می‌شود، قیمت و موجودی تازه از دیتابیس خوانده می‌شود؛ پس کاربر نمی‌تواند قیمت را دستکاری کند و محصولِ حذف‌شده یا ناموجود خودکار از سبد کنار می‌رود.</p>
+
+        <h3>۳) ثبت سفارش — تراکنش و قفل موجودی</h3>
+        <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>app/Http/Controllers/CheckoutController.php (متد store)</span><span class="demo-tag">PHP</span></div><pre><code>public function store(CheckoutRequest $request, Cart $cart): RedirectResponse
+{
+    $lines = $cart-&gt;items();
+
+    if ($lines-&gt;isEmpty()) {
+        return redirect()-&gt;route('cart.index')-&gt;with('error', 'سبد خرید شما خالی است.');
+    }
+
+    try {
+        // همه‌چیز یا هیچ‌چیز: اگر وسط کار خطا بیاید، هیچ سفارش نیمه‌کاره‌ای ذخیره نمی‌شود.
+        $order = DB::transaction(function () use ($request, $lines) {
+            $ids = $lines-&gt;map(fn ($line) =&gt; $line['product']-&gt;id)-&gt;all();
+
+            // قفل ردیف‌ها تا دو خرید هم‌زمان، موجودی را منفی نکنند
+            $products = Product::query()-&gt;whereIn('id', $ids)-&gt;lockForUpdate()-&gt;get()-&gt;keyBy('id');
+
+            $total = 0;
+
+            foreach ($lines as $line) {
+                $product = $products-&gt;get($line['product']-&gt;id);
+
+                if (! $product || ! $product-&gt;is_active || $product-&gt;stock &lt; $line['quantity']) {
+                    throw new RuntimeException("موجودی «{$line['product']-&gt;name}» کافی نیست. سبد را بررسی کنید.");
+                }
+
+                $total += $product-&gt;price * $line['quantity'];
+            }
+
+            $order = $request-&gt;user()-&gt;orders()-&gt;create([
+                ...$request-&gt;validated(),
+                'status' =&gt; 'pending',
+                'total' =&gt; $total,
+            ]);
+
+            foreach ($lines as $line) {
+                $product = $products-&gt;get($line['product']-&gt;id);
+
+                $order-&gt;products()-&gt;attach($product-&gt;id, [
+                    'quantity' =&gt; $line['quantity'],
+                    'price' =&gt; $product-&gt;price,
+                ]);
+
+                $product-&gt;decrement('stock', $line['quantity']);
+            }
+
+            return $order;
+        });
+    } catch (RuntimeException $e) {
+        return redirect()-&gt;route('cart.index')-&gt;with('error', $e-&gt;getMessage());
+    }
+
+    $cart-&gt;clear();
+
+    return redirect()-&gt;route('orders.show', $order)-&gt;with('success', 'سفارش شما با موفقیت ثبت شد. ممنون از خرید شما!');
+}</code></pre></div></div>
+        <ul>
+            <li><code>DB::transaction</code>: یا سفارش + اقلام + کم‌شدن موجودی همه ثبت می‌شوند، یا هیچ‌کدام.</li>
+            <li><code>lockForUpdate()</code>: اگر دو نفر هم‌زمان آخرین عدد را بخرند، فقط یکی موفق می‌شود.</li>
+            <li>قیمت لحظه‌ی خرید در pivot ذخیره می‌شود؛ بعداً اگر قیمت محصول عوض شد، فاکتور قدیمی تغییر نمی‌کند.</li>
+        </ul>
+
+        <h3>۴) Policy — «هر مشتری فقط سفارش خودش را ببیند»</h3>
+        <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>app/Policies/OrderPolicy.php</span><span class="demo-tag">PHP</span></div><pre><code>&lt;?php
+
+namespace App\Policies;
+
+use App\Models\Order;
+use App\Models\User;
+
+class OrderPolicy
+{
+    /** مشتری فقط سفارش خودش را می‌بیند؛ مدیر همه را. */
+    public function view(User $user, Order $order): bool
+    {
+        return $user-&gt;isAdmin() || $order-&gt;user_id === $user-&gt;id;
+    }
+}</code></pre></div></div>
+        <p>در کنترلر: <code>Gate::authorize('view', $order)</code>. اگر مشتریِ دیگری آدرس سفارش را حدس بزند، ۴۰۳ می‌گیرد.</p>
+
+        <h3>۵) آپلود و جایگزینی تصویر</h3>
+        <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>app/Http/Controllers/Admin/ProductController.php (متد update)</span><span class="demo-tag">PHP</span></div><pre><code>public function update(ProductRequest $request, Product $product): RedirectResponse
+{
+    $data = $request-&gt;validated();
+    $data['is_active'] = $request-&gt;boolean('is_active');
+    unset($data['remove_image']);
+
+    if ($request-&gt;hasFile('image')) {
+        $this-&gt;deleteImage($product);
+        $data['image'] = $request-&gt;file('image')-&gt;store('products', 'public');
+    } else {
+        unset($data['image']);
+
+        if ($request-&gt;boolean('remove_image')) {
+            $this-&gt;deleteImage($product);
+            $data['image'] = null;
+        }
+    }
+
+    $product-&gt;update($data);
+
+    return redirect()-&gt;route('admin.products.index')-&gt;with('success', 'محصول ویرایش شد.');
+}</code></pre></div></div>
+        <p>فقط <em>مسیر</em> فایل در دیتابیس ذخیره می‌شود و فایل قدیمی هنگام جایگزینی یا حذف پاک می‌شود (درس ۱۴).</p>
+    </section>
+
+    <!-- ================= تست ================= -->
+    <section class="lesson" id="tests">
+        <div class="lesson-head"><span class="lesson-num">۱۹</span><h2>اجرای تست‌ها</h2></div>
+        <p>پروژه ۱۳ تستِ Feature دارد (<code>tests/Feature/ShopTest.php</code>) که مسیرهای حیاتی را می‌پوشانند: صفحات عمومی، جستجو، محافظت پنل، ثبت‌نام/ورود، سبد، سفارش، کاهش و بازگشت موجودی و دسترسی مشتری به سفارش دیگران.</p>
+        <div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>کد</span><span class="demo-tag">ترمینال</span></div><pre><code>php artisan test</code></pre></div></div>
+        <p>تست‌ها روی دیتابیس موقتِ درون‌حافظه اجرا می‌شوند و به داده‌ی واقعی‌ات دست نمی‌زنند.</p>
+    </section>
+
+    <!-- ================= عیب‌یابی ================= -->
+    <section class="lesson" id="trouble">
+        <div class="lesson-head"><span class="lesson-num">۲۰</span><h2>عیب‌یابی</h2></div>
+        <table class="tbl">
+            <thead><tr><th>مشکل</th><th>علت و راه‌حل</th></tr></thead>
+            <tbody>
+                <tr><td>تصویر محصول نمایش داده نمی‌شود (۴۰۴)</td><td><code>php artisan storage:link</code> را نزده‌ای.</td></tr>
+                <tr><td><code>could not find driver</code></td><td>افزونه‌ی <code>pdo_sqlite</code> (یا <code>pdo_mysql</code>) در <code>php.ini</code> فعال نیست.</td></tr>
+                <tr><td><code>No application encryption key</code></td><td><code>php artisan key:generate</code></td></tr>
+                <tr><td>صفحه‌ها بدون استایل‌اند</td><td>سرور را از پوشه‌ی پروژه اجرا کن (<code>php artisan serve</code>)، نه از جای دیگر.</td></tr>
+                <tr><td>بعد از تغییر کد، چیزی عوض نشد</td><td><code>php artisan optimize:clear</code></td></tr>
+                <tr><td>خطای <code>Class "…" not found</code> پس از استخراج</td><td>zip را داخل پوشه‌ی درست استخراج نکرده‌ای؛ پوشه‌ی <code>app</code> باید کنار <code>artisan</code> باشد. <code>composer dump-autoload</code> هم بزن.</td></tr>
+                <tr><td>می‌خواهم همه‌چیز از نو شود</td><td><code>php artisan migrate:fresh --seed</code> (همه‌ی داده‌ها پاک می‌شوند)</td></tr>
+                <tr><td>ورود می‌کنم ولی ۴۰۳ می‌گیرم</td><td>با <code>customer@shop.test</code> وارد شده‌ای. برای پنل با <code>admin@shop.test</code> وارد شو.</td></tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- ================= تمرین ================= -->
+    <section class="lesson" id="next">
+        <div class="lesson-head"><span class="lesson-num">۲۱</span><h2>تمرین و قدم‌های بعدی</h2></div>
+
+        <div class="exercise">
+            <div class="ex-title">🏆 تمرین‌های پیشنهادی (از آسان به سخت)</div>
+            <ol>
+                <li>به محصول فیلد «تخفیف درصدی» اضافه کن و قیمت نهایی را در کارت و سبد نشان بده (یک migration جدید + accessor).</li>
+                <li>فیلتر بازه‌ی قیمت (از … تا …) را به فهرست محصولات اضافه کن.</li>
+                <li>صفحه‌ی «علاقه‌مندی‌ها» بساز (رابطه‌ی <code>belongsToMany</code> میان کاربر و محصول).</li>
+                <li>امتیاز و نظر برای محصول بساز و میانگین امتیاز را در کارت نشان بده.</li>
+                <li>کد تخفیف (Coupon) با تاریخ انقضا و سقف استفاده.</li>
+                <li>اتصال یک درگاه پرداخت واقعی: وضعیت <code>pending_payment</code> بساز و پس از بازگشت از درگاه، سفارش را <code>processing</code> کن.</li>
+                <li>ارسال ایمیل یا پیامک تأیید سفارش با Notification و صف (Queue).</li>
+                <li>نسخه‌ی API با Sanctum برای اپ موبایل.</li>
+            </ol>
+        </div>
+
+        <div class="note tip">
+            <div class="note-title">🚀 چک‌لیست انتشار</div>
+            <ul>
+                <li><code>APP_ENV=production</code> و <code>APP_DEBUG=false</code> و تغییر گذرواژه‌ی حساب‌های آزمایشی.</li>
+                <li>دیتابیس MySQL/PostgreSQL به‌جای SQLite و پشتیبان‌گیری منظم.</li>
+                <li><code>php artisan config:cache</code> و <code>route:cache</code> و <code>view:cache</code>.</li>
+                <li>HTTPS اجباری و <code>APP_URL</code> درست.</li>
+                <li>فقط پوشه‌ی <code>public</code> باید ریشه‌ی وب‌سرور باشد.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ================= مرورگر سورس ================= -->
+    <section class="lesson" id="browser">
+        <div class="lesson-head"><span class="lesson-num">۲۲</span><h2>مرورگر سورس (همه‌ی فایل‌ها)</h2></div>
+        <p>همه‌ی 67 فایلِ داخل zip این‌جاست؛ روی نامِ هر فایل بزن تا باز شود. (فایل‌های فونت چون باینری‌اند نمایش داده نمی‌شوند.)</p>
+        <h3 class="src-dir">📁 <span class="ltr-inline">(ریشه‌ی پروژه)</span></h3><details class="src"><summary><code>SHOP-README.md</code><small>46 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">md</span></div><pre><code># فروشگاه لاراول — سورس پروژه‌ی دوره
+
+این بسته فقط «فایل‌های فروشگاه» است و باید روی یک پروژه‌ی تازه‌ی Laravel (نسخه ۱۲ یا ۱۳) کپی شود.
+
+## نصب سریع
+
+```bash
+composer create-project laravel/laravel laravel-shop
+cd laravel-shop
+# محتوای zip را داخل همین پوشه استخراج کن (فایل‌های هم‌نام را Replace کن)
+php artisan migrate --seed
+php artisan storage:link
+php artisan serve
+```
+
+سپس `http://127.0.0.1:8000` را باز کن.
+
+## حساب‌های آزمایشی
+
+| نقش   | ایمیل              | گذرواژه  |
+|-------|--------------------|----------|
+| مدیر  | admin@shop.test    | password |
+| مشتری | customer@shop.test | password |
+
+پنل مدیریت: `/admin`
+
+## اجرای تست‌ها
+
+```bash
+php artisan test
+```
+
+## امکانات
+
+- فهرست محصولات با جستجو، فیلتر دسته، مرتب‌سازی و صفحه‌بندی
+- سبد خرید مبتنی بر Session (قیمت و موجودی همیشه از دیتابیس)
+- ثبت سفارش داخل تراکنش دیتابیس + کم‌شدن موجودی + ذخیره‌ی قیمت لحظه‌ی خرید
+- ثبت‌نام / ورود / خروج با محدودیت تعداد تلاش
+- پنل مدیریت: داشبورد، CRUD دسته‌بندی و محصول (با آپلود تصویر)، مدیریت وضعیت سفارش (لغو = برگشت موجودی)
+- Policy برای سفارش‌ها، میان‌افزار نقش، Form Request، Service برای سبد
+- ظاهر فارسی راست‌به‌چپ بدون نیاز به npm
+
+## فایل‌هایی که روی پروژه‌ی شما بازنویسی می‌شوند
+
+`routes/web.php` ، `app/Models/User.php` ، `app/Providers/AppServiceProvider.php` ، `database/seeders/DatabaseSeeder.php`</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">routes</span></h3><details class="src"><summary><code>routes/web.php</code><small>75 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
+use App\Http\Middleware\CheckRole;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| بخش عمومی (مهمان هم می‌بیند)
+|--------------------------------------------------------------------------
+*/
+Route::get('/', HomeController::class)-&gt;name('home');
+
+Route::get('/products', [ProductController::class, 'index'])-&gt;name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])-&gt;name('products.show');
+
+// سبد خرید (در Session؛ مهمان هم می‌تواند اضافه کند)
+Route::get('/cart', [CartController::class, 'index'])-&gt;name('cart.index');
+Route::post('/cart/{product}', [CartController::class, 'store'])-&gt;name('cart.store');
+Route::patch('/cart/{product}', [CartController::class, 'update'])-&gt;name('cart.update');
+Route::delete('/cart/{product}', [CartController::class, 'destroy'])-&gt;name('cart.destroy');
+Route::delete('/cart', [CartController::class, 'clear'])-&gt;name('cart.clear');
+
+/*
+|--------------------------------------------------------------------------
+| احراز هویت
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')-&gt;group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])-&gt;name('login');
+    Route::post('/login', [AuthController::class, 'login'])-&gt;middleware('throttle:6,1');
+    Route::get('/register', [AuthController::class, 'showRegister'])-&gt;name('register');
+    Route::post('/register', [AuthController::class, 'register'])-&gt;middleware('throttle:6,1');
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])-&gt;middleware('auth')-&gt;name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| فقط کاربر واردشده: پرداخت و سفارش‌ها
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')-&gt;group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'create'])-&gt;name('checkout.create');
+    Route::post('/checkout', [CheckoutController::class, 'store'])-&gt;name('checkout.store');
+
+    Route::get('/orders', [OrderController::class, 'index'])-&gt;name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])-&gt;name('orders.show');
+});
+
+/*
+|--------------------------------------------------------------------------
+| پنل مدیریت: اول auth، بعد CheckRole (ترتیب مهم است)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', CheckRole::class.':admin'])
+    -&gt;prefix('admin')
+    -&gt;name('admin.')
+    -&gt;group(function () {
+        Route::get('/', [Admin\DashboardController::class, 'index'])-&gt;name('dashboard');
+
+        Route::resource('categories', Admin\CategoryController::class)-&gt;except('show');
+        Route::resource('products', Admin\ProductController::class)-&gt;except('show');
+
+        Route::get('/orders', [Admin\OrderController::class, 'index'])-&gt;name('orders.index');
+        Route::get('/orders/{order}', [Admin\OrderController::class, 'show'])-&gt;name('orders.show');
+        Route::patch('/orders/{order}', [Admin\OrderController::class, 'update'])-&gt;name('orders.update');
+    });</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">config</span></h3><details class="src"><summary><code>config/shop.php</code><small>32 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+return [
+
+    /*
+    | نام فروشگاه و تنظیمات عمومی. هرجا لازم بود با config('shop.name') بخوان.
+    */
+    'name' =&gt; 'فروشگاه لاراول',
+    'tagline' =&gt; 'فروشگاه نمونه‌ی دوره‌ی لاراول',
+    'currency' =&gt; 'تومان',
+    'locale' =&gt; 'fa',
+
+    // تعداد آیتم در هر صفحه
+    'per_page' =&gt; 12,
+    'admin_per_page' =&gt; 15,
+
+    // حداکثر تعداد از هر محصول در یک سفارش
+    'max_quantity' =&gt; 20,
+
+    // محصولی با موجودی کمتر یا مساوی این عدد در داشبورد «کم‌موجود» حساب می‌شود
+    'low_stock' =&gt; 5,
+
+    // وضعیت‌های سفارش: کلید =&gt; برچسب
+    'order_statuses' =&gt; [
+        'pending'    =&gt; 'در انتظار بررسی',
+        'processing' =&gt; 'در حال آماده‌سازی',
+        'shipped'    =&gt; 'ارسال شده',
+        'completed'  =&gt; 'تحویل داده شده',
+        'cancelled'  =&gt; 'لغو شده',
+    ],
+];</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Models</span></h3><details class="src"><summary><code>app/Models/Category.php</code><small>20 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $fillable = ['name', 'icon'];
+
+    public function products(): HasMany
+    {
+        return $this-&gt;hasMany(Product::class);
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Models/Order.php</code><small>43 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Order extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'user_id', 'status', 'total', 'name', 'phone', 'city', 'address', 'note',
+    ];
+
+    protected function casts(): array
+    {
+        return ['total' =&gt; 'integer'];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this-&gt;belongsTo(User::class);
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this-&gt;belongsToMany(Product::class)-&gt;withPivot('quantity', 'price');
+    }
+
+    public function statusLabel(): string
+    {
+        return config('shop.order_statuses')[$this-&gt;status] ?? $this-&gt;status;
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this-&gt;status === 'cancelled';
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Models/Product.php</code><small>54 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Product extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'category_id', 'name', 'description', 'price', 'stock', 'image', 'is_active',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'price' =&gt; 'integer',
+            'stock' =&gt; 'integer',
+            'is_active' =&gt; 'boolean',
+        ];
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this-&gt;belongsTo(Category::class);
+    }
+
+    public function orders(): BelongsToMany
+    {
+        return $this-&gt;belongsToMany(Order::class)-&gt;withPivot('quantity', 'price');
+    }
+
+    /** فقط محصولات فعال (قابل نمایش در فروشگاه) */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query-&gt;where('is_active', true);
+    }
+
+    public function inStock(): bool
+    {
+        return $this-&gt;stock &gt; 0;
+    }
+
+    public function isLowStock(): bool
+    {
+        return $this-&gt;stock &gt; 0 &amp;&amp; $this-&gt;stock &lt;= config('shop.low_stock');
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Models/User.php</code><small>37 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class User extends Authenticatable
+{
+    use HasFactory, Notifiable;
+
+    // عمداً role اینجا نیست: هیچ فرمی نباید بتواند نقش کاربر را تعیین کند (Mass Assignment).
+    protected $fillable = ['name', 'email', 'password'];
+
+    protected $hidden = ['password', 'remember_token'];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' =&gt; 'datetime',
+            'password' =&gt; 'hashed',
+        ];
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this-&gt;role === 'admin';
+    }
+
+    public function orders(): HasMany
+    {
+        return $this-&gt;hasMany(Order::class);
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Policies</span></h3><details class="src"><summary><code>app/Policies/OrderPolicy.php</code><small>16 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Policies;
+
+use App\Models\Order;
+use App\Models\User;
+
+class OrderPolicy
+{
+    /** مشتری فقط سفارش خودش را می‌بیند؛ مدیر همه را. */
+    public function view(User $user, Order $order): bool
+    {
+        return $user-&gt;isAdmin() || $order-&gt;user_id === $user-&gt;id;
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Services</span></h3><details class="src"><summary><code>app/Services/Cart.php</code><small>117 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Services;
+
+use App\Models\Product;
+use Illuminate\Support\Collection;
+
+/**
+ * سبد خرید مبتنی بر Session.
+ * در سشن فقط  product_id =&gt; quantity  نگه می‌داریم؛ قیمت و موجودی همیشه از دیتابیس خوانده می‌شود،
+ * تا کاربر نتواند قیمت را دستکاری کند.
+ */
+class Cart
+{
+    private const KEY = 'cart';
+
+    private ?Collection $lines = null;
+
+    /** @return array&lt;int,int&gt; */
+    private function raw(): array
+    {
+        return session()-&gt;get(self::KEY, []);
+    }
+
+    private function save(array $raw): void
+    {
+        session()-&gt;put(self::KEY, $raw);
+        $this-&gt;lines = null; // کش داخلی را باطل کن
+    }
+
+    /** تعداد کل اقلام (برای نشان کنار آیکن سبد؛ بدون کوئری) */
+    public function count(): int
+    {
+        return (int) array_sum($this-&gt;raw());
+    }
+
+    /**
+     * اقلام سبد با اطلاعات تازه از دیتابیس.
+     * محصولِ حذف‌شده/غیرفعال/ناموجود از سبد کنار گذاشته می‌شود و تعداد به موجودی محدود می‌شود.
+     *
+     * @return Collection&lt;int,array{product:Product,quantity:int,subtotal:int}&gt;
+     */
+    public function items(): Collection
+    {
+        if ($this-&gt;lines !== null) {
+            return $this-&gt;lines;
+        }
+
+        $raw = $this-&gt;raw();
+
+        if ($raw === []) {
+            return $this-&gt;lines = collect();
+        }
+
+        $products = Product::query()-&gt;active()-&gt;whereIn('id', array_keys($raw))-&gt;get()-&gt;keyBy('id');
+
+        return $this-&gt;lines = collect($raw)
+            -&gt;map(function (int $qty, int $id) use ($products) {
+                $product = $products-&gt;get($id);
+
+                if (! $product || $product-&gt;stock &lt; 1) {
+                    return null;
+                }
+
+                $qty = max(1, min($qty, $product-&gt;stock, (int) config('shop.max_quantity')));
+
+                return ['product' =&gt; $product, 'quantity' =&gt; $qty, 'subtotal' =&gt; $product-&gt;price * $qty];
+            })
+            -&gt;filter()
+            -&gt;values();
+    }
+
+    public function total(): int
+    {
+        return (int) $this-&gt;items()-&gt;sum('subtotal');
+    }
+
+    public function isEmpty(): bool
+    {
+        return $this-&gt;items()-&gt;isEmpty();
+    }
+
+    public function add(Product $product, int $quantity = 1): void
+    {
+        $raw = $this-&gt;raw();
+        $raw[$product-&gt;id] = ($raw[$product-&gt;id] ?? 0) + $quantity;
+        $raw[$product-&gt;id] = min($raw[$product-&gt;id], $product-&gt;stock, (int) config('shop.max_quantity'));
+        $this-&gt;save($raw);
+    }
+
+    public function set(Product $product, int $quantity): void
+    {
+        $raw = $this-&gt;raw();
+
+        if ($quantity &lt; 1) {
+            unset($raw[$product-&gt;id]);
+        } else {
+            $raw[$product-&gt;id] = min($quantity, $product-&gt;stock, (int) config('shop.max_quantity'));
+        }
+
+        $this-&gt;save($raw);
+    }
+
+    public function remove(Product $product): void
+    {
+        $raw = $this-&gt;raw();
+        unset($raw[$product-&gt;id]);
+        $this-&gt;save($raw);
+    }
+
+    public function clear(): void
+    {
+        session()-&gt;forget(self::KEY);
+        $this-&gt;lines = null;
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Providers</span></h3><details class="src"><summary><code>app/Providers/AppServiceProvider.php</code><small>26 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Providers;
+
+use App\Services\Cart;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
+
+class AppServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        // یک نمونه‌ی مشترک از سبد در طول هر درخواست (کوئری تکراری نمی‌زند)
+        $this-&gt;app-&gt;scoped(Cart::class);
+    }
+
+    public function boot(): void
+    {
+        app()-&gt;setLocale(config('shop.locale'));
+
+        // قالب صفحه‌بندی فارسی و بدون وابستگی به Tailwind
+        Paginator::defaultView('vendor.pagination.shop');
+        Paginator::defaultSimpleView('vendor.pagination.shop');
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Http/Middleware</span></h3><details class="src"><summary><code>app/Http/Middleware/CheckRole.php</code><small>24 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * استفاده در روت:  CheckRole::class.':admin'
+ * نکته: این میان‌افزار باید «بعد از» auth بیاید، چون به کاربر لاگین‌کرده نیاز دارد.
+ */
+class CheckRole
+{
+    public function handle(Request $request, Closure $next, string $role): Response
+    {
+        $user = $request-&gt;user();
+
+        abort_unless($user &amp;&amp; $user-&gt;role === $role, 403, 'دسترسی به این بخش برای شما مجاز نیست.');
+
+        return $next($request);
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Http/Requests</span></h3><details class="src"><summary><code>app/Http/Requests/CheckoutRequest.php</code><small>41 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class CheckoutRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' =&gt; ['required', 'string', 'max:100'],
+            'phone' =&gt; ['required', 'string', 'regex:/^(\+98|0)?9\d{9}$/'],
+            'city' =&gt; ['required', 'string', 'max:100'],
+            'address' =&gt; ['required', 'string', 'min:10', 'max:1000'],
+            'note' =&gt; ['nullable', 'string', 'max:500'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return ['phone.regex' =&gt; 'شماره موبایل معتبر نیست (مثال: 09123456789).'];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'name' =&gt; 'نام و نام خانوادگی',
+            'phone' =&gt; 'شماره موبایل',
+            'city' =&gt; 'شهر',
+            'address' =&gt; 'آدرس',
+            'note' =&gt; 'توضیحات',
+        ];
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Http/Requests/Admin</span></h3><details class="src"><summary><code>app/Http/Requests/Admin/CategoryRequest.php</code><small>31 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Requests\Admin;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class CategoryRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' =&gt; [
+                'required', 'string', 'max:100',
+                Rule::unique('categories', 'name')-&gt;ignore($this-&gt;route('category')),
+            ],
+            'icon' =&gt; ['nullable', 'string', 'max:8'],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return ['name' =&gt; 'نام دسته‌بندی', 'icon' =&gt; 'آیکن'];
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Requests/Admin/ProductRequest.php</code><small>41 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Requests\Admin;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class ProductRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        // دسترسی را میان‌افزار CheckRole روی روت‌ها کنترل می‌کند.
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'category_id' =&gt; ['required', 'integer', 'exists:categories,id'],
+            'name' =&gt; ['required', 'string', 'max:255'],
+            'description' =&gt; ['nullable', 'string', 'max:5000'],
+            'price' =&gt; ['required', 'integer', 'min:0', 'max:999999999'],
+            'stock' =&gt; ['required', 'integer', 'min:0', 'max:100000'],
+            'image' =&gt; ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'is_active' =&gt; ['nullable', 'boolean'],
+            'remove_image' =&gt; ['nullable', 'boolean'],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'category_id' =&gt; 'دسته‌بندی',
+            'name' =&gt; 'نام محصول',
+            'description' =&gt; 'توضیحات',
+            'price' =&gt; 'قیمت',
+            'stock' =&gt; 'موجودی',
+            'image' =&gt; 'تصویر',
+        ];
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Http/Controllers</span></h3><details class="src"><summary><code>app/Http/Controllers/AuthController.php</code><small>69 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules\Password;
+
+class AuthController extends Controller
+{
+    public function showLogin()
+    {
+        return view('auth.login');
+    }
+
+    public function login(Request $request): RedirectResponse
+    {
+        $credentials = $request-&gt;validate([
+            'email' =&gt; ['required', 'email'],
+            'password' =&gt; ['required', 'string'],
+        ]);
+
+        if (! Auth::attempt($credentials, $request-&gt;boolean('remember'))) {
+            return back()
+                -&gt;withInput($request-&gt;only('email'))
+                -&gt;withErrors(['email' =&gt; 'ایمیل یا گذرواژه درست نیست.']);
+        }
+
+        $request-&gt;session()-&gt;regenerate(); // جلوگیری از Session Fixation
+
+        $fallback = $request-&gt;user()-&gt;isAdmin() ? route('admin.dashboard') : route('home');
+
+        return redirect()-&gt;intended($fallback);
+    }
+
+    public function showRegister()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request): RedirectResponse
+    {
+        $data = $request-&gt;validate([
+            'name' =&gt; ['required', 'string', 'max:100'],
+            'email' =&gt; ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' =&gt; ['required', 'confirmed', Password::min(8)],
+        ]);
+
+        // گذرواژه با cast ی hashed در مدل خودکار هش می‌شود.
+        $user = User::create($data);
+
+        Auth::login($user);
+        $request-&gt;session()-&gt;regenerate();
+
+        return redirect()-&gt;route('home')-&gt;with('success', 'ثبت‌نام انجام شد. خوش آمدید!');
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::logout();
+        $request-&gt;session()-&gt;invalidate();
+        $request-&gt;session()-&gt;regenerateToken();
+
+        return redirect()-&gt;route('home')-&gt;with('success', 'از حساب خود خارج شدید.');
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/CartController.php</code><small>63 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Product;
+use App\Services\Cart;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+
+class CartController extends Controller
+{
+    public function index(Cart $cart): View
+    {
+        return view('cart.index', [
+            'items' =&gt; $cart-&gt;items(),
+            'total' =&gt; $cart-&gt;total(),
+        ]);
+    }
+
+    public function store(Request $request, Product $product, Cart $cart): RedirectResponse
+    {
+        abort_unless($product-&gt;is_active, 404);
+
+        $data = $request-&gt;validate([
+            'quantity' =&gt; ['nullable', 'integer', 'min:1', 'max:'.config('shop.max_quantity')],
+        ]);
+
+        if (! $product-&gt;inStock()) {
+            return back()-&gt;with('error', "«{$product-&gt;name}» فعلاً ناموجود است.");
+        }
+
+        $cart-&gt;add($product, $data['quantity'] ?? 1);
+
+        return back()-&gt;with('success', "«{$product-&gt;name}» به سبد خرید اضافه شد.");
+    }
+
+    public function update(Request $request, Product $product, Cart $cart): RedirectResponse
+    {
+        $data = $request-&gt;validate([
+            'quantity' =&gt; ['required', 'integer', 'min:0', 'max:'.config('shop.max_quantity')],
+        ]);
+
+        $cart-&gt;set($product, $data['quantity']);
+
+        return redirect()-&gt;route('cart.index')-&gt;with('success', 'سبد خرید به‌روز شد.');
+    }
+
+    public function destroy(Product $product, Cart $cart): RedirectResponse
+    {
+        $cart-&gt;remove($product);
+
+        return redirect()-&gt;route('cart.index')-&gt;with('success', 'محصول از سبد حذف شد.');
+    }
+
+    public function clear(Cart $cart): RedirectResponse
+    {
+        $cart-&gt;clear();
+
+        return redirect()-&gt;route('cart.index')-&gt;with('success', 'سبد خرید خالی شد.');
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/CheckoutController.php</code><small>83 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\CheckoutRequest;
+use App\Models\Product;
+use App\Services\Cart;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use RuntimeException;
+
+class CheckoutController extends Controller
+{
+    public function create(Cart $cart): View|RedirectResponse
+    {
+        if ($cart-&gt;isEmpty()) {
+            return redirect()-&gt;route('cart.index')-&gt;with('error', 'سبد خرید شما خالی است.');
+        }
+
+        return view('checkout.create', [
+            'items' =&gt; $cart-&gt;items(),
+            'total' =&gt; $cart-&gt;total(),
+        ]);
+    }
+
+    public function store(CheckoutRequest $request, Cart $cart): RedirectResponse
+    {
+        $lines = $cart-&gt;items();
+
+        if ($lines-&gt;isEmpty()) {
+            return redirect()-&gt;route('cart.index')-&gt;with('error', 'سبد خرید شما خالی است.');
+        }
+
+        try {
+            // همه‌چیز یا هیچ‌چیز: اگر وسط کار خطا بیاید، هیچ سفارش نیمه‌کاره‌ای ذخیره نمی‌شود.
+            $order = DB::transaction(function () use ($request, $lines) {
+                $ids = $lines-&gt;map(fn ($line) =&gt; $line['product']-&gt;id)-&gt;all();
+
+                // قفل ردیف‌ها تا دو خرید هم‌زمان، موجودی را منفی نکنند
+                $products = Product::query()-&gt;whereIn('id', $ids)-&gt;lockForUpdate()-&gt;get()-&gt;keyBy('id');
+
+                $total = 0;
+
+                foreach ($lines as $line) {
+                    $product = $products-&gt;get($line['product']-&gt;id);
+
+                    if (! $product || ! $product-&gt;is_active || $product-&gt;stock &lt; $line['quantity']) {
+                        throw new RuntimeException("موجودی «{$line['product']-&gt;name}» کافی نیست. سبد را بررسی کنید.");
+                    }
+
+                    $total += $product-&gt;price * $line['quantity'];
+                }
+
+                $order = $request-&gt;user()-&gt;orders()-&gt;create([
+                    ...$request-&gt;validated(),
+                    'status' =&gt; 'pending',
+                    'total' =&gt; $total,
+                ]);
+
+                foreach ($lines as $line) {
+                    $product = $products-&gt;get($line['product']-&gt;id);
+
+                    $order-&gt;products()-&gt;attach($product-&gt;id, [
+                        'quantity' =&gt; $line['quantity'],
+                        'price' =&gt; $product-&gt;price,
+                    ]);
+
+                    $product-&gt;decrement('stock', $line['quantity']);
+                }
+
+                return $order;
+            });
+        } catch (RuntimeException $e) {
+            return redirect()-&gt;route('cart.index')-&gt;with('error', $e-&gt;getMessage());
+        }
+
+        $cart-&gt;clear();
+
+        return redirect()-&gt;route('orders.show', $order)-&gt;with('success', 'سفارش شما با موفقیت ثبت شد. ممنون از خرید شما!');
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/HomeController.php</code><small>19 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Contracts\View\View;
+
+class HomeController extends Controller
+{
+    public function __invoke(): View
+    {
+        return view('home', [
+            'categories' =&gt; Category::query()-&gt;withCount(['products' =&gt; fn ($q) =&gt; $q-&gt;active()])-&gt;orderBy('name')-&gt;get(),
+            'latest' =&gt; Product::query()-&gt;active()-&gt;with('category')-&gt;latest()-&gt;take(8)-&gt;get(),
+        ]);
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/OrderController.php</code><small>28 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Order;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+
+class OrderController extends Controller
+{
+    public function index(Request $request): View
+    {
+        $orders = $request-&gt;user()-&gt;orders()-&gt;withCount('products')-&gt;latest('id')-&gt;paginate(10);
+
+        return view('orders.index', compact('orders'));
+    }
+
+    public function show(Order $order): View
+    {
+        Gate::authorize('view', $order);
+
+        $order-&gt;load('products');
+
+        return view('orders.show', compact('order'));
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/ProductController.php</code><small>54 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
+
+class ProductController extends Controller
+{
+    public function index(Request $request): View
+    {
+        $request-&gt;validate([
+            'q' =&gt; ['nullable', 'string', 'max:100'],
+            'category' =&gt; ['nullable', 'integer'],
+            'sort' =&gt; ['nullable', 'in:newest,cheapest,expensive'],
+        ]);
+
+        $products = Product::query()
+            -&gt;active()
+            -&gt;with('category')
+            -&gt;when($request-&gt;filled('q'), fn ($q) =&gt; $q-&gt;where('name', 'like', '%'.$request-&gt;string('q').'%'))
+            -&gt;when($request-&gt;filled('category'), fn ($q) =&gt; $q-&gt;where('category_id', $request-&gt;integer('category')))
+            -&gt;when($request-&gt;input('sort') === 'cheapest', fn ($q) =&gt; $q-&gt;orderBy('price'))
+            -&gt;when($request-&gt;input('sort') === 'expensive', fn ($q) =&gt; $q-&gt;orderByDesc('price'))
+            -&gt;when(! in_array($request-&gt;input('sort'), ['cheapest', 'expensive'], true), fn ($q) =&gt; $q-&gt;latest('id'))
+            -&gt;paginate(config('shop.per_page'))
+            -&gt;withQueryString();
+
+        return view('products.index', [
+            'products' =&gt; $products,
+            'categories' =&gt; Category::query()-&gt;withCount(['products' =&gt; fn ($q) =&gt; $q-&gt;active()])-&gt;orderBy('name')-&gt;get(),
+        ]);
+    }
+
+    public function show(Product $product): View
+    {
+        abort_unless($product-&gt;is_active, 404);
+
+        $product-&gt;load('category');
+
+        $related = Product::query()
+            -&gt;active()
+            -&gt;where('category_id', $product-&gt;category_id)
+            -&gt;whereKeyNot($product-&gt;id)
+            -&gt;inRandomOrder()
+            -&gt;take(4)
+            -&gt;get();
+
+        return view('products.show', compact('product', 'related'));
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">app/Http/Controllers/Admin</span></h3><details class="src"><summary><code>app/Http/Controllers/Admin/CategoryController.php</code><small>55 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategoryRequest;
+use App\Models\Category;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+
+class CategoryController extends Controller
+{
+    public function index(): View
+    {
+        return view('admin.categories.index', [
+            'categories' =&gt; Category::withCount('products')-&gt;orderBy('name')-&gt;get(),
+        ]);
+    }
+
+    public function create(): View
+    {
+        return view('admin.categories.create');
+    }
+
+    public function store(CategoryRequest $request): RedirectResponse
+    {
+        Category::create($request-&gt;validated());
+
+        return redirect()-&gt;route('admin.categories.index')-&gt;with('success', 'دسته‌بندی ساخته شد.');
+    }
+
+    public function edit(Category $category): View
+    {
+        return view('admin.categories.edit', compact('category'));
+    }
+
+    public function update(CategoryRequest $request, Category $category): RedirectResponse
+    {
+        $category-&gt;update($request-&gt;validated());
+
+        return redirect()-&gt;route('admin.categories.index')-&gt;with('success', 'دسته‌بندی ویرایش شد.');
+    }
+
+    public function destroy(Category $category): RedirectResponse
+    {
+        if ($category-&gt;products()-&gt;exists()) {
+            return back()-&gt;with('error', 'این دسته‌بندی محصول دارد؛ ابتدا محصولاتش را جابه‌جا یا حذف کنید.');
+        }
+
+        $category-&gt;delete();
+
+        return redirect()-&gt;route('admin.categories.index')-&gt;with('success', 'دسته‌بندی حذف شد.');
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/Admin/DashboardController.php</code><small>29 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Contracts\View\View;
+
+class DashboardController extends Controller
+{
+    public function index(): View
+    {
+        return view('admin.dashboard', [
+            'stats' =&gt; [
+                'products' =&gt; Product::count(),
+                'categories' =&gt; Category::count(),
+                'orders' =&gt; Order::count(),
+                'customers' =&gt; User::where('role', 'customer')-&gt;count(),
+                'revenue' =&gt; (int) Order::where('status', '!=', 'cancelled')-&gt;sum('total'),
+            ],
+            'latestOrders' =&gt; Order::with('user')-&gt;latest('id')-&gt;take(6)-&gt;get(),
+            'lowStock' =&gt; Product::where('stock', '&lt;=', config('shop.low_stock'))-&gt;orderBy('stock')-&gt;take(6)-&gt;get(),
+        ]);
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/Admin/OrderController.php</code><small>61 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\Order;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+
+class OrderController extends Controller
+{
+    public function index(Request $request): View
+    {
+        $statuses = array_keys(config('shop.order_statuses'));
+
+        $orders = Order::query()
+            -&gt;with('user')
+            -&gt;withCount('products')
+            -&gt;when(in_array($request-&gt;input('status'), $statuses, true), fn ($q) =&gt; $q-&gt;where('status', $request-&gt;input('status')))
+            -&gt;latest('id')
+            -&gt;paginate(config('shop.admin_per_page'))
+            -&gt;withQueryString();
+
+        return view('admin.orders.index', compact('orders'));
+    }
+
+    public function show(Order $order): View
+    {
+        $order-&gt;load(['user', 'products']);
+
+        return view('admin.orders.show', compact('order'));
+    }
+
+    public function update(Request $request, Order $order): RedirectResponse
+    {
+        $data = $request-&gt;validate([
+            'status' =&gt; ['required', Rule::in(array_keys(config('shop.order_statuses')))],
+        ]);
+
+        if ($order-&gt;isCancelled()) {
+            return back()-&gt;with('error', 'سفارشِ لغوشده قابل تغییر نیست.');
+        }
+
+        DB::transaction(function () use ($order, $data) {
+            // لغو سفارش = برگرداندن موجودی به انبار
+            if ($data['status'] === 'cancelled') {
+                foreach ($order-&gt;products as $product) {
+                    $product-&gt;increment('stock', $product-&gt;pivot-&gt;quantity);
+                }
+            }
+
+            $order-&gt;update(['status' =&gt; $data['status']]);
+        });
+
+        return back()-&gt;with('success', 'وضعیت سفارش به‌روز شد.');
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>app/Http/Controllers/Admin/ProductController.php</code><small>102 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ProductRequest;
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
+class ProductController extends Controller
+{
+    public function index(Request $request): View
+    {
+        $products = Product::query()
+            -&gt;with('category')
+            -&gt;when($request-&gt;filled('q'), fn ($q) =&gt; $q-&gt;where('name', 'like', '%'.$request-&gt;string('q').'%'))
+            -&gt;latest('id')
+            -&gt;paginate(config('shop.admin_per_page'))
+            -&gt;withQueryString();
+
+        return view('admin.products.index', compact('products'));
+    }
+
+    public function create(): View
+    {
+        return view('admin.products.create', [
+            'categories' =&gt; Category::orderBy('name')-&gt;get(),
+        ]);
+    }
+
+    public function store(ProductRequest $request): RedirectResponse
+    {
+        $data = $request-&gt;validated();
+        $data['is_active'] = $request-&gt;boolean('is_active');
+        unset($data['remove_image']);
+
+        if ($request-&gt;hasFile('image')) {
+            $data['image'] = $request-&gt;file('image')-&gt;store('products', 'public');
+        } else {
+            unset($data['image']);
+        }
+
+        Product::create($data);
+
+        return redirect()-&gt;route('admin.products.index')-&gt;with('success', 'محصول ساخته شد.');
+    }
+
+    public function edit(Product $product): View
+    {
+        return view('admin.products.edit', [
+            'product' =&gt; $product,
+            'categories' =&gt; Category::orderBy('name')-&gt;get(),
+        ]);
+    }
+
+    public function update(ProductRequest $request, Product $product): RedirectResponse
+    {
+        $data = $request-&gt;validated();
+        $data['is_active'] = $request-&gt;boolean('is_active');
+        unset($data['remove_image']);
+
+        if ($request-&gt;hasFile('image')) {
+            $this-&gt;deleteImage($product);
+            $data['image'] = $request-&gt;file('image')-&gt;store('products', 'public');
+        } else {
+            unset($data['image']);
+
+            if ($request-&gt;boolean('remove_image')) {
+                $this-&gt;deleteImage($product);
+                $data['image'] = null;
+            }
+        }
+
+        $product-&gt;update($data);
+
+        return redirect()-&gt;route('admin.products.index')-&gt;with('success', 'محصول ویرایش شد.');
+    }
+
+    public function destroy(Product $product): RedirectResponse
+    {
+        if ($product-&gt;orders()-&gt;exists()) {
+            return back()-&gt;with('error', 'این محصول در سفارش‌ها استفاده شده و حذف نمی‌شود؛ به‌جای آن آن را غیرفعال کنید.');
+        }
+
+        $this-&gt;deleteImage($product);
+        $product-&gt;delete();
+
+        return redirect()-&gt;route('admin.products.index')-&gt;with('success', 'محصول حذف شد.');
+    }
+
+    private function deleteImage(Product $product): void
+    {
+        if ($product-&gt;image) {
+            Storage::disk('public')-&gt;delete($product-&gt;image);
+        }
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">database/migrations</span></h3><details class="src"><summary><code>database/migrations/2026_01_01_000001_add_role_to_users_table.php</code><small>24 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table-&gt;string('role')-&gt;default('customer')-&gt;after('password')-&gt;index();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table-&gt;dropIndex(['role']);
+            $table-&gt;dropColumn('role');
+        });
+    }
+};</code></pre></div></div></details><details class="src"><summary><code>database/migrations/2026_01_01_000002_create_categories_table.php</code><small>24 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('categories', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;string('name')-&gt;unique();
+            $table-&gt;string('icon', 16)-&gt;nullable();
+            $table-&gt;timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('categories');
+    }
+};</code></pre></div></div></details><details class="src"><summary><code>database/migrations/2026_01_01_000003_create_products_table.php</code><small>29 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('products', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;foreignId('category_id')-&gt;constrained()-&gt;restrictOnDelete();
+            $table-&gt;string('name');
+            $table-&gt;text('description')-&gt;nullable();
+            $table-&gt;unsignedBigInteger('price');          // به تومان
+            $table-&gt;unsignedInteger('stock')-&gt;default(0);
+            $table-&gt;string('image')-&gt;nullable();          // فقط مسیر فایل در دیسک public
+            $table-&gt;boolean('is_active')-&gt;default(true)-&gt;index();
+            $table-&gt;timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('products');
+    }
+};</code></pre></div></div></details><details class="src"><summary><code>database/migrations/2026_01_01_000004_create_orders_table.php</code><small>30 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('orders', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;foreignId('user_id')-&gt;constrained()-&gt;cascadeOnDelete();
+            $table-&gt;string('status')-&gt;default('pending')-&gt;index();
+            $table-&gt;unsignedBigInteger('total');
+            $table-&gt;string('name');
+            $table-&gt;string('phone', 20);
+            $table-&gt;string('city');
+            $table-&gt;text('address');
+            $table-&gt;text('note')-&gt;nullable();
+            $table-&gt;timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('orders');
+    }
+};</code></pre></div></div></details><details class="src"><summary><code>database/migrations/2026_01_01_000005_create_order_product_table.php</code><small>26 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('order_product', function (Blueprint $table) {
+            $table-&gt;id();
+            $table-&gt;foreignId('order_id')-&gt;constrained()-&gt;cascadeOnDelete();
+            $table-&gt;foreignId('product_id')-&gt;constrained()-&gt;restrictOnDelete();
+            $table-&gt;unsignedInteger('quantity');
+            $table-&gt;unsignedBigInteger('price');          // قیمت واحد در لحظه‌ی خرید (snapshot)
+            $table-&gt;unique(['order_id', 'product_id']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('order_product');
+    }
+};</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">database/factories</span></h3><details class="src"><summary><code>database/factories/CategoryFactory.php</code><small>19 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace Database\Factories;
+
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/** @extends Factory&lt;Category&gt; */
+class CategoryFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'name' =&gt; 'دسته '.fake()-&gt;unique()-&gt;numberBetween(1, 99999),
+            'icon' =&gt; '📦',
+        ];
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>database/factories/ProductFactory.php</code><small>35 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace Database\Factories;
+
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/** @extends Factory&lt;Product&gt; */
+class ProductFactory extends Factory
+{
+    public function definition(): array
+    {
+        return [
+            'category_id' =&gt; Category::factory(),
+            'name' =&gt; 'محصول '.fake()-&gt;unique()-&gt;numberBetween(1, 99999),
+            'description' =&gt; 'توضیحات نمونه برای محصول آزمایشی.',
+            'price' =&gt; fake()-&gt;numberBetween(20, 900) * 1000,
+            'stock' =&gt; fake()-&gt;numberBetween(5, 50),
+            'image' =&gt; null,
+            'is_active' =&gt; true,
+        ];
+    }
+
+    public function outOfStock(): static
+    {
+        return $this-&gt;state(['stock' =&gt; 0]);
+    }
+
+    public function inactive(): static
+    {
+        return $this-&gt;state(['is_active' =&gt; false]);
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">database/seeders</span></h3><details class="src"><summary><code>database/seeders/CategorySeeder.php</code><small>23 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace Database\Seeders;
+
+use App\Models\Category;
+use Illuminate\Database\Seeder;
+
+class CategorySeeder extends Seeder
+{
+    public function run(): void
+    {
+        foreach ([
+            ['name' =&gt; 'کتاب', 'icon' =&gt; '📚'],
+            ['name' =&gt; 'نوشت‌افزار', 'icon' =&gt; '✏️'],
+            ['name' =&gt; 'لوازم دیجیتال', 'icon' =&gt; '🎧'],
+            ['name' =&gt; 'خانه و آشپزخانه', 'icon' =&gt; '☕'],
+            ['name' =&gt; 'ورزش و سفر', 'icon' =&gt; '🎒'],
+        ] as $row) {
+            Category::updateOrCreate(['name' =&gt; $row['name']], $row);
+        }
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>database/seeders/DatabaseSeeder.php</code><small>33 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    public function run(): void
+    {
+        // role عمداً fillable نیست، پس برای حساب‌های اولیه از forceFill استفاده می‌کنیم.
+        foreach ([
+            ['email' =&gt; 'admin@shop.test', 'name' =&gt; 'مدیر فروشگاه', 'role' =&gt; 'admin'],
+            ['email' =&gt; 'customer@shop.test', 'name' =&gt; 'مشتری نمونه', 'role' =&gt; 'customer'],
+        ] as $account) {
+            $user = User::firstOrNew(['email' =&gt; $account['email']]);
+            $user-&gt;forceFill([
+                'name' =&gt; $account['name'],
+                'role' =&gt; $account['role'],
+                'password' =&gt; 'password',
+                'email_verified_at' =&gt; now(),
+            ])-&gt;save();
+        }
+
+        $this-&gt;call([
+            CategorySeeder::class,
+            ProductSeeder::class,
+            OrderSeeder::class,
+        ]);
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>database/seeders/OrderSeeder.php</code><small>43 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace Database\Seeders;
+
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Database\Seeder;
+
+/** چند سفارش نمونه تا داشبورد مدیر خالی نباشد (موجودی کم نمی‌شود؛ فقط دمو است). */
+class OrderSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $customer = User::where('email', 'customer@shop.test')-&gt;first();
+
+        if (! $customer || Order::exists()) {
+            return;
+        }
+
+        $products = Product::active()-&gt;where('stock', '&gt;', 0)-&gt;inRandomOrder()-&gt;take(12)-&gt;get();
+
+        foreach (['completed', 'shipped', 'processing', 'pending'] as $i =&gt; $status) {
+            $picked = $products-&gt;slice($i * 2, 2);
+            $total = $picked-&gt;sum(fn ($p) =&gt; $p-&gt;price * ($i + 1));
+
+            $order = Order::create([
+                'user_id' =&gt; $customer-&gt;id,
+                'status' =&gt; $status,
+                'total' =&gt; $total,
+                'name' =&gt; $customer-&gt;name,
+                'phone' =&gt; '09123456789',
+                'city' =&gt; 'تهران',
+                'address' =&gt; 'تهران، خیابان نمونه، پلاک ۱۲، واحد ۳',
+            ]);
+
+            foreach ($picked as $product) {
+                $order-&gt;products()-&gt;attach($product-&gt;id, ['quantity' =&gt; $i + 1, 'price' =&gt; $product-&gt;price]);
+            }
+        }
+    }
+}</code></pre></div></div></details><details class="src"><summary><code>database/seeders/ProductSeeder.php</code><small>58 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace Database\Seeders;
+
+use App\Models\Category;
+use App\Models\Product;
+use Illuminate\Database\Seeder;
+
+class ProductSeeder extends Seeder
+{
+    public function run(): void
+    {
+        // [دسته، نام، قیمت (تومان)، موجودی، توضیح]
+        $rows = [
+            ['کتاب', 'راهنمای شروع برنامه‌نویسی وب', 185000, 24, 'مقدمه‌ای ساده و پروژه‌محور بر HTML، CSS و جاوااسکریپت.'],
+            ['کتاب', 'آموزش PHP مدرن', 210000, 18, 'از مبانی تا شی‌گرایی و Composer، با مثال‌های کاربردی.'],
+            ['کتاب', 'لاراول از صفر تا فروشگاه', 260000, 12, 'ساخت یک فروشگاه کامل قدم‌به‌قدم با Laravel.'],
+            ['کتاب', 'طراحی پایگاه داده برای همه', 175000, 30, 'نرمال‌سازی، ایندکس و طراحی جدول‌ها به زبان ساده.'],
+            ['کتاب', 'الگوریتم‌ها به زبان ساده', 195000, 4, 'مرور الگوریتم‌های پایه با تصویر و مثال.'],
+            ['کتاب', 'رمان شب‌های کتابخانه', 120000, 40, 'رمانی دلنشین برای آخر هفته‌های آرام.'],
+            ['نوشت‌افزار', 'دفتر یادداشت سیمی A5', 45000, 80, 'کاغذ ۸۰ گرمی، ۱۰۰ برگ، جلد مقوایی مقاوم.'],
+            ['نوشت‌افزار', 'ست خودکار ژل ۶ رنگ', 38000, 120, 'جوهر روان و بدون لک، مناسب یادداشت و طراحی.'],
+            ['نوشت‌افزار', 'مداد مکانیکی ۰.۵', 29000, 95, 'بدنه‌ی فلزی سبک با گیره‌ی محکم.'],
+            ['نوشت‌افزار', 'ماژیک هایلایتر ۴ رنگ', 52000, 3, 'رنگ‌های شفاف که پشت برگه نمی‌زنند.'],
+            ['نوشت‌افزار', 'پوشه‌ی زیپ‌دار A4', 33000, 60, 'برای نگهداری مرتب اسناد و برگه‌ها.'],
+            ['لوازم دیجیتال', 'هدفون بی‌سیم سبک', 890000, 15, 'اتصال بلوتوث ۵، تا ۲۴ ساعت شارژدهی.'],
+            ['لوازم دیجیتال', 'کیبورد مکانیکال جمع‌وجور', 1450000, 9, 'سوییچ بی‌صدا و نور پس‌زمینه‌ی قابل تنظیم.'],
+            ['لوازم دیجیتال', 'ماوس بی‌سیم ارگونومیک', 520000, 22, 'دقت بالا و باتری با دوام.'],
+            ['لوازم دیجیتال', 'پاوربانک ۲۰۰۰۰ میلی‌آمپر', 780000, 0, 'شارژ سریع، دو خروجی USB و یک ورودی Type-C.'],
+            ['لوازم دیجیتال', 'هاب USB-C پنج‌پورت', 640000, 17, 'HDMI، USB 3.0 و کارت‌خوان در یک هاب.'],
+            ['لوازم دیجیتال', 'پایه‌ی لپ‌تاپ آلومینیومی', 330000, 28, 'تنظیم ارتفاع، تهویه‌ی بهتر و وضعیت نشستن سالم‌تر.'],
+            ['خانه و آشپزخانه', 'ماگ سرامیکی دسته‌دار', 68000, 70, 'ظرفیت ۳۵۰ میلی‌لیتر، مناسب چای و قهوه.'],
+            ['خانه و آشپزخانه', 'فلاسک استیل ۵۰۰ میلی‌لیتر', 240000, 26, 'تا ۱۲ ساعت گرم و ۲۴ ساعت سرد نگه می‌دارد.'],
+            ['خانه و آشپزخانه', 'چراغ مطالعه‌ی رومیزی', 410000, 14, 'نور قابل تنظیم و محافظ چشم.'],
+            ['خانه و آشپزخانه', 'گلدان رومیزی مینیمال', 95000, 35, 'طرح ساده برای میز کار و قفسه.'],
+            ['ورزش و سفر', 'کوله‌پشتی ضدآب ۲۵ لیتری', 690000, 11, 'جای لپ‌تاپ، زیپ‌های مقاوم و پشت‌بند طبی.'],
+            ['ورزش و سفر', 'بطری آب ورزشی', 82000, 55, 'بدون BPA، درب ضدنشت.'],
+            ['ورزش و سفر', 'کش ورزشی مقاومتی (ست ۵ تایی)', 150000, 2, 'پنج درجه‌ی مقاومت برای تمرین در خانه.'],
+            ['ورزش و سفر', 'کیف ارگانایزر سفر', 130000, 31, 'چند بخشی، برای مرتب نگه داشتن کابل و لوازم.'],
+        ];
+
+        foreach ($rows as [$categoryName, $name, $price, $stock, $description]) {
+            $category = Category::where('name', $categoryName)-&gt;firstOrFail();
+
+            Product::updateOrCreate(
+                ['name' =&gt; $name],
+                [
+                    'category_id' =&gt; $category-&gt;id,
+                    'price' =&gt; $price,
+                    'stock' =&gt; $stock,
+                    'description' =&gt; $description,
+                    'is_active' =&gt; true,
+                ]
+            );
+        }
+    }
+}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">lang/fa</span></h3><details class="src"><summary><code>lang/fa/validation.php</code><small>37 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+/*
+| ترجمه‌ی فارسیِ قواعد پرکاربرد. قاعده‌ای که این‌جا نباشد، خودکار به انگلیسی (fallback) برمی‌گردد.
+*/
+return [
+    'required' =&gt; 'فیلد :attribute الزامی است.',
+    'string' =&gt; 'فیلد :attribute باید متن باشد.',
+    'email' =&gt; 'فیلد :attribute باید یک ایمیل معتبر باشد.',
+    'unique' =&gt; 'این :attribute قبلاً ثبت شده است.',
+    'exists' =&gt; ':attribute انتخاب‌شده معتبر نیست.',
+    'confirmed' =&gt; 'تکرار :attribute با مقدار اصلی یکسان نیست.',
+    'integer' =&gt; 'فیلد :attribute باید عدد صحیح باشد.',
+    'boolean' =&gt; 'فیلد :attribute نامعتبر است.',
+    'in' =&gt; ':attribute انتخاب‌شده معتبر نیست.',
+    'image' =&gt; 'فیلد :attribute باید تصویر باشد.',
+    'mimes' =&gt; 'فرمت :attribute باید یکی از این‌ها باشد: :values.',
+    'regex' =&gt; 'قالب فیلد :attribute معتبر نیست.',
+
+    'min' =&gt; [
+        'numeric' =&gt; 'فیلد :attribute باید حداقل :min باشد.',
+        'file' =&gt; 'حجم :attribute باید حداقل :min کیلوبایت باشد.',
+        'string' =&gt; 'فیلد :attribute باید حداقل :min کاراکتر باشد.',
+    ],
+    'max' =&gt; [
+        'numeric' =&gt; 'فیلد :attribute نباید بیشتر از :max باشد.',
+        'file' =&gt; 'حجم :attribute نباید بیشتر از :max کیلوبایت باشد.',
+        'string' =&gt; 'فیلد :attribute نباید بیشتر از :max کاراکتر باشد.',
+    ],
+
+    'attributes' =&gt; [
+        'name' =&gt; 'نام',
+        'email' =&gt; 'ایمیل',
+        'password' =&gt; 'گذرواژه',
+    ],
+];</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views</span></h3><details class="src"><summary><code>resources/views/home.blade.php</code><small>30 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout title="خانه"&gt;
+    &lt;section class="hero"&gt;
+        &lt;h1&gt;به {{ config('shop.name') }} خوش آمدید&lt;/h1&gt;
+        &lt;p&gt;کتاب، نوشت‌افزار و لوازم دیجیتال با قیمت مناسب. ثبت‌نام کنید، سبد خرید بسازید و سفارش بدهید.&lt;/p&gt;
+        &lt;a class="btn" href="{{ route('products.index') }}"&gt;مشاهده‌ی همه‌ی محصولات&lt;/a&gt;
+    &lt;/section&gt;
+
+    &lt;h2&gt;دسته‌بندی‌ها&lt;/h2&gt;
+    &lt;div class="grid cats mb"&gt;
+        @foreach ($categories as $category)
+            &lt;a class="cat-tile" href="{{ route('products.index', ['category' =&gt; $category-&gt;id]) }}"&gt;
+                &lt;span class="ic"&gt;{{ $category-&gt;icon ?? '📦' }}&lt;/span&gt;
+                &lt;strong&gt;{{ $category-&gt;name }}&lt;/strong&gt;
+                &lt;small class="muted"&gt;{{ $category-&gt;products_count }} محصول&lt;/small&gt;
+            &lt;/a&gt;
+        @endforeach
+    &lt;/div&gt;
+
+    &lt;h2&gt;تازه‌ترین محصولات&lt;/h2&gt;
+    @if ($latest-&gt;isEmpty())
+        &lt;div class="empty"&gt;هنوز محصولی ثبت نشده است. &lt;code&gt;php artisan db:seed&lt;/code&gt; را اجرا کنید.&lt;/div&gt;
+    @else
+        &lt;div class="grid products"&gt;
+            @foreach ($latest as $product)
+                &lt;x-product-card :product="$product" /&gt;
+            @endforeach
+        &lt;/div&gt;
+    @endif
+&lt;/x-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/components</span></h3><details class="src"><summary><code>resources/views/components/admin-layout.blade.php</code><small>17 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@props(['title' =&gt; 'مدیریت'])
+&lt;x-layout :title="$title"&gt;
+    &lt;div class="admin-wrap"&gt;
+        &lt;aside class="admin-side" aria-label="منوی مدیریت"&gt;
+            &lt;a href="{{ route('admin.dashboard') }}" @class(['active' =&gt; request()-&gt;routeIs('admin.dashboard')])&gt;📊 داشبورد&lt;/a&gt;
+            &lt;a href="{{ route('admin.products.index') }}" @class(['active' =&gt; request()-&gt;routeIs('admin.products.*')])&gt;📦 محصولات&lt;/a&gt;
+            &lt;a href="{{ route('admin.categories.index') }}" @class(['active' =&gt; request()-&gt;routeIs('admin.categories.*')])&gt;🗂️ دسته‌بندی‌ها&lt;/a&gt;
+            &lt;a href="{{ route('admin.orders.index') }}" @class(['active' =&gt; request()-&gt;routeIs('admin.orders.*')])&gt;🧾 سفارش‌ها&lt;/a&gt;
+            &lt;a href="{{ route('home') }}"&gt;↩ مشاهده‌ی فروشگاه&lt;/a&gt;
+        &lt;/aside&gt;
+        &lt;section&gt;
+            &lt;h1&gt;{{ $title }}&lt;/h1&gt;
+            {{ $slot }}
+        &lt;/section&gt;
+    &lt;/div&gt;
+&lt;/x-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/components/field.blade.php</code><small>10 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@props(['name', 'label', 'type' =&gt; 'text', 'value' =&gt; null, 'hint' =&gt; null])
+&lt;div class="field"&gt;
+    &lt;label for="{{ $name }}"&gt;{{ $label }}&lt;/label&gt;
+    &lt;input id="{{ $name }}" name="{{ $name }}" type="{{ $type }}"
+           value="{{ $type === 'password' ? '' : old($name, $value) }}"
+           {{ $attributes-&gt;class(['is-invalid' =&gt; $errors-&gt;has($name)]) }}&gt;
+    @if ($hint)&lt;small class="hint"&gt;{{ $hint }}&lt;/small&gt;@endif
+    @error($name)&lt;small class="error"&gt;{{ $message }}&lt;/small&gt;@enderror
+&lt;/div&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/components/flash.blade.php</code><small>7 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@if (session('success'))
+    &lt;div class="alert success" role="status"&gt;{{ session('success') }}&lt;/div&gt;
+@endif
+@if (session('error'))
+    &lt;div class="alert error" role="alert"&gt;{{ session('error') }}&lt;/div&gt;
+@endif</code></pre></div></div></details><details class="src"><summary><code>resources/views/components/layout.blade.php</code><small>58 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@props(['title' =&gt; null])
+&lt;!DOCTYPE html&gt;
+&lt;html lang="fa" dir="rtl"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;{{ $title ? $title.' | ' : '' }}{{ config('shop.name') }}&lt;/title&gt;
+    &lt;link rel="stylesheet" href="{{ asset('css/shop.css') }}"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class="site-header"&gt;
+    &lt;div class="container bar"&gt;
+        &lt;a class="brand" href="{{ route('home') }}"&gt;🛍️ فروشگاه &lt;span&gt;لاراول&lt;/span&gt;&lt;/a&gt;
+
+        &lt;nav class="nav" aria-label="منوی اصلی"&gt;
+            &lt;a href="{{ route('home') }}"&gt;خانه&lt;/a&gt;
+            &lt;a href="{{ route('products.index') }}"&gt;محصولات&lt;/a&gt;
+            &lt;a href="{{ route('cart.index') }}"&gt;
+                سبد خرید
+                @php($cartCount = app(\App\Services\Cart::class)-&gt;count())
+                @if ($cartCount &gt; 0)&lt;span class="badge"&gt;{{ $cartCount }}&lt;/span&gt;@endif
+            &lt;/a&gt;
+
+            @auth
+                &lt;a href="{{ route('orders.index') }}"&gt;سفارش‌های من&lt;/a&gt;
+                @if (auth()-&gt;user()-&gt;isAdmin())
+                    &lt;a href="{{ route('admin.dashboard') }}"&gt;⚙️ پنل مدیریت&lt;/a&gt;
+                @endif
+                &lt;form class="inline-form" method="POST" action="{{ route('logout') }}"&gt;
+                    @csrf
+                    &lt;button type="submit" class="linklike"&gt;خروج ({{ auth()-&gt;user()-&gt;name }})&lt;/button&gt;
+                &lt;/form&gt;
+            @else
+                &lt;a href="{{ route('login') }}"&gt;ورود&lt;/a&gt;
+                &lt;a href="{{ route('register') }}"&gt;ثبت‌نام&lt;/a&gt;
+            @endauth
+        &lt;/nav&gt;
+
+        &lt;form class="search" method="GET" action="{{ route('products.index') }}" role="search"&gt;
+            &lt;input type="search" name="q" value="{{ request('q') }}" placeholder="جستجوی محصول…" aria-label="جستجو"&gt;
+            &lt;button class="btn sm" type="submit"&gt;جستجو&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;main class="container"&gt;
+    &lt;x-flash /&gt;
+    {{ $slot }}
+&lt;/main&gt;
+
+&lt;footer class="site-footer"&gt;
+    &lt;div class="container"&gt;
+        {{ config('shop.name') }} — {{ config('shop.tagline') }} · ساخته‌شده با Laravel {{ app()-&gt;version() }}
+    &lt;/div&gt;
+&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/components/order-status.blade.php</code><small>11 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@props(['order'])
+@php
+    $class = match ($order-&gt;status) {
+        'completed' =&gt; 'ok',
+        'cancelled' =&gt; 'danger',
+        'pending' =&gt; 'warn',
+        default =&gt; '',
+    };
+@endphp
+&lt;span class="tag {{ $class }}"&gt;{{ $order-&gt;statusLabel() }}&lt;/span&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/components/price.blade.php</code><small>3 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@props(['value'])
+&lt;span class="price"&gt;{{ number_format($value) }} &lt;small&gt;{{ config('shop.currency') }}&lt;/small&gt;&lt;/span&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/components/product-card.blade.php</code><small>23 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@props(['product'])
+&lt;article class="product-card"&gt;
+    &lt;a href="{{ route('products.show', $product) }}" aria-label="{{ $product-&gt;name }}"&gt;
+        &lt;x-product-image :product="$product" /&gt;
+    &lt;/a&gt;
+    &lt;div class="body"&gt;
+        &lt;span class="tag"&gt;{{ $product-&gt;category-&gt;name }}&lt;/span&gt;
+        &lt;a class="name" href="{{ route('products.show', $product) }}"&gt;{{ $product-&gt;name }}&lt;/a&gt;
+
+        &lt;div class="foot"&gt;
+            &lt;x-price :value="$product-&gt;price" /&gt;
+            @if ($product-&gt;inStock())
+                &lt;form method="POST" action="{{ route('cart.store', $product) }}"&gt;
+                    @csrf
+                    &lt;button class="btn sm" type="submit"&gt;افزودن&lt;/button&gt;
+                &lt;/form&gt;
+            @else
+                &lt;span class="tag danger"&gt;ناموجود&lt;/span&gt;
+            @endif
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/article&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/components/product-image.blade.php</code><small>9 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@props(['product', 'large' =&gt; false])
+&lt;div @class(['thumb', 'lg' =&gt; $large])&gt;
+    @if ($product-&gt;image)
+        &lt;img src="{{ asset('storage/'.$product-&gt;image) }}" alt="{{ $product-&gt;name }}" loading="lazy"&gt;
+    @else
+        &lt;span aria-hidden="true"&gt;{{ $product-&gt;category-&gt;icon ?? '📦' }}&lt;/span&gt;
+    @endif
+&lt;/div&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/vendor/pagination</span></h3><details class="src"><summary><code>resources/views/vendor/pagination/shop.blade.php</code><small>32 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@if ($paginator-&gt;hasPages())
+    &lt;nav class="pagination" role="navigation" aria-label="صفحه‌بندی"&gt;
+        @if ($paginator-&gt;onFirstPage())
+            &lt;span class="page disabled"&gt;قبلی&lt;/span&gt;
+        @else
+            &lt;a class="page" href="{{ $paginator-&gt;previousPageUrl() }}" rel="prev"&gt;قبلی&lt;/a&gt;
+        @endif
+
+        @foreach ($elements as $element)
+            @if (is_string($element))
+                &lt;span class="page disabled"&gt;{{ $element }}&lt;/span&gt;
+            @endif
+
+            @if (is_array($element))
+                @foreach ($element as $page =&gt; $url)
+                    @if ($page == $paginator-&gt;currentPage())
+                        &lt;span class="page active" aria-current="page"&gt;{{ $page }}&lt;/span&gt;
+                    @else
+                        &lt;a class="page" href="{{ $url }}"&gt;{{ $page }}&lt;/a&gt;
+                    @endif
+                @endforeach
+            @endif
+        @endforeach
+
+        @if ($paginator-&gt;hasMorePages())
+            &lt;a class="page" href="{{ $paginator-&gt;nextPageUrl() }}" rel="next"&gt;بعدی&lt;/a&gt;
+        @else
+            &lt;span class="page disabled"&gt;بعدی&lt;/span&gt;
+        @endif
+    &lt;/nav&gt;
+@endif</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/auth</span></h3><details class="src"><summary><code>resources/views/auth/login.blade.php</code><small>15 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout title="ورود"&gt;
+    &lt;div class="card mt" style="max-width:440px;margin-inline:auto"&gt;
+        &lt;h1&gt;ورود به حساب&lt;/h1&gt;
+        &lt;form method="POST" action="{{ route('login') }}"&gt;
+            @csrf
+            &lt;x-field name="email" label="ایمیل" type="email" class="ltr" required autofocus /&gt;
+            &lt;x-field name="password" label="گذرواژه" type="password" class="ltr" required /&gt;
+            &lt;label class="check"&gt;&lt;input type="checkbox" name="remember" value="1"&gt; مرا به خاطر بسپار&lt;/label&gt;
+            &lt;button class="btn block" type="submit"&gt;ورود&lt;/button&gt;
+        &lt;/form&gt;
+        &lt;p class="muted small mt"&gt;حساب ندارید؟ &lt;a href="{{ route('register') }}"&gt;ثبت‌نام کنید&lt;/a&gt;&lt;/p&gt;
+        &lt;p class="muted small"&gt;حساب‌های آزمایشی: &lt;span class="ltr"&gt;admin@shop.test&lt;/span&gt; و &lt;span class="ltr"&gt;customer@shop.test&lt;/span&gt; با گذرواژه‌ی &lt;code&gt;password&lt;/code&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/x-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/auth/register.blade.php</code><small>15 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout title="ثبت‌نام"&gt;
+    &lt;div class="card mt" style="max-width:440px;margin-inline:auto"&gt;
+        &lt;h1&gt;ثبت‌نام&lt;/h1&gt;
+        &lt;form method="POST" action="{{ route('register') }}"&gt;
+            @csrf
+            &lt;x-field name="name" label="نام و نام خانوادگی" required autofocus /&gt;
+            &lt;x-field name="email" label="ایمیل" type="email" class="ltr" required /&gt;
+            &lt;x-field name="password" label="گذرواژه" type="password" class="ltr" hint="حداقل ۸ کاراکتر" required /&gt;
+            &lt;x-field name="password_confirmation" label="تکرار گذرواژه" type="password" class="ltr" required /&gt;
+            &lt;button class="btn block" type="submit"&gt;ساخت حساب&lt;/button&gt;
+        &lt;/form&gt;
+        &lt;p class="muted small mt"&gt;قبلاً ثبت‌نام کرده‌اید؟ &lt;a href="{{ route('login') }}"&gt;ورود&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/x-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/products</span></h3><details class="src"><summary><code>resources/views/products/index.blade.php</code><small>53 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout title="محصولات"&gt;
+    &lt;h1 class="mt"&gt;محصولات&lt;/h1&gt;
+
+    &lt;div class="two-col"&gt;
+        &lt;aside class="card"&gt;
+            &lt;h3&gt;دسته‌بندی&lt;/h3&gt;
+            &lt;ul class="side-list"&gt;
+                &lt;li&gt;&lt;a href="{{ route('products.index', request()-&gt;except('category', 'page')) }}" @class(['active' =&gt; ! request('category')])&gt;همه&lt;/a&gt;&lt;/li&gt;
+                @foreach ($categories as $category)
+                    &lt;li&gt;
+                        &lt;a href="{{ route('products.index', array_merge(request()-&gt;except('page'), ['category' =&gt; $category-&gt;id])) }}"
+                           @class(['active' =&gt; (int) request('category') === $category-&gt;id])&gt;
+                            &lt;span&gt;{{ $category-&gt;icon }} {{ $category-&gt;name }}&lt;/span&gt;
+                            &lt;small class="muted"&gt;{{ $category-&gt;products_count }}&lt;/small&gt;
+                        &lt;/a&gt;
+                    &lt;/li&gt;
+                @endforeach
+            &lt;/ul&gt;
+
+            &lt;form method="GET" action="{{ route('products.index') }}" class="mt"&gt;
+                @if (request('category'))&lt;input type="hidden" name="category" value="{{ request('category') }}"&gt;@endif
+                &lt;div class="field"&gt;
+                    &lt;label for="q"&gt;جستجو&lt;/label&gt;
+                    &lt;input id="q" type="search" name="q" value="{{ request('q') }}"&gt;
+                &lt;/div&gt;
+                &lt;div class="field"&gt;
+                    &lt;label for="sort"&gt;مرتب‌سازی&lt;/label&gt;
+                    &lt;select id="sort" name="sort"&gt;
+                        &lt;option value="newest" @selected(request('sort', 'newest') === 'newest')&gt;جدیدترین&lt;/option&gt;
+                        &lt;option value="cheapest" @selected(request('sort') === 'cheapest')&gt;ارزان‌ترین&lt;/option&gt;
+                        &lt;option value="expensive" @selected(request('sort') === 'expensive')&gt;گران‌ترین&lt;/option&gt;
+                    &lt;/select&gt;
+                &lt;/div&gt;
+                &lt;button class="btn block" type="submit"&gt;اعمال&lt;/button&gt;
+            &lt;/form&gt;
+        &lt;/aside&gt;
+
+        &lt;section&gt;
+            @if ($products-&gt;isEmpty())
+                &lt;div class="empty card"&gt;محصولی با این مشخصات پیدا نشد.&lt;/div&gt;
+            @else
+                &lt;p class="muted small"&gt;نمایش {{ $products-&gt;firstItem() }} تا {{ $products-&gt;lastItem() }} از {{ $products-&gt;total() }} محصول&lt;/p&gt;
+                &lt;div class="grid products"&gt;
+                    @foreach ($products as $product)
+                        &lt;x-product-card :product="$product" /&gt;
+                    @endforeach
+                &lt;/div&gt;
+                {{ $products-&gt;links() }}
+            @endif
+        &lt;/section&gt;
+    &lt;/div&gt;
+&lt;/x-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/products/show.blade.php</code><small>53 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout :title="$product-&gt;name"&gt;
+    &lt;p class="muted small mt"&gt;
+        &lt;a href="{{ route('home') }}"&gt;خانه&lt;/a&gt; ›
+        &lt;a href="{{ route('products.index', ['category' =&gt; $product-&gt;category_id]) }}"&gt;{{ $product-&gt;category-&gt;name }}&lt;/a&gt; ›
+        {{ $product-&gt;name }}
+    &lt;/p&gt;
+
+    &lt;div class="cols-2"&gt;
+        &lt;x-product-image :product="$product" :large="true" /&gt;
+
+        &lt;div class="card"&gt;
+            &lt;span class="tag"&gt;{{ $product-&gt;category-&gt;name }}&lt;/span&gt;
+            &lt;h1 class="mt"&gt;{{ $product-&gt;name }}&lt;/h1&gt;
+
+            &lt;p&gt;&lt;x-price :value="$product-&gt;price" /&gt;&lt;/p&gt;
+
+            @if ($product-&gt;inStock())
+                &lt;p&gt;
+                    @if ($product-&gt;isLowStock())
+                        &lt;span class="tag warn"&gt;فقط {{ $product-&gt;stock }} عدد باقی مانده&lt;/span&gt;
+                    @else
+                        &lt;span class="tag ok"&gt;موجود&lt;/span&gt;
+                    @endif
+                &lt;/p&gt;
+
+                &lt;form method="POST" action="{{ route('cart.store', $product) }}" class="row"&gt;
+                    @csrf
+                    &lt;input class="qty" type="number" name="quantity" value="1" min="1"
+                           max="{{ min($product-&gt;stock, config('shop.max_quantity')) }}" aria-label="تعداد"&gt;
+                    &lt;button class="btn" type="submit"&gt;افزودن به سبد خرید&lt;/button&gt;
+                &lt;/form&gt;
+                @error('quantity')&lt;small class="muted" style="color:var(--danger)"&gt;{{ $message }}&lt;/small&gt;@enderror
+            @else
+                &lt;p&gt;&lt;span class="tag danger"&gt;ناموجود&lt;/span&gt;&lt;/p&gt;
+            @endif
+
+            @if ($product-&gt;description)
+                &lt;h3 class="mt"&gt;توضیحات&lt;/h3&gt;
+                &lt;p&gt;{{ $product-&gt;description }}&lt;/p&gt;
+            @endif
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    @if ($related-&gt;isNotEmpty())
+        &lt;h2 class="mt"&gt;محصولات مرتبط&lt;/h2&gt;
+        &lt;div class="grid products"&gt;
+            @foreach ($related as $item)
+                &lt;x-product-card :product="$item-&gt;setRelation('category', $product-&gt;category)" /&gt;
+            @endforeach
+        &lt;/div&gt;
+    @endif
+&lt;/x-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/cart</span></h3><details class="src"><summary><code>resources/views/cart/index.blade.php</code><small>58 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout title="سبد خرید"&gt;
+    &lt;h1 class="mt"&gt;سبد خرید&lt;/h1&gt;
+
+    @if ($items-&gt;isEmpty())
+        &lt;div class="empty card"&gt;
+            &lt;p&gt;سبد خرید شما خالی است.&lt;/p&gt;
+            &lt;a class="btn" href="{{ route('products.index') }}"&gt;رفتن به فروشگاه&lt;/a&gt;
+        &lt;/div&gt;
+    @else
+        &lt;div class="card table-wrap"&gt;
+            &lt;table&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;&lt;th&gt;محصول&lt;/th&gt;&lt;th&gt;قیمت واحد&lt;/th&gt;&lt;th&gt;تعداد&lt;/th&gt;&lt;th&gt;جمع&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody&gt;
+                @foreach ($items as $line)
+                    @php($product = $line['product'])
+                    &lt;tr&gt;
+                        &lt;td&gt;&lt;a href="{{ route('products.show', $product) }}"&gt;{{ $product-&gt;name }}&lt;/a&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;x-price :value="$product-&gt;price" /&gt;&lt;/td&gt;
+                        &lt;td&gt;
+                            &lt;form method="POST" action="{{ route('cart.update', $product) }}" class="row"&gt;
+                                @csrf
+                                @method('PATCH')
+                                &lt;input class="qty" type="number" name="quantity" value="{{ $line['quantity'] }}" min="0"
+                                       max="{{ min($product-&gt;stock, config('shop.max_quantity')) }}" aria-label="تعداد"&gt;
+                                &lt;button class="btn secondary sm" type="submit"&gt;به‌روزرسانی&lt;/button&gt;
+                            &lt;/form&gt;
+                        &lt;/td&gt;
+                        &lt;td&gt;&lt;x-price :value="$line['subtotal']" /&gt;&lt;/td&gt;
+                        &lt;td&gt;
+                            &lt;form method="POST" action="{{ route('cart.destroy', $product) }}"&gt;
+                                @csrf
+                                @method('DELETE')
+                                &lt;button class="btn danger sm" type="submit"&gt;حذف&lt;/button&gt;
+                            &lt;/form&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                @endforeach
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        &lt;div class="row between mt"&gt;
+            &lt;form method="POST" action="{{ route('cart.clear') }}" onsubmit="return confirm('سبد خرید خالی شود؟')"&gt;
+                @csrf
+                @method('DELETE')
+                &lt;button class="btn secondary" type="submit"&gt;خالی کردن سبد&lt;/button&gt;
+            &lt;/form&gt;
+
+            &lt;div class="row"&gt;
+                &lt;span&gt;جمع کل: &lt;x-price :value="$total" /&gt;&lt;/span&gt;
+                &lt;a class="btn" href="{{ route('checkout.create') }}"&gt;ادامه و ثبت سفارش&lt;/a&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    @endif
+&lt;/x-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/checkout</span></h3><details class="src"><summary><code>resources/views/checkout/create.blade.php</code><small>41 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout title="ثبت سفارش"&gt;
+    &lt;h1 class="mt"&gt;ثبت سفارش&lt;/h1&gt;
+
+    &lt;div class="cols-2"&gt;
+        &lt;form class="card" method="POST" action="{{ route('checkout.store') }}"&gt;
+            @csrf
+            &lt;h3&gt;مشخصات گیرنده&lt;/h3&gt;
+            &lt;x-field name="name" label="نام و نام خانوادگی" :value="auth()-&gt;user()-&gt;name" required /&gt;
+            &lt;x-field name="phone" label="شماره موبایل" type="tel" class="ltr" placeholder="09123456789" required /&gt;
+            &lt;x-field name="city" label="شهر" required /&gt;
+
+            &lt;div class="field"&gt;
+                &lt;label for="address"&gt;آدرس کامل&lt;/label&gt;
+                &lt;textarea id="address" name="address" @class(['is-invalid' =&gt; $errors-&gt;has('address')]) required&gt;{{ old('address') }}&lt;/textarea&gt;
+                @error('address')&lt;small class="error"&gt;{{ $message }}&lt;/small&gt;@enderror
+            &lt;/div&gt;
+
+            &lt;div class="field"&gt;
+                &lt;label for="note"&gt;توضیحات (اختیاری)&lt;/label&gt;
+                &lt;textarea id="note" name="note"&gt;{{ old('note') }}&lt;/textarea&gt;
+                @error('note')&lt;small class="error"&gt;{{ $message }}&lt;/small&gt;@enderror
+            &lt;/div&gt;
+
+            &lt;p class="muted small"&gt;پرداخت در این نسخه‌ی آموزشی «در محل تحویل» است؛ درگاه پرداخت واقعی به‌عنوان تمرین پیشنهاد شده است.&lt;/p&gt;
+            &lt;button class="btn block" type="submit"&gt;ثبت نهایی سفارش&lt;/button&gt;
+        &lt;/form&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;خلاصه‌ی سفارش&lt;/h3&gt;
+            &lt;ul class="side-list"&gt;
+                @foreach ($items as $line)
+                    &lt;li&gt;&lt;a href="{{ route('products.show', $line['product']) }}"&gt;&lt;span&gt;{{ $line['product']-&gt;name }} × {{ $line['quantity'] }}&lt;/span&gt;&lt;x-price :value="$line['subtotal']" /&gt;&lt;/a&gt;&lt;/li&gt;
+                @endforeach
+            &lt;/ul&gt;
+            &lt;hr&gt;
+            &lt;p class="row between"&gt;&lt;strong&gt;جمع کل&lt;/strong&gt;&lt;x-price :value="$total" /&gt;&lt;/p&gt;
+            &lt;a class="btn secondary block" href="{{ route('cart.index') }}"&gt;بازگشت به سبد خرید&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/x-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/orders</span></h3><details class="src"><summary><code>resources/views/orders/index.blade.php</code><small>27 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout title="سفارش‌های من"&gt;
+    &lt;h1 class="mt"&gt;سفارش‌های من&lt;/h1&gt;
+
+    @if ($orders-&gt;isEmpty())
+        &lt;div class="empty card"&gt;هنوز سفارشی ثبت نکرده‌اید. &lt;a href="{{ route('products.index') }}"&gt;شروع خرید&lt;/a&gt;&lt;/div&gt;
+    @else
+        &lt;div class="card table-wrap"&gt;
+            &lt;table&gt;
+                &lt;thead&gt;&lt;tr&gt;&lt;th&gt;شماره&lt;/th&gt;&lt;th&gt;تاریخ&lt;/th&gt;&lt;th&gt;اقلام&lt;/th&gt;&lt;th&gt;مبلغ&lt;/th&gt;&lt;th&gt;وضعیت&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                &lt;tbody&gt;
+                @foreach ($orders as $order)
+                    &lt;tr&gt;
+                        &lt;td&gt;#{{ $order-&gt;id }}&lt;/td&gt;
+                        &lt;td&gt;{{ $order-&gt;created_at-&gt;format('Y/m/d H:i') }}&lt;/td&gt;
+                        &lt;td&gt;{{ $order-&gt;products_count }}&lt;/td&gt;
+                        &lt;td&gt;&lt;x-price :value="$order-&gt;total" /&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;x-order-status :order="$order" /&gt;&lt;/td&gt;
+                        &lt;td&gt;&lt;a class="btn secondary sm" href="{{ route('orders.show', $order) }}"&gt;جزئیات&lt;/a&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                @endforeach
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+        {{ $orders-&gt;links() }}
+    @endif
+&lt;/x-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/orders/show.blade.php</code><small>32 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-layout :title="'سفارش #'.$order-&gt;id"&gt;
+    &lt;h1 class="mt"&gt;سفارش #{{ $order-&gt;id }} &lt;x-order-status :order="$order" /&gt;&lt;/h1&gt;
+
+    &lt;div class="cols-2"&gt;
+        &lt;div class="card table-wrap"&gt;
+            &lt;table&gt;
+                &lt;thead&gt;&lt;tr&gt;&lt;th&gt;محصول&lt;/th&gt;&lt;th&gt;قیمت&lt;/th&gt;&lt;th&gt;تعداد&lt;/th&gt;&lt;th&gt;جمع&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                &lt;tbody&gt;
+                @foreach ($order-&gt;products as $product)
+                    &lt;tr&gt;
+                        &lt;td&gt;{{ $product-&gt;name }}&lt;/td&gt;
+                        &lt;td&gt;&lt;x-price :value="$product-&gt;pivot-&gt;price" /&gt;&lt;/td&gt;
+                        &lt;td&gt;{{ $product-&gt;pivot-&gt;quantity }}&lt;/td&gt;
+                        &lt;td&gt;&lt;x-price :value="$product-&gt;pivot-&gt;price * $product-&gt;pivot-&gt;quantity" /&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                @endforeach
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+            &lt;p class="row between mt"&gt;&lt;strong&gt;جمع کل&lt;/strong&gt;&lt;x-price :value="$order-&gt;total" /&gt;&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;مشخصات گیرنده&lt;/h3&gt;
+            &lt;p&gt;{{ $order-&gt;name }}&lt;br&gt;&lt;span class="ltr"&gt;{{ $order-&gt;phone }}&lt;/span&gt;&lt;/p&gt;
+            &lt;p&gt;{{ $order-&gt;city }}، {{ $order-&gt;address }}&lt;/p&gt;
+            @if ($order-&gt;note)&lt;p class="muted"&gt;توضیحات: {{ $order-&gt;note }}&lt;/p&gt;@endif
+            &lt;p class="muted small"&gt;ثبت‌شده در {{ $order-&gt;created_at-&gt;format('Y/m/d H:i') }}&lt;/p&gt;
+            &lt;a class="btn secondary" href="{{ route('orders.index') }}"&gt;همه‌ی سفارش‌ها&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/x-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/admin</span></h3><details class="src"><summary><code>resources/views/admin/dashboard.blade.php</code><small>36 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="داشبورد"&gt;
+    &lt;div class="grid stats mb"&gt;
+        &lt;div class="stat"&gt;&lt;div class="n"&gt;{{ number_format($stats['products']) }}&lt;/div&gt;&lt;div class="l"&gt;محصول&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat"&gt;&lt;div class="n"&gt;{{ number_format($stats['categories']) }}&lt;/div&gt;&lt;div class="l"&gt;دسته‌بندی&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat"&gt;&lt;div class="n"&gt;{{ number_format($stats['orders']) }}&lt;/div&gt;&lt;div class="l"&gt;سفارش&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat"&gt;&lt;div class="n"&gt;{{ number_format($stats['customers']) }}&lt;/div&gt;&lt;div class="l"&gt;مشتری&lt;/div&gt;&lt;/div&gt;
+        &lt;div class="stat"&gt;&lt;div class="n"&gt;{{ number_format($stats['revenue']) }}&lt;/div&gt;&lt;div class="l"&gt;فروش ({{ config('shop.currency') }})&lt;/div&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class="cols-2"&gt;
+        &lt;div class="card"&gt;
+            &lt;h3&gt;آخرین سفارش‌ها&lt;/h3&gt;
+            @forelse ($latestOrders as $order)
+                &lt;p class="row between"&gt;
+                    &lt;a href="{{ route('admin.orders.show', $order) }}"&gt;#{{ $order-&gt;id }} — {{ $order-&gt;user-&gt;name }}&lt;/a&gt;
+                    &lt;span&gt;&lt;x-order-status :order="$order" /&gt; &lt;x-price :value="$order-&gt;total" /&gt;&lt;/span&gt;
+                &lt;/p&gt;
+            @empty
+                &lt;p class="muted"&gt;سفارشی وجود ندارد.&lt;/p&gt;
+            @endforelse
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;کم‌موجود / ناموجود&lt;/h3&gt;
+            @forelse ($lowStock as $product)
+                &lt;p class="row between"&gt;
+                    &lt;a href="{{ route('admin.products.edit', $product) }}"&gt;{{ $product-&gt;name }}&lt;/a&gt;
+                    &lt;span @class(['tag', 'danger' =&gt; $product-&gt;stock === 0, 'warn' =&gt; $product-&gt;stock &gt; 0])&gt;{{ $product-&gt;stock }} عدد&lt;/span&gt;
+                &lt;/p&gt;
+            @empty
+                &lt;p class="muted"&gt;همه‌ی محصولات موجودی کافی دارند.&lt;/p&gt;
+            @endforelse
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/admin/categories</span></h3><details class="src"><summary><code>resources/views/admin/categories/_form.blade.php</code><small>6 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@csrf
+&lt;x-field name="name" label="نام دسته‌بندی" :value="$category-&gt;name ?? null" required /&gt;
+&lt;x-field name="icon" label="آیکن (یک ایموجی)" :value="$category-&gt;icon ?? null" hint="مثلاً 📚 — برای محصولاتِ بدون تصویر نمایش داده می‌شود." /&gt;
+&lt;button class="btn" type="submit"&gt;ذخیره&lt;/button&gt;
+&lt;a class="btn secondary" href="{{ route('admin.categories.index') }}"&gt;انصراف&lt;/a&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/admin/categories/create.blade.php</code><small>6 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="دسته‌بندی جدید"&gt;
+    &lt;form class="card" method="POST" action="{{ route('admin.categories.store') }}"&gt;
+        @include('admin.categories._form')
+    &lt;/form&gt;
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/admin/categories/edit.blade.php</code><small>7 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="ویرایش دسته‌بندی"&gt;
+    &lt;form class="card" method="POST" action="{{ route('admin.categories.update', $category) }}"&gt;
+        @method('PUT')
+        @include('admin.categories._form')
+    &lt;/form&gt;
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/admin/categories/index.blade.php</code><small>29 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="دسته‌بندی‌ها"&gt;
+    &lt;p&gt;&lt;a class="btn" href="{{ route('admin.categories.create') }}"&gt;+ دسته‌بندی جدید&lt;/a&gt;&lt;/p&gt;
+
+    &lt;div class="card table-wrap"&gt;
+        &lt;table&gt;
+            &lt;thead&gt;&lt;tr&gt;&lt;th&gt;آیکن&lt;/th&gt;&lt;th&gt;نام&lt;/th&gt;&lt;th&gt;تعداد محصول&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+            &lt;tbody&gt;
+            @forelse ($categories as $category)
+                &lt;tr&gt;
+                    &lt;td&gt;{{ $category-&gt;icon }}&lt;/td&gt;
+                    &lt;td&gt;{{ $category-&gt;name }}&lt;/td&gt;
+                    &lt;td&gt;{{ $category-&gt;products_count }}&lt;/td&gt;
+                    &lt;td class="row"&gt;
+                        &lt;a class="btn secondary sm" href="{{ route('admin.categories.edit', $category) }}"&gt;ویرایش&lt;/a&gt;
+                        &lt;form method="POST" action="{{ route('admin.categories.destroy', $category) }}" onsubmit="return confirm('حذف شود؟')"&gt;
+                            @csrf
+                            @method('DELETE')
+                            &lt;button class="btn danger sm" type="submit"&gt;حذف&lt;/button&gt;
+                        &lt;/form&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            @empty
+                &lt;tr&gt;&lt;td colspan="4" class="muted"&gt;دسته‌بندی‌ای وجود ندارد.&lt;/td&gt;&lt;/tr&gt;
+            @endforelse
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/admin/products</span></h3><details class="src"><summary><code>resources/views/admin/products/_form.blade.php</code><small>47 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>@csrf
+&lt;div class="field"&gt;
+    &lt;label for="category_id"&gt;دسته‌بندی&lt;/label&gt;
+    &lt;select id="category_id" name="category_id" @class(['is-invalid' =&gt; $errors-&gt;has('category_id')]) required&gt;
+        &lt;option value=""&gt;— انتخاب کنید —&lt;/option&gt;
+        @foreach ($categories as $category)
+            &lt;option value="{{ $category-&gt;id }}" @selected((int) old('category_id', $product-&gt;category_id ?? null) === $category-&gt;id)&gt;{{ $category-&gt;name }}&lt;/option&gt;
+        @endforeach
+    &lt;/select&gt;
+    @error('category_id')&lt;small class="error"&gt;{{ $message }}&lt;/small&gt;@enderror
+&lt;/div&gt;
+
+&lt;x-field name="name" label="نام محصول" :value="$product-&gt;name ?? null" required /&gt;
+
+&lt;div class="field"&gt;
+    &lt;label for="description"&gt;توضیحات&lt;/label&gt;
+    &lt;textarea id="description" name="description"&gt;{{ old('description', $product-&gt;description ?? '') }}&lt;/textarea&gt;
+    @error('description')&lt;small class="error"&gt;{{ $message }}&lt;/small&gt;@enderror
+&lt;/div&gt;
+
+&lt;div class="cols-2"&gt;
+    &lt;x-field name="price" :label="'قیمت ('.config('shop.currency').')'" type="number" :value="$product-&gt;price ?? null" min="0" required /&gt;
+    &lt;x-field name="stock" label="موجودی" type="number" :value="$product-&gt;stock ?? 0" min="0" required /&gt;
+&lt;/div&gt;
+
+&lt;div class="field"&gt;
+    &lt;label for="image"&gt;تصویر (jpg / png / webp، حداکثر ۲ مگابایت)&lt;/label&gt;
+    &lt;input id="image" type="file" name="image" accept="image/*" @class(['is-invalid' =&gt; $errors-&gt;has('image')])&gt;
+    @error('image')&lt;small class="error"&gt;{{ $message }}&lt;/small&gt;@enderror
+
+    @if (! empty($product?-&gt;image))
+        &lt;div class="row mt"&gt;
+            &lt;div class="thumb-sm" style="width:64px;height:64px"&gt;&lt;img src="{{ asset('storage/'.$product-&gt;image) }}" alt=""&gt;&lt;/div&gt;
+            &lt;label class="check"&gt;&lt;input type="checkbox" name="remove_image" value="1"&gt; حذف تصویر فعلی&lt;/label&gt;
+        &lt;/div&gt;
+    @endif
+&lt;/div&gt;
+
+&lt;input type="hidden" name="is_active" value="0"&gt;
+&lt;label class="check"&gt;
+    &lt;input type="checkbox" name="is_active" value="1" @checked(old('is_active', $product-&gt;is_active ?? true))&gt;
+    فعال (در فروشگاه نمایش داده شود)
+&lt;/label&gt;
+
+&lt;button class="btn" type="submit"&gt;ذخیره&lt;/button&gt;
+&lt;a class="btn secondary" href="{{ route('admin.products.index') }}"&gt;انصراف&lt;/a&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/admin/products/create.blade.php</code><small>6 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="محصول جدید"&gt;
+    &lt;form class="card" method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data"&gt;
+        @include('admin.products._form')
+    &lt;/form&gt;
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/admin/products/edit.blade.php</code><small>7 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="ویرایش محصول"&gt;
+    &lt;form class="card" method="POST" action="{{ route('admin.products.update', $product) }}" enctype="multipart/form-data"&gt;
+        @method('PUT')
+        @include('admin.products._form')
+    &lt;/form&gt;
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/admin/products/index.blade.php</code><small>39 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="محصولات"&gt;
+    &lt;div class="row between mb"&gt;
+        &lt;a class="btn" href="{{ route('admin.products.create') }}"&gt;+ محصول جدید&lt;/a&gt;
+        &lt;form class="row" method="GET" action="{{ route('admin.products.index') }}"&gt;
+            &lt;input type="search" name="q" value="{{ request('q') }}" placeholder="جستجوی نام…" style="width:220px"&gt;
+            &lt;button class="btn secondary" type="submit"&gt;جستجو&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+
+    &lt;div class="card table-wrap"&gt;
+        &lt;table&gt;
+            &lt;thead&gt;&lt;tr&gt;&lt;th&gt;تصویر&lt;/th&gt;&lt;th&gt;نام&lt;/th&gt;&lt;th&gt;دسته&lt;/th&gt;&lt;th&gt;قیمت&lt;/th&gt;&lt;th&gt;موجودی&lt;/th&gt;&lt;th&gt;وضعیت&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+            &lt;tbody&gt;
+            @forelse ($products as $product)
+                &lt;tr&gt;
+                    &lt;td&gt;&lt;div class="thumb-sm"&gt;@if ($product-&gt;image)&lt;img src="{{ asset('storage/'.$product-&gt;image) }}" alt=""&gt;@else{{ $product-&gt;category-&gt;icon }}@endif&lt;/div&gt;&lt;/td&gt;
+                    &lt;td&gt;{{ $product-&gt;name }}&lt;/td&gt;
+                    &lt;td&gt;{{ $product-&gt;category-&gt;name }}&lt;/td&gt;
+                    &lt;td&gt;&lt;x-price :value="$product-&gt;price" /&gt;&lt;/td&gt;
+                    &lt;td&gt;{{ $product-&gt;stock }}&lt;/td&gt;
+                    &lt;td&gt;@if ($product-&gt;is_active)&lt;span class="tag ok"&gt;فعال&lt;/span&gt;@else&lt;span class="tag"&gt;غیرفعال&lt;/span&gt;@endif&lt;/td&gt;
+                    &lt;td class="row"&gt;
+                        &lt;a class="btn secondary sm" href="{{ route('admin.products.edit', $product) }}"&gt;ویرایش&lt;/a&gt;
+                        &lt;form method="POST" action="{{ route('admin.products.destroy', $product) }}" onsubmit="return confirm('این محصول حذف شود؟')"&gt;
+                            @csrf
+                            @method('DELETE')
+                            &lt;button class="btn danger sm" type="submit"&gt;حذف&lt;/button&gt;
+                        &lt;/form&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+            @empty
+                &lt;tr&gt;&lt;td colspan="7" class="muted"&gt;محصولی پیدا نشد.&lt;/td&gt;&lt;/tr&gt;
+            @endforelse
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+    {{ $products-&gt;links() }}
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">resources/views/admin/orders</span></h3><details class="src"><summary><code>resources/views/admin/orders/index.blade.php</code><small>34 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout title="سفارش‌ها"&gt;
+    &lt;form class="row mb" method="GET" action="{{ route('admin.orders.index') }}"&gt;
+        &lt;select name="status" style="width:220px" onchange="this.form.submit()" aria-label="فیلتر وضعیت"&gt;
+            &lt;option value=""&gt;همه‌ی وضعیت‌ها&lt;/option&gt;
+            @foreach (config('shop.order_statuses') as $key =&gt; $label)
+                &lt;option value="{{ $key }}" @selected(request('status') === $key)&gt;{{ $label }}&lt;/option&gt;
+            @endforeach
+        &lt;/select&gt;
+        &lt;noscript&gt;&lt;button class="btn secondary" type="submit"&gt;فیلتر&lt;/button&gt;&lt;/noscript&gt;
+    &lt;/form&gt;
+
+    &lt;div class="card table-wrap"&gt;
+        &lt;table&gt;
+            &lt;thead&gt;&lt;tr&gt;&lt;th&gt;شماره&lt;/th&gt;&lt;th&gt;مشتری&lt;/th&gt;&lt;th&gt;تاریخ&lt;/th&gt;&lt;th&gt;اقلام&lt;/th&gt;&lt;th&gt;مبلغ&lt;/th&gt;&lt;th&gt;وضعیت&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+            &lt;tbody&gt;
+            @forelse ($orders as $order)
+                &lt;tr&gt;
+                    &lt;td&gt;#{{ $order-&gt;id }}&lt;/td&gt;
+                    &lt;td&gt;{{ $order-&gt;user-&gt;name }}&lt;/td&gt;
+                    &lt;td&gt;{{ $order-&gt;created_at-&gt;format('Y/m/d H:i') }}&lt;/td&gt;
+                    &lt;td&gt;{{ $order-&gt;products_count }}&lt;/td&gt;
+                    &lt;td&gt;&lt;x-price :value="$order-&gt;total" /&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;x-order-status :order="$order" /&gt;&lt;/td&gt;
+                    &lt;td&gt;&lt;a class="btn secondary sm" href="{{ route('admin.orders.show', $order) }}"&gt;مشاهده&lt;/a&gt;&lt;/td&gt;
+                &lt;/tr&gt;
+            @empty
+                &lt;tr&gt;&lt;td colspan="7" class="muted"&gt;سفارشی پیدا نشد.&lt;/td&gt;&lt;/tr&gt;
+            @endforelse
+            &lt;/tbody&gt;
+        &lt;/table&gt;
+    &lt;/div&gt;
+    {{ $orders-&gt;links() }}
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><details class="src"><summary><code>resources/views/admin/orders/show.blade.php</code><small>45 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;x-admin-layout :title="'سفارش #'.$order-&gt;id"&gt;
+    &lt;div class="cols-2"&gt;
+        &lt;div class="card table-wrap"&gt;
+            &lt;table&gt;
+                &lt;thead&gt;&lt;tr&gt;&lt;th&gt;محصول&lt;/th&gt;&lt;th&gt;قیمت&lt;/th&gt;&lt;th&gt;تعداد&lt;/th&gt;&lt;th&gt;جمع&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                &lt;tbody&gt;
+                @foreach ($order-&gt;products as $product)
+                    &lt;tr&gt;
+                        &lt;td&gt;{{ $product-&gt;name }}&lt;/td&gt;
+                        &lt;td&gt;&lt;x-price :value="$product-&gt;pivot-&gt;price" /&gt;&lt;/td&gt;
+                        &lt;td&gt;{{ $product-&gt;pivot-&gt;quantity }}&lt;/td&gt;
+                        &lt;td&gt;&lt;x-price :value="$product-&gt;pivot-&gt;price * $product-&gt;pivot-&gt;quantity" /&gt;&lt;/td&gt;
+                    &lt;/tr&gt;
+                @endforeach
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+            &lt;p class="row between mt"&gt;&lt;strong&gt;جمع کل&lt;/strong&gt;&lt;x-price :value="$order-&gt;total" /&gt;&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class="card"&gt;
+            &lt;h3&gt;مشتری&lt;/h3&gt;
+            &lt;p&gt;{{ $order-&gt;user-&gt;name }} — &lt;span class="ltr"&gt;{{ $order-&gt;user-&gt;email }}&lt;/span&gt;&lt;/p&gt;
+            &lt;h3&gt;گیرنده&lt;/h3&gt;
+            &lt;p&gt;{{ $order-&gt;name }} — &lt;span class="ltr"&gt;{{ $order-&gt;phone }}&lt;/span&gt;&lt;br&gt;{{ $order-&gt;city }}، {{ $order-&gt;address }}&lt;/p&gt;
+            @if ($order-&gt;note)&lt;p class="muted"&gt;توضیحات: {{ $order-&gt;note }}&lt;/p&gt;@endif
+
+            &lt;h3 class="mt"&gt;وضعیت: &lt;x-order-status :order="$order" /&gt;&lt;/h3&gt;
+            @unless ($order-&gt;isCancelled())
+                &lt;form method="POST" action="{{ route('admin.orders.update', $order) }}" class="row"&gt;
+                    @csrf
+                    @method('PATCH')
+                    &lt;select name="status" style="width:200px" aria-label="وضعیت جدید"&gt;
+                        @foreach (config('shop.order_statuses') as $key =&gt; $label)
+                            &lt;option value="{{ $key }}" @selected($order-&gt;status === $key)&gt;{{ $label }}&lt;/option&gt;
+                        @endforeach
+                    &lt;/select&gt;
+                    &lt;button class="btn" type="submit"&gt;ثبت وضعیت&lt;/button&gt;
+                &lt;/form&gt;
+                &lt;p class="muted small"&gt;با انتخاب «لغو شده»، موجودی محصولات به انبار برمی‌گردد و دیگر قابل تغییر نیست.&lt;/p&gt;
+            @endunless
+            &lt;a class="btn secondary mt" href="{{ route('admin.orders.index') }}"&gt;بازگشت&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/x-admin-layout&gt;</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">public/css</span></h3><details class="src"><summary><code>public/css/shop.css</code><small>130 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">css</span></div><pre><code>/* ============================================================
+   فروشگاه لاراول — استایل مشترک (RTL، بدون نیاز به npm/Tailwind)
+   ============================================================ */
+@font-face { font-family:'Vazirmatn'; src:url('../fonts/Vazirmatn-FD-Regular.woff2') format('woff2'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Vazirmatn'; src:url('../fonts/Vazirmatn-FD-Medium.woff2') format('woff2'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Vazirmatn'; src:url('../fonts/Vazirmatn-FD-Bold.woff2') format('woff2'); font-weight:700; font-display:swap; }
+
+:root{
+  --bg:#f6f7fb; --surface:#fff; --text:#1f2937; --muted:#64748b; --heading:#0f172a;
+  --border:#e5e7eb; --accent:#4f46e5; --accent-strong:#4338ca; --accent-soft:#eef2ff;
+  --ok:#059669; --ok-soft:#ecfdf5; --warn:#b45309; --warn-soft:#fffbeb; --danger:#dc2626; --danger-soft:#fef2f2;
+  --radius:14px; --shadow:0 1px 2px rgba(15,23,42,.05),0 8px 22px rgba(15,23,42,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Vazirmatn',Tahoma,sans-serif;line-height:1.9;font-size:15px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{color:var(--heading);line-height:1.5;margin:0 0 .6em}
+h1{font-size:1.7rem} h2{font-size:1.3rem} h3{font-size:1.1rem}
+.container{width:min(1180px,100% - 32px);margin-inline:auto}
+.muted{color:var(--muted)} .small{font-size:.85rem}
+.mt{margin-top:20px} .mb{margin-bottom:20px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+.grow{flex:1}
+
+/* ---------- هدر ---------- */
+.site-header{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
+.site-header .bar{display:flex;align-items:center;gap:18px;padding:12px 0;flex-wrap:wrap}
+.brand{font-weight:700;font-size:1.15rem;color:var(--heading)} .brand span{color:var(--accent)}
+.nav{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.nav a,.nav button.linklike{color:var(--text);padding:6px 12px;border-radius:10px;font-size:.92rem}
+.nav a:hover,.nav button.linklike:hover{background:var(--accent-soft);text-decoration:none;color:var(--accent-strong)}
+.search{display:flex;gap:6px;flex:1;min-width:200px;max-width:380px;margin-inline-start:auto}
+.search input{flex:1}
+.badge{display:inline-block;min-width:22px;padding:0 7px;border-radius:999px;background:var(--accent);color:#fff;font-size:.75rem;text-align:center}
+button.linklike{background:none;border:0;cursor:pointer;font:inherit}
+
+/* ---------- دکمه و فرم ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border-radius:10px;border:1px solid transparent;background:var(--accent);color:#fff;font:inherit;font-weight:500;cursor:pointer;transition:.15s}
+.btn:hover{background:var(--accent-strong);text-decoration:none;color:#fff}
+.btn.secondary{background:#fff;color:var(--text);border-color:var(--border)}
+.btn.secondary:hover{background:var(--accent-soft);color:var(--accent-strong)}
+.btn.danger{background:var(--danger)} .btn.danger:hover{background:#b91c1c}
+.btn.sm{padding:5px 12px;font-size:.85rem} .btn.block{display:flex;width:100%}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+input,select,textarea{font:inherit;color:inherit;width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:10px;background:#fff}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent-soft);border-color:var(--accent)}
+input[type=checkbox]{width:auto} input[type=file]{padding:7px}
+textarea{min-height:110px;resize:vertical}
+.field{margin-bottom:16px} .field label{display:block;font-weight:500;margin-bottom:4px}
+.field .hint{display:block;color:var(--muted);font-size:.8rem}
+.field .error{display:block;color:var(--danger);font-size:.82rem}
+.is-invalid{border-color:var(--danger)}
+.check{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+.ltr{direction:ltr;text-align:left}
+
+/* ---------- کارت‌ها و گرید ---------- */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:18px}
+.grid.products{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.grid.cats{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
+.grid.stats{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.two-col{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:860px){.two-col,.cols-2{grid-template-columns:1fr}}
+
+.product-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:.15s}
+.product-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.product-card .body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.product-card .name{font-weight:500;color:var(--heading)}
+.product-card .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:8px}
+.thumb{aspect-ratio:4/3;background:linear-gradient(135deg,#eef2ff,#e0e7ff);display:flex;align-items:center;justify-content:center;font-size:3rem;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb.lg{aspect-ratio:1/1;border-radius:var(--radius);font-size:6rem}
+.price{font-weight:700;color:var(--heading)} .price small{font-weight:400;color:var(--muted)}
+.tag{display:inline-block;padding:1px 10px;border-radius:999px;font-size:.75rem;background:var(--accent-soft);color:var(--accent-strong)}
+.tag.ok{background:var(--ok-soft);color:var(--ok)} .tag.warn{background:var(--warn-soft);color:var(--warn)} .tag.danger{background:var(--danger-soft);color:var(--danger)}
+
+.cat-tile{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 10px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);color:var(--text);text-align:center}
+.cat-tile:hover{border-color:var(--accent);text-decoration:none;box-shadow:var(--shadow)}
+.cat-tile .ic{font-size:2rem}
+
+.hero{background:linear-gradient(135deg,#0891b2,#2563eb 60%,#6d28d9);color:#fff;border-radius:22px;padding:42px 36px;margin:24px 0}
+.hero h1{color:#fff;font-size:2rem} .hero p{opacity:.9;max-width:560px}
+.hero .btn{background:#fff;color:var(--accent-strong)}
+
+.side-list{list-style:none;margin:0;padding:0}
+.side-list a{display:flex;justify-content:space-between;padding:7px 10px;border-radius:8px;color:var(--text)}
+.side-list a:hover,.side-list a.active{background:var(--accent-soft);color:var(--accent-strong);text-decoration:none}
+
+/* ---------- جدول ---------- */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--border);vertical-align:middle}
+th{background:#f8fafc;font-weight:500;color:var(--muted);font-size:.85rem;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td .thumb-sm{width:44px;height:44px;border-radius:8px;overflow:hidden;background:var(--accent-soft);display:flex;align-items:center;justify-content:center}
+td .thumb-sm img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- پیام‌ها ---------- */
+.alert{padding:11px 16px;border-radius:10px;margin:16px 0;border:1px solid;font-size:.92rem}
+.alert.success{background:var(--ok-soft);border-color:#a7f3d0;color:#047857}
+.alert.error{background:var(--danger-soft);border-color:#fecaca;color:#b91c1c}
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+
+/* ---------- صفحه‌بندی ---------- */
+.pagination{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin:28px 0}
+.pagination .page{min-width:38px;padding:5px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);text-align:center}
+.pagination a.page:hover{background:var(--accent-soft);text-decoration:none}
+.pagination .active{background:var(--accent);border-color:var(--accent);color:#fff}
+.pagination .disabled{color:#cbd5e1}
+
+/* ---------- پنل مدیریت ---------- */
+.admin-wrap{display:grid;grid-template-columns:220px 1fr;gap:22px;margin:24px 0;align-items:start}
+@media(max-width:860px){.admin-wrap{grid-template-columns:1fr}}
+.admin-side{background:#0f172a;border-radius:var(--radius);padding:14px;position:sticky;top:76px}
+.admin-side a{display:block;color:#cbd5e1;padding:9px 12px;border-radius:10px}
+.admin-side a:hover{background:#1e293b;color:#fff;text-decoration:none}
+.admin-side a.active{background:var(--accent);color:#fff}
+.stat{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+.stat .n{font-size:1.5rem;font-weight:700;color:var(--heading)} .stat .l{color:var(--muted);font-size:.85rem}
+.qty{width:76px}
+.inline-form{display:inline}
+
+/* ---------- فوتر ---------- */
+.site-footer{border-top:1px solid var(--border);margin-top:56px;padding:26px 0;color:var(--muted);text-align:center;font-size:.88rem;background:#fff}</code></pre></div></div></details><h3 class="src-dir">📁 <span class="ltr-inline">tests/Feature</span></h3><details class="src"><summary><code>tests/Feature/ShopTest.php</code><small>168 خط</small></summary><div class="demo demo-full"><div class="demo-code"><div class="demo-label"><span>فایل</span><span class="demo-tag">php</span></div><pre><code>&lt;?php
+
+namespace Tests\Feature;
+
+use App\Models\Category;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class ShopTest extends TestCase
+{
+    use RefreshDatabase;
+
+    private function admin(): User
+    {
+        return User::factory()-&gt;create(['role' =&gt; 'admin']);
+    }
+
+    public function test_home_and_product_pages_load(): void
+    {
+        $product = Product::factory()-&gt;create();
+
+        $this-&gt;get('/')-&gt;assertOk()-&gt;assertSee($product-&gt;name);
+        $this-&gt;get('/products')-&gt;assertOk()-&gt;assertSee($product-&gt;name);
+        $this-&gt;get(route('products.show', $product))-&gt;assertOk()-&gt;assertSee($product-&gt;name);
+    }
+
+    public function test_inactive_product_is_hidden(): void
+    {
+        $product = Product::factory()-&gt;inactive()-&gt;create();
+
+        $this-&gt;get(route('products.show', $product))-&gt;assertNotFound();
+        $this-&gt;get('/products')-&gt;assertDontSee($product-&gt;name);
+    }
+
+    public function test_search_filters_products(): void
+    {
+        Product::factory()-&gt;create(['name' =&gt; 'کتاب لاراول']);
+        Product::factory()-&gt;create(['name' =&gt; 'ماگ سرامیکی']);
+
+        $this-&gt;get('/products?q=لاراول')-&gt;assertSee('کتاب لاراول')-&gt;assertDontSee('ماگ سرامیکی');
+    }
+
+    public function test_guest_is_redirected_from_admin_and_checkout(): void
+    {
+        $this-&gt;get('/admin')-&gt;assertRedirect(route('login'));
+        $this-&gt;get('/checkout')-&gt;assertRedirect(route('login'));
+    }
+
+    public function test_customer_cannot_open_admin(): void
+    {
+        $this-&gt;actingAs(User::factory()-&gt;create())-&gt;get('/admin')-&gt;assertForbidden();
+    }
+
+    public function test_admin_can_open_admin_pages(): void
+    {
+        $this-&gt;actingAs($this-&gt;admin());
+
+        $this-&gt;get('/admin')-&gt;assertOk();
+        $this-&gt;get('/admin/products')-&gt;assertOk();
+        $this-&gt;get('/admin/categories')-&gt;assertOk();
+        $this-&gt;get('/admin/orders')-&gt;assertOk();
+    }
+
+    public function test_admin_can_create_category_and_product(): void
+    {
+        $this-&gt;actingAs($this-&gt;admin());
+
+        $this-&gt;post('/admin/categories', ['name' =&gt; 'تست', 'icon' =&gt; '🧪'])-&gt;assertRedirect(route('admin.categories.index'));
+        $category = Category::where('name', 'تست')-&gt;firstOrFail();
+
+        $this-&gt;post('/admin/products', [
+            'category_id' =&gt; $category-&gt;id,
+            'name' =&gt; 'محصول تستی',
+            'price' =&gt; 150000,
+            'stock' =&gt; 7,
+            'is_active' =&gt; 1,
+        ])-&gt;assertRedirect(route('admin.products.index'));
+
+        $this-&gt;assertDatabaseHas('products', ['name' =&gt; 'محصول تستی', 'stock' =&gt; 7]);
+    }
+
+    public function test_product_validation_errors(): void
+    {
+        $this-&gt;actingAs($this-&gt;admin())
+            -&gt;post('/admin/products', ['name' =&gt; ''])
+            -&gt;assertSessionHasErrors(['name', 'category_id', 'price', 'stock']);
+    }
+
+    public function test_cart_and_checkout_create_order_and_reduce_stock(): void
+    {
+        $product = Product::factory()-&gt;create(['price' =&gt; 100000, 'stock' =&gt; 5]);
+        $user = User::factory()-&gt;create();
+
+        $this-&gt;post(route('cart.store', $product), ['quantity' =&gt; 2]);
+        $this-&gt;get('/cart')-&gt;assertOk()-&gt;assertSee($product-&gt;name);
+
+        $this-&gt;actingAs($user)-&gt;post('/checkout', [
+            'name' =&gt; 'علی رضایی',
+            'phone' =&gt; '09123456789',
+            'city' =&gt; 'تهران',
+            'address' =&gt; 'تهران، خیابان آزادی، پلاک ۱۰',
+        ])-&gt;assertRedirect();
+
+        $order = Order::firstOrFail();
+        $this-&gt;assertSame(200000, $order-&gt;total);
+        $this-&gt;assertSame($user-&gt;id, $order-&gt;user_id);
+        $this-&gt;assertSame(3, $product-&gt;fresh()-&gt;stock);
+        $this-&gt;assertDatabaseHas('order_product', ['order_id' =&gt; $order-&gt;id, 'product_id' =&gt; $product-&gt;id, 'quantity' =&gt; 2, 'price' =&gt; 100000]);
+    }
+
+    public function test_cannot_add_out_of_stock_product(): void
+    {
+        $product = Product::factory()-&gt;outOfStock()-&gt;create();
+
+        $this-&gt;post(route('cart.store', $product))-&gt;assertSessionHas('error');
+        $this-&gt;get('/cart')-&gt;assertDontSee($product-&gt;name);
+    }
+
+    public function test_customer_sees_only_own_order(): void
+    {
+        $owner = User::factory()-&gt;create();
+        $other = User::factory()-&gt;create();
+        $order = Order::create([
+            'user_id' =&gt; $owner-&gt;id, 'status' =&gt; 'pending', 'total' =&gt; 1000,
+            'name' =&gt; 'x', 'phone' =&gt; '09123456789', 'city' =&gt; 'تهران', 'address' =&gt; 'آدرس نمونه ۱۲۳',
+        ]);
+
+        $this-&gt;actingAs($owner)-&gt;get(route('orders.show', $order))-&gt;assertOk();
+        $this-&gt;actingAs($other)-&gt;get(route('orders.show', $order))-&gt;assertForbidden();
+    }
+
+    public function test_cancelling_order_restores_stock(): void
+    {
+        $product = Product::factory()-&gt;create(['stock' =&gt; 5]);
+        $user = User::factory()-&gt;create();
+
+        $this-&gt;actingAs($user)-&gt;post(route('cart.store', $product), ['quantity' =&gt; 2]);
+        $this-&gt;post('/checkout', [
+            'name' =&gt; 'علی', 'phone' =&gt; '09123456789', 'city' =&gt; 'تهران', 'address' =&gt; 'آدرس نمونه ۱۲۳۴۵',
+        ]);
+        $this-&gt;assertSame(3, $product-&gt;fresh()-&gt;stock);
+
+        $order = Order::firstOrFail();
+        $this-&gt;actingAs($this-&gt;admin())-&gt;patch(route('admin.orders.update', $order), ['status' =&gt; 'cancelled']);
+
+        $this-&gt;assertSame(5, $product-&gt;fresh()-&gt;stock);
+        $this-&gt;assertSame('cancelled', $order-&gt;fresh()-&gt;status);
+    }
+
+    public function test_register_login_logout(): void
+    {
+        $this-&gt;post('/register', [
+            'name' =&gt; 'کاربر', 'email' =&gt; 'a@b.test', 'password' =&gt; 'secret-pass-1', 'password_confirmation' =&gt; 'secret-pass-1',
+        ])-&gt;assertRedirect(route('home'));
+        $this-&gt;assertAuthenticated();
+        $this-&gt;assertSame('customer', User::first()-&gt;role);
+
+        $this-&gt;post('/logout')-&gt;assertRedirect(route('home'));
+        $this-&gt;assertGuest();
+
+        $this-&gt;post('/login', ['email' =&gt; 'a@b.test', 'password' =&gt; 'wrong'])-&gt;assertSessionHasErrors('email');
+        $this-&gt;post('/login', ['email' =&gt; 'a@b.test', 'password' =&gt; 'secret-pass-1'])-&gt;assertRedirect(route('home'));
+    }
+}</code></pre></div></div></details>
+    </section>
+
+    
+    <!-- ================= نکات طلایی ================= -->
+    <div class="golden">
+        <h3>🏆 چیزی که از این پروژه تویِ ذهنت بماند</h3>
+        <ol>
+            <li>یک سایتِ واقعی ترکیبی است از: روت + کنترلر + مدل + بلید — و «ترتیبِ میان‌افزارها» حرفِ آخر را می‌زند.</li>
+            <li>«داده در دیتابیس، فایل در storage» — فقط مسیرِ فایل را ذخیره کن.</li>
+            <li>همیشه به ورودیِ کاربر بدباش: <code>validated()</code>، <code>{{ }}</code> و <code>@csrf</code>.</li>
+            <li>هر صفحه‌ای که middleware نداشته باشد «درِ بدونِ قفل» است؛ از <code>resource</code> فقط همان متدهایی را بساز که لازم داری.</li>
+            <li>برایِ توسعه، وضعیتِ قابلِ بازتولید (migrate:fresh --seed) مهم‌تر از داده‌ای است که دستی ست کرده‌ای.</li>
+            <li>پروژه‌ی بعدی‌ات را با همین ساختارِ ساده شروع کن؛ بعد پیچیدگی اضافه کن، نه قبلش.</li>
+        </ol>
+    </div>
+
+    <!-- ================= مطالعه‌ی بیشتر ================= -->
+    <div class="tk99-more">📚 مطالعه‌ی بیشتر (انگلیسی) برایِ ادامه‌ی راه:
+        <a href="https://laravel.com/docs/13.x/starter-kits" target="_blank" rel="noopener">Starter Kits</a> —
+        <a href="https://laravel.com/docs/13.x/session" target="_blank" rel="noopener">Session</a> —
+        <a href="https://laravel.com/docs/13.x/sanctum" target="_blank" rel="noopener">Sanctum (API)</a> —
+        <a href="https://laravel.com/docs/13.x/queues" target="_blank" rel="noopener">Queues</a> —
+        <a href="https://laravel.com/docs/13.x/testing" target="_blank" rel="noopener">Testing</a>.
+    </div>
+
+    <!-- ================= ناوبری ================= -->
+    <nav class="lesson-nav" aria-label="ناوبری بین بخش‌ها">
+        <a href="00-فهرست.html">فهرست درس‌ها</a>
+        <a href="15-امنیت.html">→ بخش قبل: امنیت پایه‌ی وب</a>
+        <a href="00-فهرست.html">فهرست ←</a>
+    </nav>
+
+</div>
+<script src="../assets/js/rayvo.js"></script>
+</body>
+</html>
